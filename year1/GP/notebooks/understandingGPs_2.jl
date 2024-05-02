@@ -4,17 +4,7 @@
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-end
-
-# ╔═╡ f86b0780-008c-11ef-33a9-931d80ed898b
+# ╔═╡ 6f129282-07c3-11ef-0046-991ccdeb5dff
 begin
 	using AbstractGPs
 	using Distributions
@@ -30,7 +20,7 @@ begin
 	Random.seed!(12)  
 end
 
-# ╔═╡ 409e7ee5-c7db-4ac8-a4b4-d0d45da11019
+# ╔═╡ d6c848d9-0bcf-4af0-ae5f-2653fbc741c7
 begin
 	using CairoMakie.Makie.ColorSchemes: Set1_4
 	
@@ -40,848 +30,23 @@ begin
 	)
 end
 
-# ╔═╡ afb8abfc-86c1-470c-8640-0685f68c072e
-using Optim
-
-# ╔═╡ c926a7c0-806a-47b2-be6f-880c00b643ec
+# ╔═╡ d32914ca-72f4-4fae-bbbc-50cafeaa6140
 md"""
-### Uniformly distributed training data points 
+### Research questions
+
+- What happens if the kernel is not capturing all information about initial function?
+- What is a good train/test split? How crucial is the spacing between the inputs?
+- What happens if we have noise variance as a hyperparameter?
 """
 
-# ╔═╡ 96850f54-02ea-4a4f-bdec-3ac3bef8a4ce
-md"""
-Error model: 
+# ╔═╡ 4bad828a-7872-477e-9da9-eb3e9c8ec93f
 
-$y_i = f(x_i) + \epsilon_i,$
 
-where $\epsilon_i \sim \mathcal{N}(0, \sigma_{noise}^2)$.
-"""
+# ╔═╡ 8342d601-fe0c-4480-8d03-bf718a4a6015
 
-# ╔═╡ 7868f5a7-a06d-4fa2-b707-43a40125203e
-md"""
-### Train and test split
-"""
 
-# ╔═╡ b5a794cd-cc30-4670-8a05-09618ef84754
-md"""
-Step = $(@bind step PlutoUI.Slider(0.1:0.5:5.0; default=0.5, show_value=true))
+# ╔═╡ f4574164-a6e8-4f89-a17d-146dc7d3211c
 
-Noise variance = $(@bind noise_var PlutoUI.Slider(0.0:0.01:0.5; default=0.05, show_value=true))
-"""
-
-# ╔═╡ 37fe1231-b880-4a1b-90a3-3ed1073914c9
-Normal(0, noise_var)
-
-# ╔═╡ eb40cd54-3564-4c4f-9a5d-41263340d53c
-begin
-	x = 0:step:15
-	x_dense = 0:0.1:15
-	
-	eps = rand(Normal(0, noise_var), length(x))
-	y = sin.(x) + eps
-end
-
-# ╔═╡ 8c2e10ce-c07e-4848-b9c1-283990422884
-begin
-	# 1:length(x) = collect(1:length(x))
-	
-	# Shuffle the list
-	shuffled_numbers = shuffle(1:length(x))
-end
-
-# ╔═╡ 5f922588-7aa8-4fce-891f-9b86634526cb
-begin
-	n = length(x)
-	partition = floor(Int, 0.8 * n)
-	shuffled_list = shuffle(1:length(x))
-	train_idx = shuffled_list[1:partition]
-	test_idx = shuffled_list[(partition + 1):end]
-	
-	x_train = x[train_idx]
-	y_train = y[train_idx]
-	x_test = x[test_idx]
-	y_test = y[test_idx]
-end
-
-# ╔═╡ 5c28f88e-721c-415e-aad5-197b3631b798
-begin
-	# error bars as doubled noise variance
-	yerr = 2 * noise_var
-	
-	fig, ax, =  errorbars(x, y, yerr;
-	    whiskerwidth = 10, linewidth = 1.0, color=:black,
-	    figure = (;size = (600,400)),
-		axis = (; title = latexstring("σ_{noise} = {$(noise_var)}"), xlabel = L"x")
-	)
-	
-	scatter!(x, y; )
-	lines!(x_dense, sin.(x_dense); linewidth = 0.5, linestyle = :dashdot, label=L"\sin(x)")
-	axislegend(ax, position=:rb,)
-	colgap!(fig.layout, 5)
-	fig
-end
-
-# ╔═╡ 2853c9f6-3c04-4dc6-9fa0-4375013266f0
-begin
-	local fig, ax, =  errorbars(x, y, yerr;
-	    whiskerwidth = 10, linewidth = 1.0, color=:black,
-	    figure = (;size = (600,400)),
-		axis = (; title = latexstring("σ_{noise} = {$(noise_var)}"), xlabel = L"x")
-	)
-	
-	scatter!(x_train, y_train; label="Train")
-	scatter!(x_test, y_test; xlabel="x", ylabel="y", label="Test")
-		
-	lines!(x_dense, sin.(x_dense); linewidth = 0.5, linestyle = :dashdot, label=L"\sin(x)")
-	axislegend(ax, position=:rb,)
-	colgap!(fig.layout, 5)
-	fig
-end
-
-# ╔═╡ fdc37a5c-36fc-4252-b47e-274132622643
-md"""
-### Kernel functions
-"""
-
-# ╔═╡ 0e533afa-1e3a-414f-b3b7-1c632f9f9e87
-md"""
-
-**Linear Kernel**:
-represents a linear relationship between data points. 
-```math
-k(x_i, x_j) = x_i \cdot x_j
-```
-
-**Squared Exponential Kernel**:
-the similarity between data points based on their distance.
-
-```math
-k(x_i, x_j) = \exp \left( -\frac{{d(x_i, x_j)}}{{2l^2}} \right)
-```
-where $l$ is a hyperparameter for the length scale, and $d$ by defalt is the Euclidean metric $d = \lVert x_i - x_j \rVert_2$.
-
-**Cosine Kernel**:
-represents a linear relationship between data points. 
-```math
-k(x_i, x_j) = \cos(\pi d(x_i, x_j)),
-```
-where by default, $d$ is the Euclidean metric.
-
-**Matérn $\frac{3}{2}$ Kernel**:
-
-```math
-k(x_i, x_j) = \left(1 + \frac{{\sqrt{3} \lVert x_i - x_j \rVert}}{l}\right) \exp \left(-\frac{{\sqrt{3} \lVert x_i - x_j \rVert}}{l}\right)
-```
-
-**Polynomial Kernel**:
-computes the similarity between two vectors in feature space by taking the dot product in a certain power $d$.
-
-```math
-k(x_i, x_j) = (x_i \cdot x_j + c)^d
-```
-where $c$ is an optional constant.
-
-**Periodic Kernel**:
-
-$k_{\text{per}}(x, x') = \sigma^2 \exp\left(-\frac{2\sin^2\left(\frac{\pi}{p}(x - x')\right)}{l^2}\right)$
-
-where $\sigma^2$ is the signal variance, $p$ is a period, and $l$ is a lengthscale parameter.
-
-
-
-"""
-
-# ╔═╡ 35e58fa8-4f53-4d42-9ba5-54b93198546a
-function triangular_wave(t, A=1, T=2)
-    return A * (1.0 - (2.0 / T) * abs(t - T / 2.0))
-end
-
-# ╔═╡ 52e299ab-5ad3-4bed-b058-34512150cfac
-begin
-	k1 = LinearKernel(; c=0.5) 
-	K1 = kernelmatrix(k1, x)
-	
-	k2 = SqExponentialKernel()
-	K2 = kernelmatrix(k2, x)
-	
-	k3 = CosineKernel()
-	K3 = kernelmatrix(k3, x)
-	
-	k4 = Matern52Kernel()
-	K4 = kernelmatrix(k4, x)
-	
-	k5 = PolynomialKernel(; c=2.0, degree=2) 
-	K5 = kernelmatrix(k5, x)
-
-	# Takes sin(.) of the input parameters
-	k6 = Matern12Kernel() ∘ FunctionTransform(sin)
-	K6 = kernelmatrix(k6, x)
-
-	k7 = PeriodicKernel()
-	K7 = kernelmatrix(k7, x)
-
-	k8 = Matern12Kernel()
-	K8 = kernelmatrix(k8, x)
-
-	kernel_list = [k1, k2, k3, k4, k5, k6, k7, k8]
-	K_mat = [K1, K2, K3, K4, K5, K6, K7, K8]
-	titles=["Linear" "Squared-Exponential" "CosineKernel" "Matern 52" "Polynomial, degree=2" "Matern12Kernel() ∘ FunctionTransform(sin)" "PeriodicKernel" "Matern 12"];
-	
-end
-
-# ╔═╡ e508e01f-06ef-4b15-abc9-6aed1fc5c407
-# ╠═╡ disabled = true
-#=╠═╡
-begin
-	f = GP(Matern12Kernel())
-	K7 == cov(f(triangular_wave.(x)))
-end
-  ╠═╡ =#
-
-# ╔═╡ 90171762-407b-4841-92ff-8bfa133e56c1
-begin
-	local fig = Figure(size = (800, 1200))
-
-	for i in 1:4, j in 1:2
-
-		Axis(fig[i, j + 1 - (j % 2)];
-				xlabel = "x", ylabel = "y", title = titles[2*(i-1) + j], 
-				width = 200, height = 200
-		) 
-		
-		hmap = heatmap!(x, x, K_mat[2*(i-1) + j]; )	
-		
-		Colorbar(fig[i, (j + 1 - (j % 2) + 1)], hmap; 
-			width = 15, 
-			ticksize = 15, 
-			tickalign = 1
-		)
-	end
-	
-	colsize!(fig.layout, 1, Aspect(1, 1.0))
-	colgap!(fig.layout, 7)
-	fig
-end
-
-# ╔═╡ a64a048e-a723-4e63-9e39-a163923d354a
-md"""
-### Varying the hyperparameters of the kernel
-The square-exponential kernel is defined as follows:
-```math
-k(x_i, x_j) = \sigma_f^2 exp(-\frac{1}{2l^2} (x_i - x_j)^2) + \sigma_{noise}\delta_{ij}
-```
-where $l$ is the length-scale parameter, $\sigma_f$ is the signal variance and $\sigma_{noise}$ is the noise variance.
-
-"""
-
-# ╔═╡ 34824bb8-ccea-4a7a-9cc3-ca428fe73221
-md"""
-
-###### How to set the length-scale?
-
-The transforms such as `ScaleTransform` and `ARDTransform` multiply the input by a scale factor, corresponding to the inverse of the length-scale.
-"""
-
-# ╔═╡ 6e5cc202-5c67-4fe0-afff-59884736f47d
-# Lengthscale of 0.5
-SqExponentialKernel() ∘ ScaleTransform(2.0)
-
-# ╔═╡ 4cf6001d-6bad-4ea9-9ed5-b93cf75a9ab6
-# Alternative way
-with_lengthscale(SqExponentialKernel(), 0.5)
-
-# ╔═╡ c7f00309-dd57-46ea-9d2d-47630633a77e
-md"""
-Vector-valued lengthscales for multiple-dimensional inputs
-"""
-
-# ╔═╡ b986787f-42f6-43d8-ac30-716bc166dcbe
-begin
-	length_scales = [1.0, 2.0]
-	with_lengthscale(SqExponentialKernel(), length_scales)
-end
-
-# ╔═╡ b52babb5-5108-461e-8668-53768ccc9d48
-SqExponentialKernel() ∘ ARDTransform(1 ./ length_scales)
-
-# ╔═╡ c1b4b07b-7b0e-4b25-87a5-120c452127aa
-md"""
-###### How to set the kernel variance?
-"""
-
-# ╔═╡ e4a7f0aa-fb4f-4d75-bb4f-1383d66b3d6c
-3.0 * SqExponentialKernel()
-
-# ╔═╡ 12a06a96-49a1-4b3a-86d5-d684eb769e55
-md"""
-Choose the kernel: $\quad$ $(@bind k_index Select([1 =>"Linear", 
-			2 =>"Squared-Exponential", 3 => "Cosine", 
-			4 => "Matern 52", 5 => "Polynomial, degree=2", 
-			6 => "Matern12 ∘ FunctionTransform(sin)", 7 => "Periodic", 
-			8 => "Neural Network"]))
-"""
-
-# ╔═╡ ecc8c828-cef7-46ca-b252-8458104a0b21
-md"""
-Length-scale = $(@bind l_scale PlutoUI.Slider(0:0.1:7; default=1, show_value=true))
-
-Variance = $(@bind sigma_f PlutoUI.Slider(0:0.1:1; default=1, show_value=true))
-
-"""
-
-# ╔═╡ ace3edf4-8f41-40c5-9dc6-15acf8314862
-begin
-	f_post_ls = []
-	k_ls = []
-	for kernel in kernel_list
-		kernel_ls = sigma_f^2 * with_lengthscale(kernel, l_scale)
-		f = GP(kernel_ls)
-		fx = f(x_train, noise_var)
-		f_post = posterior(fx, y_train)
-
-		push!(k_ls, kernel_ls)
-		push!(f_post_ls, f_post)
-	end
-end
-
-# ╔═╡ 328451f4-f1e0-41f4-b8f0-3611eda5f332
-begin
-	local fig = Figure(size = (1000, 500))
-
-	Axis(fig[1, 1]; 
-			xlabel = "x", ylabel = "y", title = titles[k_index], 
-			width = 250, height = 250
-	) 
-	
-	hmap = heatmap!(x, x, kernelmatrix(k_ls[k_index], x); colormap = :Spectral_11)	
-	
-	Colorbar(fig[1, 2], hmap; 
-		width = 15, 
-		ticksize = 15, 
-		tickalign = 1
-	)
-
-	ax13 = Axis(fig[1, 3]; 
-			xlabel = "x", ylabel = "y", title = titles[k_index], 
-			width = 250, height = 250
-	) 
-	xlims!(ax13, 0, 15)
-	ylims!(ax13, -2, 2)
-
-	plt1 = plot!(fig[1, 3], 0:01:15, f_post_ls[k_index]; 
-		bandscale=2, color=Cycled(2), 
-	)
-	gpsample!(fig[1, 3], 0:0.1:15, f_post_ls[k_index]; samples=2, color=Cycled(3))
-
-
-	sca1 = scatter!(
-		fig[1, 3],
-	    x_train,
-	    y_train;
-	 #    xlim=(0, 11.6),
-		# ylim=(-1.5, 1.5),
-	    xlabel="x",
-	    ylabel="y",
-	    title="posterior (default parameters)",
-	    label="Train Data",
-	)
-	sca2 = scatter!(fig[1, 3], x_test, y_test; label="Test Data")
-	Legend(fig[1, 4], [plt1, sca1, sca2], ["Posterior", "Train Data", "Test Data"])
-	
-	colsize!(fig.layout, 1, Aspect(1, 1.0))
-	colgap!(fig.layout, 7)
-	fig
-end
-
-# ╔═╡ 075d1ddf-4f68-45ed-b46b-dfe78bec4e6b
-md"""
-###### How to compose the kernels?
-"""
-
-# ╔═╡ 62f1f4af-4559-45d0-a3c1-c5bca7af9add
-begin
-	kernel1 = SqExponentialKernel()
-	kernel2 = with_lengthscale(CosineKernel(), 3.) 
-end
-
-# ╔═╡ de51f393-127c-416a-99d6-6da32f5f559f
-# Kernel sum
-k_sum = kernel1 + kernel2 
-
-# ╔═╡ 7a933140-b648-44d2-be69-a6c4b9951841
-# Kernel product
-k_prod = k1 * k2 
-
-# ╔═╡ 0198dab8-b902-4798-9738-5d465608ece4
-begin
-	local fig = Figure(size = (800, 600))
-	ks = [k1, k2, k_sum, k_prod]
-	ts = ["SqExponential", "Cosine, l = 3", "SqExponential + Cosine", "SqExponential * Cosine"]
-	for i in 1:2, j in 1:2
-		Axis(fig[i , j + 1 - (j % 2)];
-			xlabel = "x", ylabel = "y", title = ts[2*(i-1) + j], 
-			width = 200, height = 200
-		) 
-		
-		hmap1 = heatmap!(x, x, kernelmatrix(ks[2*(i-1) + j], x); colormap = :Spectral_11,)	
-		
-		Colorbar(fig[i, j + 1 - (j % 2) + 1], hmap1; 
-			width = 15, 
-			ticksize = 15, 
-			tickalign = 1
-		)
-
-	end
-
-	colsize!(fig.layout, 1, Aspect(1, 1.0))
-	colgap!(fig.layout, 7)
-	fig
-end
-
-# ╔═╡ 9b6e1b3a-aa0d-4a22-9296-f050e7115c1b
-begin
-	p_fx_list = []
-	for kernel in kernel_list
-		println("Kernel: ", kernel)
-
-		f = GP(kernel)
-		
-		# create a finite-dimensional projection at the inputs of the training dataset observed under Gaussian noise
-		fx = f(x_train, noise_var)
-
-		# compute the log-likelihood of the outputs of the training dataset
-		println("The log-likelihood of the train outputs: ", logpdf(fx, y_train))
-		
-		# compute the posterior Gaussian process given the training data
-		p_fx = posterior(fx, y_train)
-		push!(p_fx_list, p_fx)
-		
-		println("The log-likelihood of the test outputs: ", logpdf(p_fx(x_test, noise_var), y_test))
-		println("")
-		
-	end
-end
-
-# ╔═╡ 275a28ff-95e6-44c8-82ad-83a7bb808141
-md"""
-### Optimizing kernel parameters
-"""
-
-# ╔═╡ 2d09aa0a-7246-4297-be81-f0e8e82de791
-let
-	figure = Figure(size= (400,400))
-	ax = Axis(figure)
-
-	xlim!(0,10)
-	plot!(ax, x, softplus.(x))
-	figure
-end
-
-# ╔═╡ 1b627a14-6c74-49ad-b157-097d33b768fd
-function loss_function(x, y, kernel_function)
-    function negativelogmarginallikelihood(params)
-		# We ensure that the kernel parameters are positive with the softplus function
-        k = softplus(params[1]) * 
-			(kernel_function ∘ ScaleTransform(softplus(params[2])))
-		
-        f = GP(k)
-        fx = f(x, noise_var)
-        return -logpdf(fx, y)
-    end
-    return negativelogmarginallikelihood
-end
-
-# ╔═╡ 1bbec4f4-1e50-424d-8f9b-d0636b1b8eee
-begin
-	begin
-		kernels = [k3, k6, k7]
-		kernels_names = [ "Cosine kernel", "Matern12Kernel() ∘ FunctionTransform(sin)", "Periodic kernel"]
-	end
-end
-
-# ╔═╡ 6a21d065-78b7-4a68-9140-5f308a5bc152
-md"""
-**Initial guess** should not be too far from the solution. Random initialization tends to give the wrong solution.
-"""
-
-# ╔═╡ 0cac3467-2a00-4f06-b195-f21a6df25678
-md"""
-Choose the kernel: $\quad$ $(@bind k_idx Select([1 => "Cosine", 
-			2 => "Matern12 ∘ FunctionTransform(sin)", 3 => "Periodic"]))
-"""
-
-# ╔═╡ 01fe3e03-593d-4e16-9a3d-1f22346551c5
-begin
-	# How we initialize the kernel parameters is important!
-	θ0 = randn(2)
-	opt = Optim.optimize(loss_function(x_train, y_train, kernels[k_idx]), θ0, LBFGS())
-	
-end
-
-# ╔═╡ 16a81cba-4626-4e66-8177-be3efe37b892
-opt.minimizer
-
-# ╔═╡ 78d2ad94-c0fc-4840-9244-536a3c5253f2
-kernels[k_idx]
-
-# ╔═╡ e146328f-aa0e-4efd-947a-358530503716
-begin
-	opt_kernel =
-	    softplus(opt.minimizer[1]) *
-	    (kernels[k_idx] ∘ ScaleTransform(softplus(opt.minimizer[2])))
-	
-	opt_f = GP(opt_kernel)
-	opt_fx = opt_f(x_train, noise_var)
-	opt_p_fx = posterior(opt_fx, y_train)
-end
-
-# ╔═╡ 9820c1ad-a132-44fc-a1b9-0bf4b19fa836
--logpdf(opt_p_fx(x_test, noise_var), y_test)
-
-# ╔═╡ 3fad4395-fca4-4562-b0e9-278b156e646d
-md"""
-number of samples: $(@bind show_inx PlutoUI.Slider(0:1:15; default=0, show_value=true))
-"""
-
-# ╔═╡ c2146c58-732b-48a9-b8b2-4b88e5d22af7
-begin
-	local fig = Figure(size = (600, 450))
-	local ax = Axis(fig[1, 1], xlabel = "x", ylabel = "y", title="Posterior distribution",)
-	# kernel_index = findall(x->x==kernel_name, titles)
-
-	plot!(0:0.01:15, opt_p_fx; 
-		bandscale=2, color=Cycled(2), 
-		label="Optimized parameters"
-	)
-	gpsample!(0:0.01:15, opt_p_fx; samples=show_inx, color=Cycled(3))
-
-	lines!(x_dense, sin.(x_dense); linewidth = 0.5, linestyle = :dashdot, label=L"\sin(x)")
-
-	scatter!(
-	    x_train,
-	    y_train;
-	    xlim=(0, 16),
-		ylim=(-1.8, 1.8),
-	    xlabel="x",
-	    ylabel="y",
-	    title="posterior (default parameters)",
-	    label="Train Data",
-	)
-	scatter!(x_test, y_test; label="Test Data")
-	axislegend(ax, position=:rt,)
-	fig
-end
-
-# ╔═╡ ee880cec-4aae-46a3-8eb8-41ae68e82fe5
-#=╠═╡
-sum((μ_opt .- sin.(x_test)).^2)
-  ╠═╡ =#
-
-# ╔═╡ 5a8c6f6e-bb54-48d7-824e-bde4d782f2ae
-# ╠═╡ disabled = true
-#=╠═╡
-# evaluates the Gaussian process at the test points, returning a mean vector
-μ_opt = mean(opt_p_fx(x_test, noise_var))
-  ╠═╡ =#
-
-# ╔═╡ efdc4eb8-39ce-4b5a-9c07-91dbaaf2378d
-begin
-	scene = plot(0:0.01:15, opt_p_fx; bandscale=3, color=Cycled(2))
-	samples = gpsample!(0:0.01:15, opt_p_fx; samples=3, color=Cycled(3))
-	scatter!(x, y)
-
-	
-	
-	record(scene, "posterior_animation.mp4", 0:0.01:4) do x
-	    samples.orbit[] = x
-	end
-end
-
-# ╔═╡ 4f4f5bb5-91bc-4a98-8885-cde97eb93153
-md"""
-### Example with silicon data
-"""
-
-# ╔═╡ ac444626-97bd-40bc-8860-865f594df716
-begin
-	# Silicon lattice constant in Bohr
-	a_const = 10.26 
-	a_list = (a_const - 0.06*a_const):0.05:(a_const + 0.06*a_const)
-end
-
-# ╔═╡ b9324bb7-7293-44d1-8864-b9324327dba3
-energy = [  -7.91342
-			-7.91596
-			-7.91818
-			-7.92015
-			-7.92182
-			-7.92327
-			-7.92445
-			-7.92539
-			-7.92611
-			-7.92662
-			-7.92692
-			-7.92703
-			-7.92694
-			-7.92668
-			-7.92624
-			-7.92563
-			-7.92487
-			-7.92397
-			-7.9229
-			-7.92174
-			-7.92042
-			-7.919
-			-7.91746
-			-7.9158
-			-7.91405]
-
-# ╔═╡ 7fe48e59-9885-4242-8cd0-d9873f14c42a
-a_list
-
-# ╔═╡ ac58cb00-5db3-433a-a422-2e9a57220bc0
-energy
-
-# ╔═╡ 8c2e97a6-884a-406e-96de-222053b4b3e8
-begin
-	a_len = length(a_list)
-	part = floor(Int, 0.34 * a_len)
-end
-
-# ╔═╡ 4e98e8c5-c373-4b16-bff4-2c08cc8bb296
-a_len
-
-# ╔═╡ f1051326-becb-42b9-80b3-5bb7944018de
-min_index = argmin(energy)
-
-# ╔═╡ c82914c9-de5d-445c-b96c-4467ef6b2d04
-begin
-	idx_test = min_index #(min_index - 1):(min_index + 1)
-	a_test = [a_list[idx_test]]
-	e_test = [energy[idx_test]]
-	a_test, e_test
-end
-
-# ╔═╡ aabdb6ea-bb55-440e-ac03-fac0a0b00e8c
-md"""
-Length-scale = $(@bind length_scale PlutoUI.Slider(0:0.1:7; default=1, show_value=true))
-
-Variance = $(@bind sigma PlutoUI.Slider(0:0.1:1; default=1, show_value=true))
-
-"""
-
-# ╔═╡ 1c789b1c-783c-4d7c-8d74-85ccd25e41d5
-softplus(0.)
-
-# ╔═╡ e31356b8-1bf0-455a-af50-05903aff793c
-# softplus(opt_params.minimizer[2])
-
-# ╔═╡ 3b3d22ce-dd65-4f37-abbd-9401598fd248
-md"""
-Number of observations: $(@bind n_points PlutoUI.Slider(1:1:8; default=5, show_value=true))
-
-Observation noise: $(@bind e_noise PlutoUI.Slider(1.0e-8:1.0e-8:1.0e-6; default=1.0e-8, show_value=true))
-
-
-"""
-
-# ╔═╡ f6bbb321-6280-449a-8101-2a6f7bd82dfd
-begin
-	# error bars as doubled noise variance
-	# e_noise = 1.0e-8
-	e_energy = 2 * e_noise
-end
-
-# ╔═╡ 6be99274-ba46-4ab6-a228-401680e49059
-begin
-	local fig, ax, =  errorbars(a_list, energy, e_energy;
-	    whiskerwidth = 10, linewidth = 1.0, color=:black,
-	    figure = (;size = (600,400)),
-		axis = (; title = latexstring("σ_{noise} = {$(e_noise)}"), 
-				  xlabel = L"x"),
-	)
-
-	xlims!(ax, 9.5, 11)
-	ylims!(ax, -7.93, -7.91)
-	
-	scatter!(a_list, energy; )
-	fig
-end
-
-# ╔═╡ e94a84f8-7ac6-4efd-95a9-9b0ba5d6e09d
-begin
-	# n_points = 5
-	idx1 = sample(1:part, n_points, replace=false)
-	idx2 = sample((2*part + 1):a_len, n_points, replace=false)
-	idx1, idx2
-end
-
-# ╔═╡ 97adbb35-7e50-40a0-b875-34ab1d442f89
-begin
-	a_train = vcat(a_list[idx1], a_list[idx2])
-	e_train = vcat(energy[idx1], energy[idx2])
-	a_train, e_train
-end
-
-# ╔═╡ 95dc4147-beef-4210-9bea-6ac2882613a8
-begin
-	local fig = Figure(size = (600, 400))
-	local ax = Axis(fig, xlabel = L"a", ylabel = L"E", 
-	          title = latexstring("σ_{noise} = $(e_noise)"))
-	
-	scatter!(ax, a_train, e_train, label="Train")
-	scatter!(ax, a_test, e_test, label="Test")
-
-	xlims!(ax, 9.5, 11)
-	ylims!(ax, -7.93, -7.91)
-
-	axislegend(ax, position=:rb,)
-	
-	fig[1, 1] = ax
-	fig
-	
-end
-
-# ╔═╡ d9e830e0-271d-4d9d-9dea-dfc7e1e63c43
-e_noise
-
-# ╔═╡ 6ba5dec9-b297-46ab-9701-0c726d298373
-begin
-	kernel = SqExponentialKernel()
-	local f = GP(kernel)
-	fx = f(a_train, e_noise) # e_noise
-	f_post = posterior(fx, e_train)
-end
-
-# ╔═╡ 013b6f85-470c-4cea-a897-692a23097226
-kernel
-
-# ╔═╡ 0f6c7b05-7f28-4faf-956f-bf6f0012a06d
--logpdf(f_post(a_test, e_noise), e_test)
-
-# ╔═╡ 72cf7228-db3c-4c79-b47b-9317b8602ba2
-begin
-	local fig = Figure(size = (600, 400))
-	local ax = Axis(fig, xlabel = L"a", ylabel = L"E", 
-	          title = latexstring("σ_{noise} = $(e_noise)"))
-	
-	scatter!(ax, a_train, e_train, label="Train")
-	scatter!(ax, a_test, e_test, label="Test")
-
-	plot!(ax, 9.5:0.01:11, f_post; 
-		bandscale=2, color=Cycled(2), 
-	)
-	gpsample!(ax, 9.5:0.01:11, f_post; samples=2, color=Cycled(3))
-
-	xlims!(ax, 9.5, 11)
-	ylims!(ax, -7.93, -7.91)
-
-	axislegend(ax, position=:rb,)
-	
-	fig[1, 1] = ax
-	fig
-	
-end
-
-# ╔═╡ b0639cbd-0eba-4a60-a914-acb245a7111b
-begin
-	k_params 	= sigma^2 * with_lengthscale(kernel, length_scale)
-	local f 	= GP(k_params)
-	local fx 	= f(a_train, e_noise)
-	posterior_d = posterior(fx, e_train)
-end
-
-# ╔═╡ 1e4861b4-fc64-4909-92e0-4fe9f627685d
-begin
-	local fig = Figure(size = (600, 400))
-	local ax = Axis(fig, xlabel = L"a", ylabel = L"E", 
-	          title = latexstring("σ_{noise} = $(e_noise)"))
-	
-	scatter!(ax, a_train, e_train, label="Train")
-	scatter!(ax, a_test, e_test, label="Test")
-
-	plot!(ax, 9.5:0.01:11, posterior_d; 
-		bandscale=2, color=Cycled(2), 
-	)
-	gpsample!(ax, 9.5:0.01:11, posterior_d; samples=2, color=Cycled(3))
-
-	xlims!(ax, 9.5, 11)
-	ylims!(ax, -7.93, -7.91)
-
-	axislegend(ax, position=:rb,)
-	
-	fig[1, 1] = ax
-	fig
-	
-end
-
-# ╔═╡ b5b47321-543d-447d-b146-bcbc5f0a4455
-function loss(x, y, kernel_function)
-    function negativelogmarginallikelihood(params)
-		# We ensure that the kernel parameters are positive with the softplus function
-        k = (kernel_function ∘ ScaleTransform(softplus(params[1])))
-		
-        f = GP(k)
-        fx = f(x, e_noise)
-        return -logpdf(fx, y)
-    end
-    return negativelogmarginallikelihood
-end
-
-# ╔═╡ ddfb874c-35d0-4ead-93ad-3f00a50bb061
-begin
-	# We randomly initialize the kernel parameters and minimize the negative log marginal likelihood with the LBFGS algorithm
-	θ_init = randn(1) #[1.6, 0.5]
-	opt_params = Optim.optimize(loss(a_train, e_train, kernel), θ_init, LBFGS())
-	
-end
-
-# ╔═╡ b1cff0b3-aabb-4c9e-9386-baf5534fcc87
-softplus(opt_params.minimizer[1])
-
-# ╔═╡ 1751dba5-3b08-4727-85f9-3ed00dc4bf24
-begin
-	# softplus(opt_params.minimizer[1]) *
-	opt_SEkernel = (kernel ∘ ScaleTransform(softplus(opt_params.minimizer[1])))
-	
-	local opt_g = GP(opt_SEkernel)
-	local opt_gx = opt_g(a_train, e_noise)
-	opt_posterior = posterior(opt_gx, e_train)
-	
-end
-
-# ╔═╡ e6c13ea6-018f-493a-beff-ca5a138f987f
-mean_opt = mean(opt_posterior(a_test, e_noise))
-
-# ╔═╡ 092fce0c-36a4-436f-8f35-bc494afb1cb4
-sum((mean_opt.- e_test).^2)
-
-# ╔═╡ 1cae3cb2-91d4-4543-b144-19b415007d53
--logpdf(opt_posterior(a_test, e_noise), e_test)
-
-# ╔═╡ 93993ec4-2120-4926-8a28-7e12ac93bfa9
-begin
-	local fig = Figure(size = (600, 400))
-	local ax = Axis(fig, xlabel = L"a", ylabel = L"E", 
-	          title = latexstring("σ_{noise} = $(e_noise)"))
-	
-	scatter!(ax, a_train, e_train, label="Train")
-	scatter!(ax, a_test, e_test, label="Test")
-
-	plot!(ax, 9.5:0.01:11, opt_posterior; 
-		bandscale=2, color=Cycled(2), label="Posterior"
-	)
-	gpsample!(ax, 9.5:0.01:11, opt_posterior; samples=2, color=Cycled(3))
-
-	xlims!(ax, 9.5, 11)
-	ylims!(ax, -7.93, -7.91)
-
-	axislegend(ax, position=:rb,)
-	
-	fig[1, 1] = ax
-	fig
-	
-end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -892,7 +57,6 @@ CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 FillArrays = "1a297f60-69ca-5386-bcde-b61e274b549b"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
-Optim = "429524aa-4258-5aef-a3af-852621145aeb"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 StatsFuns = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
@@ -901,11 +65,10 @@ StatsFuns = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
 AbstractGPs = "~0.5.21"
 AbstractGPsMakie = "~0.2.7"
 CairoMakie = "~0.11.10"
-Distributions = "~0.25.107"
-FillArrays = "~1.10.0"
+Distributions = "~0.25.108"
+FillArrays = "~1.10.2"
 LaTeXStrings = "~1.3.1"
-Optim = "~1.9.4"
-PlutoUI = "~0.7.58"
+PlutoUI = "~0.7.59"
 StatsFuns = "~1.3.1"
 """
 
@@ -915,7 +78,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.9.3"
 manifest_format = "2.0"
-project_hash = "12bf931d6f73047bcf0322e812116d14dc8d34bd"
+project_hash = "fe2a4079af9d25dde44c628a1316c6b04a761d13"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -947,9 +110,9 @@ version = "0.3.0"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
-git-tree-sha1 = "297b6b41b66ac7cbbebb4a740844310db9fd7b8c"
+git-tree-sha1 = "6e1d2a35f2f90a4bc7c2ed98079b2ba09c35b83a"
 uuid = "6e696c72-6542-2067-7265-42206c756150"
-version = "1.3.1"
+version = "1.3.2"
 
 [[deps.AbstractTrees]]
 git-tree-sha1 = "2d9c9a55f9c93e8887ad391fbae72f8ef55e1177"
@@ -965,6 +128,12 @@ weakdeps = ["StaticArrays"]
 
     [deps.Adapt.extensions]
     AdaptStaticArraysExt = "StaticArrays"
+
+[[deps.AliasTables]]
+deps = ["Random"]
+git-tree-sha1 = "07591db28451b3e45f4c0088a2d5e986ae5aa92d"
+uuid = "66dad0bd-aa9a-41b7-9441-69ab47430ed8"
+version = "1.1.1"
 
 [[deps.Animations]]
 deps = ["Colors"]
@@ -1217,10 +386,10 @@ deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[deps.Distributions]]
-deps = ["FillArrays", "LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SpecialFunctions", "Statistics", "StatsAPI", "StatsBase", "StatsFuns"]
-git-tree-sha1 = "7c302d7a5fec5214eb8a5a4c466dcf7a51fcf169"
+deps = ["AliasTables", "FillArrays", "LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SpecialFunctions", "Statistics", "StatsAPI", "StatsBase", "StatsFuns"]
+git-tree-sha1 = "22c595ca4146c07b16bcf9c8bea86f731f7109d2"
 uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
-version = "0.25.107"
+version = "0.25.108"
 
     [deps.Distributions.extensions]
     DistributionsChainRulesCoreExt = "ChainRulesCore"
@@ -1268,9 +437,9 @@ version = "2.2.8"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "4558ab818dcceaab612d1bb8c19cee87eda2b83c"
+git-tree-sha1 = "1c6317308b9dc757616f0b5cb379db10494443a7"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-version = "2.5.0+0"
+version = "2.6.2+0"
 
 [[deps.Extents]]
 git-tree-sha1 = "2140cd04483da90b2da7f99b2add0750504fc39c"
@@ -1318,9 +487,9 @@ uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
 [[deps.FillArrays]]
 deps = ["LinearAlgebra"]
-git-tree-sha1 = "bfe82a708416cf00b73a3198db0859c82f741558"
+git-tree-sha1 = "57f08d5665e76397e96b168f9acc12ab17c84a68"
 uuid = "1a297f60-69ca-5386-bcde-b61e274b549b"
-version = "1.10.0"
+version = "1.10.2"
 weakdeps = ["PDMats", "SparseArrays", "Statistics"]
 
     [deps.FillArrays.extensions]
@@ -1413,9 +582,9 @@ version = "1.3.4"
 
 [[deps.GeometryBasics]]
 deps = ["EarCut_jll", "Extents", "GeoInterface", "IterTools", "LinearAlgebra", "StaticArrays", "StructArrays", "Tables"]
-git-tree-sha1 = "5694b56ccf9d15addedc35e9a4ba9c317721b788"
+git-tree-sha1 = "b62f2b2d76cee0d61a2ef2b3118cd2a3215d3134"
 uuid = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
-version = "0.4.10"
+version = "0.4.11"
 
 [[deps.Gettext_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Libiconv_jll", "Pkg", "XML2_jll"]
@@ -1514,9 +683,9 @@ version = "0.9.9"
 
 [[deps.Imath_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "3d09a9f60edf77f8a4d99f9e015e8fbf9989605d"
+git-tree-sha1 = "0936ba688c6d201805a83da835b55c61a180db52"
 uuid = "905a6f67-0a94-5f89-b386-d35d92009cd1"
-version = "3.1.7+0"
+version = "3.1.11+0"
 
 [[deps.IndirectArrays]]
 git-tree-sha1 = "012e604e1c7458645cb8b436f8fba789a51b257f"
@@ -1535,9 +704,9 @@ version = "0.1.2"
 
 [[deps.IntelOpenMP_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "5fdf2fe6724d8caabf43b557b84ce53f3b7e2f6b"
+git-tree-sha1 = "be50fe8df3acbffa0274a744f1a99d29c45a57f4"
 uuid = "1d5cc7b8-4909-519e-a0f8-d0f5ad9712d0"
-version = "2024.0.2+0"
+version = "2024.1.0+0"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
@@ -1625,9 +794,9 @@ version = "3.0.2+0"
 
 [[deps.KernelDensity]]
 deps = ["Distributions", "DocStringExtensions", "FFTW", "Interpolations", "StatsBase"]
-git-tree-sha1 = "fee018a29b60733876eb557804b5b109dd3dd8a7"
+git-tree-sha1 = "7d703202e65efa1369de1279c162b915e245eed1"
 uuid = "5ab0869b-81aa-558d-bb23-cbf5423bbe9b"
-version = "0.6.8"
+version = "0.6.9"
 
 [[deps.KernelFunctions]]
 deps = ["ChainRulesCore", "Compat", "CompositionsBase", "Distances", "FillArrays", "Functors", "IrrationalConstants", "LinearAlgebra", "LogExpFunctions", "Random", "Requires", "SpecialFunctions", "Statistics", "StatsBase", "TensorCore", "Test", "ZygoteRules"]
@@ -1696,10 +865,10 @@ uuid = "e9f186c6-92d2-5b65-8a66-fee21dc1b490"
 version = "3.2.2+1"
 
 [[deps.Libgcrypt_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgpg_error_jll", "Pkg"]
-git-tree-sha1 = "64613c82a59c120435c067c2b809fc61cf5166ae"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgpg_error_jll"]
+git-tree-sha1 = "9fd170c4bbfd8b935fdc5f8b7aa33532c991a673"
 uuid = "d4300ac3-e22c-5743-9152-c294e39db1e4"
-version = "1.8.7+0"
+version = "1.8.11+0"
 
 [[deps.Libgpg_error_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1715,15 +884,15 @@ version = "1.17.0+0"
 
 [[deps.Libmount_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "dae976433497a2f841baadea93d27e68f1a12a97"
+git-tree-sha1 = "4b683b19157282f50bfd5dcaa2efe5295814ea22"
 uuid = "4b2f31a3-9ecc-558c-b454-b3730dcb73e9"
-version = "2.39.3+0"
+version = "2.40.0+0"
 
 [[deps.Libuuid_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "0a04a1318df1bf510beb2562cf90fb0c386f58c4"
+git-tree-sha1 = "27fd5cc10be85658cacfe11bb81bee216af13eda"
 uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
-version = "2.39.3+1"
+version = "2.40.0+0"
 
 [[deps.LightXML]]
 deps = ["Libdl", "XML2_jll"]
@@ -1772,10 +941,10 @@ uuid = "6c6e2e6c-3030-632d-7369-2d6c69616d65"
 version = "0.1.4"
 
 [[deps.MKL_jll]]
-deps = ["Artifacts", "IntelOpenMP_jll", "JLLWrappers", "LazyArtifacts", "Libdl"]
-git-tree-sha1 = "72dc3cf284559eb8f53aa593fe62cb33f83ed0c0"
+deps = ["Artifacts", "IntelOpenMP_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "oneTBB_jll"]
+git-tree-sha1 = "80b2833b56d466b3858d565adcd16a4a05f2089b"
 uuid = "856f044c-d86e-5d09-b602-aeab76dc8ba7"
-version = "2024.0.0+0"
+version = "2024.1.0+0"
 
 [[deps.MacroTools]]
 deps = ["Markdown", "Random"]
@@ -1899,9 +1068,9 @@ version = "0.3.2"
 
 [[deps.OpenEXR_jll]]
 deps = ["Artifacts", "Imath_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "a4ca623df1ae99d09bc9868b008262d0c0ac1e4f"
+git-tree-sha1 = "8292dd5c8a38257111ada2174000a33745b06d4e"
 uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
-version = "3.1.4+0"
+version = "3.2.4+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -1974,9 +1143,9 @@ version = "0.5.12"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "526f5a03792669e4187e584e8ec9d534248ca765"
+git-tree-sha1 = "cb5a2ab6763464ae0f19c86c56c63d4a2b0f5bda"
 uuid = "36c8627f-9965-5494-a995-c6b170f724f3"
-version = "1.52.1+0"
+version = "1.52.2+0"
 
 [[deps.Parameters]]
 deps = ["OrderedCollections", "UnPack"]
@@ -1992,9 +1161,9 @@ version = "2.8.1"
 
 [[deps.Permutations]]
 deps = ["Combinatorics", "LinearAlgebra", "Random"]
-git-tree-sha1 = "eb3f9df2457819bf0a9019bd93cc451697a0751e"
+git-tree-sha1 = "4ca430561cf37c75964c8478eddae2d79e96ca9b"
 uuid = "2ae35dd2-176d-5d53-8349-f30d82d94d4f"
-version = "0.4.20"
+version = "0.4.21"
 
 [[deps.Pixman_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "LLVMOpenMP_jll", "Libdl"]
@@ -2021,9 +1190,9 @@ version = "1.4.1"
 
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
-git-tree-sha1 = "71a22244e352aa8c5f0f2adde4150f62368a3f2e"
+git-tree-sha1 = "ab55ee1510ad2af0ff674dbcced5e94921f867a9"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-version = "0.7.58"
+version = "0.7.59"
 
 [[deps.PolygonOps]]
 git-tree-sha1 = "77b3d3605fc1cd0b42d95eba87dfcd2bf67d5ff6"
@@ -2032,9 +1201,9 @@ version = "0.1.2"
 
 [[deps.Polynomials]]
 deps = ["LinearAlgebra", "RecipesBase", "Setfield", "SparseArrays"]
-git-tree-sha1 = "81a2a9462003a423fdc59e2a3ff84cde93c4637b"
+git-tree-sha1 = "89620a0b5458dca4bf9ea96174fa6422b3adf6f9"
 uuid = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
-version = "4.0.7"
+version = "4.0.8"
 
     [deps.Polynomials.extensions]
     PolynomialsChainRulesCoreExt = "ChainRulesCore"
@@ -2552,6 +1721,12 @@ deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
 version = "1.48.0+0"
 
+[[deps.oneTBB_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "7d0ea0f4895ef2f5cb83645fa689e52cb55cf493"
+uuid = "1317d2d5-d96f-522e-a858-c73665f53c3e"
+version = "2021.12.0+0"
+
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
@@ -2571,92 +1746,11 @@ version = "3.5.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═f86b0780-008c-11ef-33a9-931d80ed898b
-# ╠═409e7ee5-c7db-4ac8-a4b4-d0d45da11019
-# ╟─c926a7c0-806a-47b2-be6f-880c00b643ec
-# ╟─96850f54-02ea-4a4f-bdec-3ac3bef8a4ce
-# ╠═37fe1231-b880-4a1b-90a3-3ed1073914c9
-# ╠═eb40cd54-3564-4c4f-9a5d-41263340d53c
-# ╠═5c28f88e-721c-415e-aad5-197b3631b798
-# ╟─7868f5a7-a06d-4fa2-b707-43a40125203e
-# ╠═8c2e10ce-c07e-4848-b9c1-283990422884
-# ╠═5f922588-7aa8-4fce-891f-9b86634526cb
-# ╟─b5a794cd-cc30-4670-8a05-09618ef84754
-# ╠═2853c9f6-3c04-4dc6-9fa0-4375013266f0
-# ╟─fdc37a5c-36fc-4252-b47e-274132622643
-# ╟─0e533afa-1e3a-414f-b3b7-1c632f9f9e87
-# ╠═35e58fa8-4f53-4d42-9ba5-54b93198546a
-# ╠═52e299ab-5ad3-4bed-b058-34512150cfac
-# ╠═e508e01f-06ef-4b15-abc9-6aed1fc5c407
-# ╠═90171762-407b-4841-92ff-8bfa133e56c1
-# ╟─a64a048e-a723-4e63-9e39-a163923d354a
-# ╟─34824bb8-ccea-4a7a-9cc3-ca428fe73221
-# ╠═6e5cc202-5c67-4fe0-afff-59884736f47d
-# ╠═4cf6001d-6bad-4ea9-9ed5-b93cf75a9ab6
-# ╟─c7f00309-dd57-46ea-9d2d-47630633a77e
-# ╠═b986787f-42f6-43d8-ac30-716bc166dcbe
-# ╠═b52babb5-5108-461e-8668-53768ccc9d48
-# ╟─c1b4b07b-7b0e-4b25-87a5-120c452127aa
-# ╠═ace3edf4-8f41-40c5-9dc6-15acf8314862
-# ╠═e4a7f0aa-fb4f-4d75-bb4f-1383d66b3d6c
-# ╟─12a06a96-49a1-4b3a-86d5-d684eb769e55
-# ╟─ecc8c828-cef7-46ca-b252-8458104a0b21
-# ╠═328451f4-f1e0-41f4-b8f0-3611eda5f332
-# ╟─075d1ddf-4f68-45ed-b46b-dfe78bec4e6b
-# ╠═62f1f4af-4559-45d0-a3c1-c5bca7af9add
-# ╠═de51f393-127c-416a-99d6-6da32f5f559f
-# ╠═7a933140-b648-44d2-be69-a6c4b9951841
-# ╠═0198dab8-b902-4798-9738-5d465608ece4
-# ╠═9b6e1b3a-aa0d-4a22-9296-f050e7115c1b
-# ╟─275a28ff-95e6-44c8-82ad-83a7bb808141
-# ╠═afb8abfc-86c1-470c-8640-0685f68c072e
-# ╠═2d09aa0a-7246-4297-be81-f0e8e82de791
-# ╠═1b627a14-6c74-49ad-b157-097d33b768fd
-# ╠═1bbec4f4-1e50-424d-8f9b-d0636b1b8eee
-# ╠═01fe3e03-593d-4e16-9a3d-1f22346551c5
-# ╠═78d2ad94-c0fc-4840-9244-536a3c5253f2
-# ╠═16a81cba-4626-4e66-8177-be3efe37b892
-# ╟─6a21d065-78b7-4a68-9140-5f308a5bc152
-# ╠═e146328f-aa0e-4efd-947a-358530503716
-# ╠═9820c1ad-a132-44fc-a1b9-0bf4b19fa836
-# ╟─0cac3467-2a00-4f06-b195-f21a6df25678
-# ╟─3fad4395-fca4-4562-b0e9-278b156e646d
-# ╠═c2146c58-732b-48a9-b8b2-4b88e5d22af7
-# ╠═ee880cec-4aae-46a3-8eb8-41ae68e82fe5
-# ╠═5a8c6f6e-bb54-48d7-824e-bde4d782f2ae
-# ╠═efdc4eb8-39ce-4b5a-9c07-91dbaaf2378d
-# ╟─4f4f5bb5-91bc-4a98-8885-cde97eb93153
-# ╠═ac444626-97bd-40bc-8860-865f594df716
-# ╠═b9324bb7-7293-44d1-8864-b9324327dba3
-# ╠═f6bbb321-6280-449a-8101-2a6f7bd82dfd
-# ╠═7fe48e59-9885-4242-8cd0-d9873f14c42a
-# ╠═ac58cb00-5db3-433a-a422-2e9a57220bc0
-# ╠═6be99274-ba46-4ab6-a228-401680e49059
-# ╠═8c2e97a6-884a-406e-96de-222053b4b3e8
-# ╠═4e98e8c5-c373-4b16-bff4-2c08cc8bb296
-# ╠═e94a84f8-7ac6-4efd-95a9-9b0ba5d6e09d
-# ╠═97adbb35-7e50-40a0-b875-34ab1d442f89
-# ╠═f1051326-becb-42b9-80b3-5bb7944018de
-# ╠═c82914c9-de5d-445c-b96c-4467ef6b2d04
-# ╠═95dc4147-beef-4210-9bea-6ac2882613a8
-# ╠═d9e830e0-271d-4d9d-9dea-dfc7e1e63c43
-# ╠═6ba5dec9-b297-46ab-9701-0c726d298373
-# ╠═0f6c7b05-7f28-4faf-956f-bf6f0012a06d
-# ╠═72cf7228-db3c-4c79-b47b-9317b8602ba2
-# ╠═b0639cbd-0eba-4a60-a914-acb245a7111b
-# ╟─aabdb6ea-bb55-440e-ac03-fac0a0b00e8c
-# ╠═1e4861b4-fc64-4909-92e0-4fe9f627685d
-# ╠═b5b47321-543d-447d-b146-bcbc5f0a4455
-# ╠═ddfb874c-35d0-4ead-93ad-3f00a50bb061
-# ╠═1c789b1c-783c-4d7c-8d74-85ccd25e41d5
-# ╠═b1cff0b3-aabb-4c9e-9386-baf5534fcc87
-# ╠═e31356b8-1bf0-455a-af50-05903aff793c
-# ╠═013b6f85-470c-4cea-a897-692a23097226
-# ╠═1751dba5-3b08-4727-85f9-3ed00dc4bf24
-# ╠═e6c13ea6-018f-493a-beff-ca5a138f987f
-# ╠═1cae3cb2-91d4-4543-b144-19b415007d53
-# ╠═092fce0c-36a4-436f-8f35-bc494afb1cb4
-# ╟─3b3d22ce-dd65-4f37-abbd-9401598fd248
-# ╠═93993ec4-2120-4926-8a28-7e12ac93bfa9
+# ╠═6f129282-07c3-11ef-0046-991ccdeb5dff
+# ╠═d6c848d9-0bcf-4af0-ae5f-2653fbc741c7
+# ╟─d32914ca-72f4-4fae-bbbc-50cafeaa6140
+# ╠═4bad828a-7872-477e-9da9-eb3e9c8ec93f
+# ╠═8342d601-fe0c-4480-8d03-bf718a4a6015
+# ╠═f4574164-a6e8-4f89-a17d-146dc7d3211c
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
