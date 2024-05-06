@@ -1,8 +1,18 @@
 ### A Pluto.jl notebook ###
-# v0.19.40
+# v0.19.41
 
 using Markdown
 using InteractiveUtils
+
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
 
 # ╔═╡ 6f129282-07c3-11ef-0046-991ccdeb5dff
 begin
@@ -39,11 +49,148 @@ md"""
 - What happens if we have noise variance as a hyperparameter?
 """
 
-# ╔═╡ 4bad828a-7872-477e-9da9-eb3e9c8ec93f
+# ╔═╡ edfb55d1-f366-4ba0-90a2-8b5c6c41615d
+md"""
+### Dataset
+"""
+
+# ╔═╡ 3b985294-11f7-4faf-aac5-244f3f7ff071
+begin
+	start = 0
+	stop = 15
+	n_elements = 15
+end
+
+# ╔═╡ 8fdd5198-d806-4981-af2f-525ea20f47c0
+md"""
+##### Defining different spacings
+
+"""
+
+# ╔═╡ 44bb308d-0b01-489b-9734-4c17b4f24b15
+# Regular spacing
+regular_spacing = collect(range(start, stop=stop, length=n_elements))
+
+# ╔═╡ aa8bf2de-a59f-4b91-8b38-8d3b3d5ef9b4
+begin
+	# Linear spacing
+	increment_lin = (stop - start) / (n_elements - 1)
+	linear_spacing = collect(start:increment_lin:stop)
+end
+
+# ╔═╡ fd358f0a-959d-4e99-bd6e-d7a027fd6cdc
+begin
+	# Define the start, stop, and number of elements
+	start_exp = 1
+	stop_exp = 1024
+	n_elements_exp = 15
+	
+	# Calculate the exponential spacing factor
+	spacing_factor= (stop_exp / start_exp)^(1 / (n_elements_exp - 1))
+	
+	# Create the array with exponential spacing
+	exponential_spacing= [start_exp * spacing_factor^i for i in 0:n_elements_exp-1] .* 0.03	
+end
+
+# ╔═╡ 49672bbb-9600-4616-b9be-fb411dd46816
+size(exponential_spacing)
+
+# ╔═╡ b153d530-2e81-4a95-88c4-4b1f7c5da077
+begin
+	spacing_values = sort(rand(n_elements))
+	
+	# Scale spacing values
+	scaled_spacing_values = (spacing_values .- minimum(spacing_values)) / (maximum(spacing_values) - minimum(spacing_values)) * (stop - start) .+ start
+
+	random_spacing = sort(scaled_spacing_values)
+end
+
+# ╔═╡ 89736d7d-05d4-4f4a-bbd0-7953cd4b1ca3
+spacing_list = [regular_spacing, exponential_spacing, random_spacing]
+
+# ╔═╡ 9f0790f4-2b9b-486b-8228-5e5f4b31f5a6
+let
+	fig = Figure()
+	ax = Axis(fig[1, 1], title="Arrays with Different Spacings", 
+						 ylabel=L"x_i", xlabel=L"i")
+	
+	sca1 = scatter!(ax, 1:n_elements, regular_spacing, markersize=5, color=:blue, label="Regular Spacing")
+	# scatter!(ax, 1:n_elements, linear_spacing_array, markersize=5, color=:green, label="Linear Spacing")
+	sca2 = scatter!(ax, 1:n_elements_exp, exponential_spacing, markersize=5, color=:red, label="Exponential Spacing")
+
+	sca3 = scatter!(ax, 1:n_elements, random_spacing, markersize=5, color=:green, label="Random Spacing")
+
+	Legend(fig[1, 2], [sca1, sca2, sca3], ["Regular Spacing", "Exponential Spacing", "Random Spacing"])
+	fig
+
+end
+	
+
+# ╔═╡ 90649de2-fcd7-447d-9dee-623b472650de
+begin
+	exponents = 0:10
+	
+	# Calculate the powers of 2
+	powers_of_2 = 2 .^ exponents
+end
+
+# ╔═╡ b7b5a87f-a82e-4c7b-a8da-8fef3d46eac4
+powers_of_2 .* 0.03
+
+# ╔═╡ 9a0ec83d-5816-46a6-b939-fe1314914636
+md"""
+Spacing: $\quad$ $(@bind space_idx Select([1 =>"Regular", 
+							2 =>"Exponential", 3 => "Random"]))
+"""
+
+# ╔═╡ 5eac6936-a8a1-4e44-8d11-61724394e2ac
+md"""
+#### Train/test split
+"""
+
+# ╔═╡ e05be78d-8605-4d5a-8702-6a84dc797b30
+md"""
+Train set, %  $(@bind train_percent PlutoUI.Slider(10:10:90; default=70, show_value=true))
+"""
+
+# ╔═╡ 6f139add-34e7-4a4e-b323-b766ddd98f07
+
+
+# ╔═╡ 0b518659-d1ed-40a0-864d-7e728d7a2803
 
 
 # ╔═╡ 8342d601-fe0c-4480-8d03-bf718a4a6015
+md"""
+Step = $(@bind step PlutoUI.Slider(0.1:0.5:5.0; default=0.5, show_value=true))
 
+Noise variance = $(@bind noise_var PlutoUI.Slider(0.0:0.01:0.5; default=0.05, show_value=true))
+"""
+
+# ╔═╡ 93edd39b-54bb-4a5e-b30b-b400685299ab
+begin
+	x = spacing_list[space_idx]
+	eps = rand(Normal(0, noise_var), length(x))
+	y = sin.(x) + eps
+end
+
+# ╔═╡ fe094266-0d93-41a6-a131-ef8494001580
+begin
+	# error bars as doubled noise variance
+	yerr = 2 * noise_var
+	x_dense = 0:0.1:15
+	
+	fig, ax, =  errorbars(x, y, yerr;
+	    whiskerwidth = 10, linewidth = 1.0, color=:black,
+	    figure = (;size = (600,400)),
+		axis = (; title = latexstring("σ_{noise} = {$(noise_var)}"), xlabel = L"x")
+	)
+	
+	scatter!(x, y; )
+	lines!(x_dense, sin.(x_dense); linewidth = 0.5, linestyle = :dashdot, label=L"\sin(x)")
+	axislegend(ax, position=:rb,)
+	colgap!(fig.layout, 5)
+	fig
+end
 
 # ╔═╡ f4574164-a6e8-4f89-a17d-146dc7d3211c
 
@@ -76,7 +223,7 @@ StatsFuns = "~1.3.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.9.3"
+julia_version = "1.10.2"
 manifest_format = "2.0"
 project_hash = "fe2a4079af9d25dde44c628a1316c6b04a761d13"
 
@@ -146,16 +293,19 @@ uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
 version = "1.1.1"
 
 [[deps.ArrayInterface]]
-deps = ["Adapt", "LinearAlgebra", "Requires", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "c5aeb516a84459e0318a02507d2261edad97eb75"
+deps = ["Adapt", "LinearAlgebra", "SparseArrays", "SuiteSparse"]
+git-tree-sha1 = "133a240faec6e074e07c31ee75619c90544179cf"
 uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
-version = "7.7.1"
+version = "7.10.0"
 
     [deps.ArrayInterface.extensions]
     ArrayInterfaceBandedMatricesExt = "BandedMatrices"
     ArrayInterfaceBlockBandedMatricesExt = "BlockBandedMatrices"
     ArrayInterfaceCUDAExt = "CUDA"
+    ArrayInterfaceCUDSSExt = "CUDSS"
+    ArrayInterfaceChainRulesExt = "ChainRules"
     ArrayInterfaceGPUArraysCoreExt = "GPUArraysCore"
+    ArrayInterfaceReverseDiffExt = "ReverseDiff"
     ArrayInterfaceStaticArraysCoreExt = "StaticArraysCore"
     ArrayInterfaceTrackerExt = "Tracker"
 
@@ -163,7 +313,10 @@ version = "7.7.1"
     BandedMatrices = "aae01518-5342-5314-be14-df237901396f"
     BlockBandedMatrices = "ffab5731-97b5-5995-9138-79e8c1846df0"
     CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
+    CUDSS = "45b445bb-4962-46a0-9369-b4df9d0f772e"
+    ChainRules = "082447d4-558c-5d27-93f4-14fc19e9eca2"
     GPUArraysCore = "46192b85-c4d5-4398-a991-12ede77f4527"
+    ReverseDiff = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
     StaticArraysCore = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
     Tracker = "9f7883ad-71c0-57eb-9f7f-b5c9e6d3789c"
 
@@ -303,7 +456,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.5+0"
+version = "1.1.0+0"
 
 [[deps.CompositionsBase]]
 git-tree-sha1 = "802bb88cd69dfd1509f6670416bd4434015693ad"
@@ -437,9 +590,9 @@ version = "2.2.8"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "1c6317308b9dc757616f0b5cb379db10494443a7"
+git-tree-sha1 = "4558ab818dcceaab612d1bb8c19cee87eda2b83c"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-version = "2.6.2+0"
+version = "2.5.0+0"
 
 [[deps.Extents]]
 git-tree-sha1 = "2140cd04483da90b2da7f99b2add0750504fc39c"
@@ -499,9 +652,9 @@ weakdeps = ["PDMats", "SparseArrays", "Statistics"]
 
 [[deps.FiniteDiff]]
 deps = ["ArrayInterface", "LinearAlgebra", "Requires", "Setfield", "SparseArrays"]
-git-tree-sha1 = "73d1214fec245096717847c62d389a5d2ac86504"
+git-tree-sha1 = "2de436b72c3422940cbe1367611d137008af7ec3"
 uuid = "6a86dc24-6348-571c-b903-95158fe2bd41"
-version = "2.22.0"
+version = "2.23.1"
 
     [deps.FiniteDiff.extensions]
     FiniteDiffBandedMatricesExt = "BandedMatrices"
@@ -683,9 +836,9 @@ version = "0.9.9"
 
 [[deps.Imath_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "0936ba688c6d201805a83da835b55c61a180db52"
+git-tree-sha1 = "3d09a9f60edf77f8a4d99f9e015e8fbf9989605d"
 uuid = "905a6f67-0a94-5f89-b386-d35d92009cd1"
-version = "3.1.11+0"
+version = "3.1.7+0"
 
 [[deps.IndirectArrays]]
 git-tree-sha1 = "012e604e1c7458645cb8b436f8fba789a51b257f"
@@ -839,21 +992,26 @@ version = "0.3.1"
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.6.3"
+version = "0.6.4"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "7.84.0+0"
+version = "8.4.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
+deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
+
+[[deps.LibGit2_jll]]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
+uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
+version = "1.6.4+0"
 
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.10.2+0"
+version = "1.11.0+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -982,7 +1140,7 @@ version = "0.5.7"
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.2+0"
+version = "2.28.2+1"
 
 [[deps.Missings]]
 deps = ["DataAPI"]
@@ -1006,7 +1164,7 @@ version = "0.3.4"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2022.10.11"
+version = "2023.1.10"
 
 [[deps.Multisets]]
 git-tree-sha1 = "8d852646862c96e226367ad10c8af56099b4047e"
@@ -1058,7 +1216,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.21+4"
+version = "0.3.23+4"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -1068,14 +1226,14 @@ version = "0.3.2"
 
 [[deps.OpenEXR_jll]]
 deps = ["Artifacts", "Imath_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "8292dd5c8a38257111ada2174000a33745b06d4e"
+git-tree-sha1 = "a4ca623df1ae99d09bc9868b008262d0c0ac1e4f"
 uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
-version = "3.2.4+0"
+version = "3.1.4+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+0"
+version = "0.8.1+2"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1115,7 +1273,7 @@ version = "1.6.3"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+0"
+version = "10.42.0+1"
 
 [[deps.PDMats]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
@@ -1174,7 +1332,7 @@ version = "0.42.2+0"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.9.2"
+version = "1.10.0"
 
 [[deps.PkgVersion]]
 deps = ["Pkg"]
@@ -1268,7 +1426,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[deps.Random]]
-deps = ["SHA", "Serialization"]
+deps = ["SHA"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[deps.RangeArrays]]
@@ -1421,6 +1579,7 @@ version = "1.2.1"
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+version = "1.10.0"
 
 [[deps.SpecialFunctions]]
 deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
@@ -1457,7 +1616,7 @@ version = "1.4.2"
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
 uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-version = "1.9.0"
+version = "1.10.0"
 
 [[deps.StatsAPI]]
 deps = ["LinearAlgebra"]
@@ -1508,9 +1667,9 @@ deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 
 [[deps.SuiteSparse_jll]]
-deps = ["Artifacts", "Libdl", "Pkg", "libblastrampoline_jll"]
+deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "5.10.1+6"
+version = "7.2.1+1"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -1661,7 +1820,7 @@ version = "1.5.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+0"
+version = "1.2.13+1"
 
 [[deps.ZygoteRules]]
 deps = ["ChainRulesCore", "MacroTools"]
@@ -1690,7 +1849,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+0"
+version = "5.8.0+1"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1719,7 +1878,7 @@ version = "1.3.7+1"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.48.0+0"
+version = "1.52.0+1"
 
 [[deps.oneTBB_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1730,7 +1889,7 @@ version = "2021.12.0+0"
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+0"
+version = "17.4.0+2"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1749,7 +1908,25 @@ version = "3.5.0+0"
 # ╠═6f129282-07c3-11ef-0046-991ccdeb5dff
 # ╠═d6c848d9-0bcf-4af0-ae5f-2653fbc741c7
 # ╟─d32914ca-72f4-4fae-bbbc-50cafeaa6140
-# ╠═4bad828a-7872-477e-9da9-eb3e9c8ec93f
+# ╟─edfb55d1-f366-4ba0-90a2-8b5c6c41615d
+# ╠═3b985294-11f7-4faf-aac5-244f3f7ff071
+# ╟─8fdd5198-d806-4981-af2f-525ea20f47c0
+# ╠═44bb308d-0b01-489b-9734-4c17b4f24b15
+# ╠═aa8bf2de-a59f-4b91-8b38-8d3b3d5ef9b4
+# ╠═fd358f0a-959d-4e99-bd6e-d7a027fd6cdc
+# ╠═49672bbb-9600-4616-b9be-fb411dd46816
+# ╠═b153d530-2e81-4a95-88c4-4b1f7c5da077
+# ╠═89736d7d-05d4-4f4a-bbd0-7953cd4b1ca3
+# ╠═9f0790f4-2b9b-486b-8228-5e5f4b31f5a6
+# ╠═93edd39b-54bb-4a5e-b30b-b400685299ab
+# ╠═90649de2-fcd7-447d-9dee-623b472650de
+# ╠═b7b5a87f-a82e-4c7b-a8da-8fef3d46eac4
+# ╟─9a0ec83d-5816-46a6-b939-fe1314914636
+# ╠═fe094266-0d93-41a6-a131-ef8494001580
+# ╟─5eac6936-a8a1-4e44-8d11-61724394e2ac
+# ╠═e05be78d-8605-4d5a-8702-6a84dc797b30
+# ╠═6f139add-34e7-4a4e-b323-b766ddd98f07
+# ╠═0b518659-d1ed-40a0-864d-7e728d7a2803
 # ╠═8342d601-fe0c-4480-8d03-bf718a4a6015
 # ╠═f4574164-a6e8-4f89-a17d-146dc7d3211c
 # ╟─00000000-0000-0000-0000-000000000001
