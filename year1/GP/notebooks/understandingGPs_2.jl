@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.40
+# v0.19.41
 
 using Markdown
 using InteractiveUtils
@@ -189,14 +189,14 @@ Noise variance = $(@bind noise_var PlutoUI.Slider(0.0:0.01:0.4; default=0.05, sh
 begin
 	x = spacing_list[space_idx]
 	eps = rand(Normal(0, noise_var), length(x))
-	y = sin.(x) + eps
+	y = 2*sin.(x) + eps
 end
 
 # ╔═╡ b7b5a87f-a82e-4c7b-a8da-8fef3d46eac4
 begin
-	y_reg = sin.(regular_spacing) + eps
-	y_exp = sin.(exponential_spacing) + eps
-	y_rand = sin.(random_spacing) + eps
+	y_reg = 2*sin.(regular_spacing) + eps
+	y_exp = 2*sin.(exponential_spacing) + eps
+	y_rand = 2*sin.(random_spacing) + eps
 end
 
 # ╔═╡ 6f139add-34e7-4a4e-b323-b766ddd98f07
@@ -253,7 +253,7 @@ begin
 	y_train = y[train_idx]
 
 	x_add = [4.8, 7.9, 11]
-	y_add = sin.(x_add) + rand(Normal(0, noise_var), length(x_add))
+	y_add = 2*sin.(x_add) + rand(Normal(0, noise_var), length(x_add))
 	x_test = [x[test_idx]; x_add]
 	y_test = [y[test_idx]; y_add]
 
@@ -361,11 +361,11 @@ function loss_function(x, y, kernel_function=SqExponentialKernel())
     function negativelogmarginallikelihood(params)
 		
         k = softplus(params[1]) * 
-			(kernel_function ∘ ScaleTransform(softplus(params[2])))
+			(kernel_function ∘ ScaleTransform(softplus(params[2])))  
 		
         f = GP(k)
         fx = f(x, noise_var)
-        return -logpdf(fx, y)
+        return -logpdf(fx, y) + 0.01softplus(params[2])^2
     end
     return negativelogmarginallikelihood
 end
@@ -378,6 +378,9 @@ end
 
 # ╔═╡ a983b3ab-0eb7-4642-9b74-e9f472bf7e6c
 opt.minimizer
+
+# ╔═╡ b27bf918-22e8-424e-88cb-7e496bc8a511
+softplus.(opt.minimizer) 
 
 # ╔═╡ d5d7f3fd-d424-4062-8ead-3741e07d5b95
 begin
@@ -408,7 +411,7 @@ let
 	)
 
 	lines = lines!(x_dense, sin.(x_dense); 
-			linewidth = 0.5, 
+			linewidth = 1.5, 
 			linestyle = :dashdot, 
 			color = :black,
 	)
@@ -486,7 +489,7 @@ end
 -logpdf(opt_p_fx(x_test, noise_var), y_test)
 
 # ╔═╡ 4b274a22-f027-4ab5-ae52-354b37148bc5
--logpdf(post_opt_sigma(x_test, logistic(opt_sigma.minimizer[1])), y_test)
+-logpdf(post_opt_sigma(x_test, noise_var), y_test)
 
 # ╔═╡ 8b3451a2-a2d5-4de2-845c-a74f454e5273
 md"""
@@ -609,12 +612,6 @@ begin
 	fx_opt_params = f_opt_params(x_train, logistic(opt_params.minimizer[3]))
 	post_opt_params = posterior(fx_opt_params, y_train)
 end
-
-# ╔═╡ ee70d3ae-317b-499b-8718-12ac534b8369
-post_opt_sigma(x_test, noise_var)
-
-# ╔═╡ a9333369-6b06-41ee-b45b-6a56b00500b1
-post_opt_sigma(x_test, 0.)
 
 # ╔═╡ ea0d391e-06b3-4142-8bfe-a33633c9e1f4
 -logpdf(opt_p_fx(x_test, noise_var), y_test)
@@ -845,9 +842,6 @@ let
 end
 
 # ╔═╡ d28ed904-c2af-42f9-86cd-511d76142a95
-
-# How to compare?
-
 # -logpdf(post_opt_s_vec(x_test, 
 # 	logistic.(opt_s_vec.minimizer[1:length(x_train)])), 
 # 	y_test
@@ -885,7 +879,7 @@ StatsFuns = "~1.3.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.9.3"
+julia_version = "1.10.2"
 manifest_format = "2.0"
 project_hash = "88db565bada7f8af76e3691346353f82312195f4"
 
@@ -1112,7 +1106,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.5+0"
+version = "1.1.0+0"
 
 [[deps.CompositionsBase]]
 git-tree-sha1 = "802bb88cd69dfd1509f6670416bd4434015693ad"
@@ -1648,21 +1642,26 @@ version = "0.3.1"
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.6.3"
+version = "0.6.4"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "7.84.0+0"
+version = "8.4.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
+deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
+
+[[deps.LibGit2_jll]]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
+uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
+version = "1.6.4+0"
 
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.10.2+0"
+version = "1.11.0+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -1791,7 +1790,7 @@ version = "0.5.7"
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.2+0"
+version = "2.28.2+1"
 
 [[deps.Missings]]
 deps = ["DataAPI"]
@@ -1815,7 +1814,7 @@ version = "0.3.4"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2022.10.11"
+version = "2023.1.10"
 
 [[deps.Multisets]]
 git-tree-sha1 = "8d852646862c96e226367ad10c8af56099b4047e"
@@ -1867,7 +1866,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.21+4"
+version = "0.3.23+4"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -1884,7 +1883,7 @@ version = "3.2.4+0"
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+0"
+version = "0.8.1+2"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1924,7 +1923,7 @@ version = "1.6.3"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+0"
+version = "10.42.0+1"
 
 [[deps.PDMats]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
@@ -1983,7 +1982,7 @@ version = "0.42.2+0"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.9.2"
+version = "1.10.0"
 
 [[deps.PkgVersion]]
 deps = ["Pkg"]
@@ -2077,7 +2076,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[deps.Random]]
-deps = ["SHA", "Serialization"]
+deps = ["SHA"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[deps.RangeArrays]]
@@ -2230,6 +2229,7 @@ version = "1.2.1"
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+version = "1.10.0"
 
 [[deps.SpecialFunctions]]
 deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
@@ -2266,7 +2266,7 @@ version = "1.4.2"
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
 uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-version = "1.9.0"
+version = "1.10.0"
 
 [[deps.StatsAPI]]
 deps = ["LinearAlgebra"]
@@ -2317,9 +2317,9 @@ deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 
 [[deps.SuiteSparse_jll]]
-deps = ["Artifacts", "Libdl", "Pkg", "libblastrampoline_jll"]
+deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "5.10.1+6"
+version = "7.2.1+1"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -2470,7 +2470,7 @@ version = "1.5.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+0"
+version = "1.2.13+1"
 
 [[deps.ZygoteRules]]
 deps = ["ChainRulesCore", "MacroTools"]
@@ -2499,7 +2499,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+0"
+version = "5.8.0+1"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2528,7 +2528,7 @@ version = "1.3.7+1"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.48.0+0"
+version = "1.52.0+1"
 
 [[deps.oneTBB_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2539,7 +2539,7 @@ version = "2021.12.0+0"
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+0"
+version = "17.4.0+2"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2588,6 +2588,7 @@ version = "3.5.0+0"
 # ╠═6bd2159d-0116-4a49-a12c-ae3a9bcd14d1
 # ╠═09827650-e733-4036-82e9-8860af14c864
 # ╠═a983b3ab-0eb7-4642-9b74-e9f472bf7e6c
+# ╠═b27bf918-22e8-424e-88cb-7e496bc8a511
 # ╠═d5d7f3fd-d424-4062-8ead-3741e07d5b95
 # ╠═ebe2afc8-920d-492d-a7a9-e25ec226d23f
 # ╟─8d0a3033-831e-4132-a183-437cbfcaea26
@@ -2604,15 +2605,13 @@ version = "3.5.0+0"
 # ╟─8b3451a2-a2d5-4de2-845c-a74f454e5273
 # ╠═283644c5-2dcf-41e5-b0ff-2979fb2f939f
 # ╠═8b6f28c7-5007-414c-9edb-7c641c730da2
-# ╠═42b6ac42-35da-41ac-bfaf-0c6d6bb90ad2
+# ╟─42b6ac42-35da-41ac-bfaf-0c6d6bb90ad2
 # ╟─9a423753-ea18-435a-b4b7-98e40dcd3f28
 # ╠═d536637e-503e-4703-89ed-279a7c525a15
 # ╠═b153585b-4b76-4a0b-a997-541b70093c72
 # ╠═f1aaf1cf-0e3e-4284-b12f-f2b1586c26e5
 # ╠═db618b86-5fe4-4e61-a20b-e10ef929b3f6
 # ╠═b77cdd3f-f7b3-4054-a6af-be148bd09df7
-# ╠═ee70d3ae-317b-499b-8718-12ac534b8369
-# ╠═a9333369-6b06-41ee-b45b-6a56b00500b1
 # ╠═ea0d391e-06b3-4142-8bfe-a33633c9e1f4
 # ╠═900690d1-0f67-4b71-88d2-9d8fbbcc5d93
 # ╠═e02e0ced-8221-4d2d-96c0-6dfd2a97b8d3
