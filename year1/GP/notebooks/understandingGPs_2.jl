@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.41
+# v0.19.40
 
 using Markdown
 using InteractiveUtils
@@ -39,6 +39,17 @@ begin
 	    Axis=(limits=((0, 15), nothing),),
 	)
 end
+
+# ╔═╡ 18344f8c-74e2-4c0a-ac9d-e63e3f15697f
+begin
+	using Colors
+	
+	logocolors = Colors.JULIA_LOGO_COLORS
+	[logocolors.blue, logocolors.red, logocolors.green, logocolors.purple]
+end
+
+# ╔═╡ ce6bdbfb-68a3-4b4c-b1c4-11e9033ac4ba
+using Optim
 
 # ╔═╡ d32914ca-72f4-4fae-bbbc-50cafeaa6140
 md"""
@@ -106,7 +117,10 @@ begin
 end
 
 # ╔═╡ 89736d7d-05d4-4f4a-bbd0-7953cd4b1ca3
-spacing_list = [regular_spacing, exponential_spacing, random_spacing]
+begin
+	spacing_list = [regular_spacing, exponential_spacing, random_spacing]
+	spacing_titles = ["Regular Spacing", "Exponential Spacing", "Random Spacing"]
+end
 
 # ╔═╡ 9f0790f4-2b9b-486b-8228-5e5f4b31f5a6
 let
@@ -114,56 +128,64 @@ let
 	ax = Axis(fig[1, 1], title="Arrays with Different Spacings", 
 						 ylabel=L"x_i", xlabel=L"i")
 	
-	sca1 = scatter!(ax, 1:n_elements, regular_spacing, markersize=5, color=:blue, label="Regular Spacing")
-	# scatter!(ax, 1:n_elements, linear_spacing_array, markersize=5, color=:green, label="Linear Spacing")
-	sca2 = scatter!(ax, 1:n_elements_exp, exponential_spacing, markersize=5, color=:red, label="Exponential Spacing")
+	sca1 = scatter!(ax, 1:n_elements, regular_spacing, 
+					color=logocolors.blue, 
+					label="Regular Spacing"
+	)
 
-	sca3 = scatter!(ax, 1:n_elements, random_spacing, markersize=5, color=:green, label="Random Spacing")
+	sca2 = scatter!(ax, 1:n_elements_exp, exponential_spacing, 
+					color=logocolors.red, 
+					label="Exponential Spacing"
+	)
 
-	Legend(fig[1, 2], [sca1, sca2, sca3], ["Regular Spacing", "Exponential Spacing", "Random Spacing"])
+	sca3 = scatter!(ax, 1:n_elements, random_spacing, 
+					color=logocolors.green, 
+					label="Random Spacing"
+	)
+
+	Legend(fig[1, 2], [sca1, sca2, sca3], spacing_titles)
 	fig
 
 end
 	
 
-# ╔═╡ 90649de2-fcd7-447d-9dee-623b472650de
-begin
-	exponents = 0:10
-	
-	# Calculate the powers of 2
-	powers_of_2 = 2 .^ exponents
-end
-
-# ╔═╡ b7b5a87f-a82e-4c7b-a8da-8fef3d46eac4
-powers_of_2 .* 0.03
-
 # ╔═╡ 9a0ec83d-5816-46a6-b939-fe1314914636
-md"""
-Spacing: $\quad$ $(@bind space_idx Select([1 =>"Regular", 
-							2 =>"Exponential", 3 => "Random"]))
-"""
+# md"""
+# Spacing: $\quad$ $(@bind space_idx Select([1 =>"Regular", 
+# 							2 =>"Exponential", 3 => "Random"]))
+# """
 
 # ╔═╡ 5eac6936-a8a1-4e44-8d11-61724394e2ac
 md"""
 #### Train/test split
 """
 
-# ╔═╡ e05be78d-8605-4d5a-8702-6a84dc797b30
-md"""
-Train set, %  $(@bind train_percent PlutoUI.Slider(10:10:90; default=70, show_value=true))
-"""
-
-# ╔═╡ 6f139add-34e7-4a4e-b323-b766ddd98f07
-
-
-# ╔═╡ 0b518659-d1ed-40a0-864d-7e728d7a2803
-
-
 # ╔═╡ 8342d601-fe0c-4480-8d03-bf718a4a6015
 md"""
-Step = $(@bind step PlutoUI.Slider(0.1:0.5:5.0; default=0.5, show_value=true))
-
 Noise variance = $(@bind noise_var PlutoUI.Slider(0.0:0.01:0.5; default=0.05, show_value=true))
+
+"""
+
+# ╔═╡ 4ac9a8b2-f627-4275-b6cd-f628adfcf573
+yerr = 2 * noise_var
+
+# ╔═╡ 66fe92f5-59a1-4a78-ac57-e37c904911d0
+md"""
+#### Gaussian Process Regression with SE kernel
+
+"""
+
+# ╔═╡ 37c1e3ee-3da9-4488-bbdf-052cc2c89d81
+k_se = SqExponentialKernel()
+
+# ╔═╡ ac49e85c-fb88-4046-8230-d7bbfa518b25
+md"""
+
+Train set, %  $(@bind train_percent PlutoUI.Slider(40:10:90; default=70, show_value=true))
+
+Spacing: $\quad$ $(@bind space_idx Select([1 =>"Regular", 
+							2 =>"Exponential", 3 => "Random"]))
+
 """
 
 # ╔═╡ 93edd39b-54bb-4a5e-b30b-b400685299ab
@@ -173,27 +195,245 @@ begin
 	y = sin.(x) + eps
 end
 
+# ╔═╡ b7b5a87f-a82e-4c7b-a8da-8fef3d46eac4
+begin
+	y_reg = sin.(regular_spacing) + eps
+	y_exp = sin.(exponential_spacing) + eps
+	y_rand = sin.(random_spacing) + eps
+end
+
 # ╔═╡ fe094266-0d93-41a6-a131-ef8494001580
 begin
-	# error bars as doubled noise variance
-	yerr = 2 * noise_var
 	x_dense = 0:0.1:15
+
+	fig = Figure(size = (700,400))
+	ax =  Axis(
+				fig[1, 1], 
+				title = latexstring("σ_{noise} = {$(noise_var)}"), 
+				xlabel = L"x",
+				ylabel = L"\sin(x) + \epsilon_{noise}"
+	)
+
+	sca1 = scatter!(ax, regular_spacing, y_reg, 
+					color=logocolors.blue, 
+					label="Regular Spacing"
+	)
+
+	sca2 = scatter!(ax, exponential_spacing, y_exp, 
+					color=logocolors.red, 
+					label="Exponential Spacing"
+	)
+
+	sca3 = scatter!(ax, random_spacing, y_rand, 
+					color=logocolors.green, 
+					label="Random Spacing"
+	)
+
+	Legend(fig[1, 2], [sca1, sca2, sca3], spacing_titles)
 	
-	fig, ax, =  errorbars(x, y, yerr;
+	lines!(x_dense, sin.(x_dense); 
+			linewidth = 0.5, 
+			linestyle = :dashdot, 
+			color=:black,
+			label=L"\sin(x)"
+	)
+	colgap!(fig.layout, 5)
+	fig
+end
+
+# ╔═╡ 6f139add-34e7-4a4e-b323-b766ddd98f07
+shuffled_numbers = shuffle(1:length(x))
+
+# ╔═╡ 0b518659-d1ed-40a0-864d-7e728d7a2803
+begin
+	n = length(x)
+	partition = floor(Int, train_percent * 0.01 * n)
+	shuffled_list = shuffle(1:length(x))
+	train_idx = shuffled_list[1:partition]
+	test_idx = shuffled_list[(partition + 1):end]
+	
+	x_train = x[train_idx]
+	y_train = y[train_idx]
+
+	x_add = [4.8, 7.9, 11]
+	y_add = sin.(x_add) + rand(Normal(0, noise_var), length(x_add))
+	x_test = [x[test_idx]; x_add]
+	y_test = [y[test_idx]; y_add]
+
+
+end
+
+# ╔═╡ f4574164-a6e8-4f89-a17d-146dc7d3211c
+let
+	
+	fig, ax, =  errorbars([x; x_add], [y; y_add], yerr;
 	    whiskerwidth = 10, linewidth = 1.0, color=:black,
 	    figure = (;size = (600,400)),
 		axis = (; title = latexstring("σ_{noise} = {$(noise_var)}"), xlabel = L"x")
 	)
 	
-	scatter!(x, y; )
-	lines!(x_dense, sin.(x_dense); linewidth = 0.5, linestyle = :dashdot, label=L"\sin(x)")
+	scatter!(x_train, y_train; 
+				label="Train", 
+				color=logocolors.green
+	)
+	scatter!(x_test, y_test; 
+				label="Test", 
+				color=logocolors.red
+	)
+		
+	lines!(x_dense, sin.(x_dense); 
+			linewidth = 0.5, linestyle = :dashdot, 
+			color=:black, label=L"\sin(x)"
+	)
 	axislegend(ax, position=:rb,)
 	colgap!(fig.layout, 5)
 	fig
 end
 
-# ╔═╡ f4574164-a6e8-4f89-a17d-146dc7d3211c
+# ╔═╡ 933eea31-6afb-4f18-894d-27f9a4bbc28a
+begin
+	f = GP(k_se)
+	fx = f(x_train, noise_var)
+end
 
+# ╔═╡ a89b383a-bac4-41ba-ab6d-3a77f1bcf5a5
+# compute the posterior Gaussian process given the training data
+p_fx = posterior(fx, y_train)
+
+# ╔═╡ 853556bb-a37b-45e7-9940-f32b7e6f07d8
+Cycled(2)
+
+# ╔═╡ 2bb0d5ae-a1ff-4ab9-b2f4-e91c202468d9
+let
+	fig = Figure(size = (1000, 500))
+
+	Axis(fig[1, 1]; 
+			xlabel = L"x", ylabel = L"x", title = "Kernel", 
+			width = 250, height = 250
+	) 
+	
+	hmap = heatmap!(x, x, kernelmatrix(k_se, x); )	
+	
+	Colorbar(fig[1, 2], hmap; 
+		width = 15, 
+		ticksize = 15, 
+		tickalign = 1
+	)
+
+	ax1 = Axis(fig[1, 3]; 
+			xlabel = L"x", ylabel = L"y", 
+			title = spacing_titles[space_idx], 
+			width = 250, height = 250
+	) 
+	xlims!(ax1, 0, 15)
+	ylims!(ax1, -2, 2)
+
+	plt1 = plot!(fig[1, 3], 0:01:15, p_fx; 
+				bandscale=2, 
+				color=Cycled(2), 
+	)
+	gpsample!(fig[1, 3], 0:0.1:15, p_fx; 
+				samples=2, color=:gray,
+				linewidth = 0.5
+	)
+
+	sca1 = scatter!(
+			fig[1, 3],
+		    x_train,
+		    y_train;
+			color=logocolors.green,
+	)
+	sca2 = scatter!(
+			fig[1, 3], 
+			x_test, 
+			y_test; 
+			color=logocolors.red,)
+	
+	Legend(fig[1, 4], 
+			[plt1, sca1, sca2], 
+			["Posterior", "Train Data", "Test Data"]
+	)
+	
+	colsize!(fig.layout, 1, Aspect(1, 1.0))
+	colgap!(fig.layout, 7)
+	fig
+end
+
+# ╔═╡ 6bd2159d-0116-4a49-a12c-ae3a9bcd14d1
+function loss_function(x, y, kernel_function=SqExponentialKernel())
+    function negativelogmarginallikelihood(params)
+		
+        k = softplus(params[1]) * 
+			(kernel_function ∘ ScaleTransform(softplus(params[2])))
+		
+        f = GP(k)
+        fx = f(x, noise_var)
+        return -logpdf(fx, y)
+    end
+    return negativelogmarginallikelihood
+end
+
+# ╔═╡ 09827650-e733-4036-82e9-8860af14c864
+begin
+	θ_init = randn(2)
+	opt = Optim.optimize(loss_function(x_train, y_train), θ_init, LBFGS())
+end
+
+# ╔═╡ a983b3ab-0eb7-4642-9b74-e9f472bf7e6c
+opt.minimizer
+
+# ╔═╡ d5d7f3fd-d424-4062-8ead-3741e07d5b95
+begin
+	opt_kernel =
+	    softplus(opt.minimizer[1]) *
+	    (k_se ∘ ScaleTransform(softplus(opt.minimizer[2])))
+	
+	opt_f = GP(opt_kernel)
+	opt_fx = opt_f(x_train, noise_var)
+	opt_p_fx = posterior(opt_fx, y_train)
+end
+
+# ╔═╡ ebe2afc8-920d-492d-a7a9-e25ec226d23f
+-logpdf(opt_p_fx(x_test, noise_var), y_test)
+
+# ╔═╡ d40ef562-6013-4465-b501-f4bd6cdf07ae
+let
+	fig = Figure(size = (600, 450))
+	ax = Axis(fig[1, 1], xlabel = "x", ylabel = "y", title="Posterior distribution",)
+
+	plot!(0:0.01:15, opt_p_fx; 
+		bandscale=2, color=Cycled(2), 
+		label="Optimized parameters"
+	)
+	gpsample!(0:0.01:15, opt_p_fx; 
+				samples=2, 
+				linewidth = 0.5, 
+				color=:gray,
+	)
+
+	lines!(x_dense, sin.(x_dense); 
+			linewidth = 0.5, 
+			linestyle = :dashdot, 
+			color = :black,
+			label=L"\sin(x)"
+	)
+
+	scatter!(
+	    x_train,
+	    y_train;
+	    xlim=(0, 16),
+		ylim=(-1.8, 1.8),
+	    color=logocolors.green,
+	    label="Train Data",
+	)
+	scatter!(x_test, y_test; 
+		color=logocolors.red,
+		label="Test Data"
+	)
+	
+	axislegend(ax, position=:rt,)
+	fig
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -201,9 +441,11 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 AbstractGPs = "99985d1d-32ba-4be9-9821-2ec096f28918"
 AbstractGPsMakie = "7834405d-1089-4985-bd30-732a30b92057"
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 FillArrays = "1a297f60-69ca-5386-bcde-b61e274b549b"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 StatsFuns = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
@@ -212,9 +454,11 @@ StatsFuns = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
 AbstractGPs = "~0.5.21"
 AbstractGPsMakie = "~0.2.7"
 CairoMakie = "~0.11.10"
+Colors = "~0.12.10"
 Distributions = "~0.25.108"
 FillArrays = "~1.10.2"
 LaTeXStrings = "~1.3.1"
+Optim = "~1.9.4"
 PlutoUI = "~0.7.59"
 StatsFuns = "~1.3.1"
 """
@@ -223,9 +467,9 @@ StatsFuns = "~1.3.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.2"
+julia_version = "1.9.3"
 manifest_format = "2.0"
-project_hash = "fe2a4079af9d25dde44c628a1316c6b04a761d13"
+project_hash = "88db565bada7f8af76e3691346353f82312195f4"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -293,19 +537,16 @@ uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
 version = "1.1.1"
 
 [[deps.ArrayInterface]]
-deps = ["Adapt", "LinearAlgebra", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "133a240faec6e074e07c31ee75619c90544179cf"
+deps = ["Adapt", "LinearAlgebra", "Requires", "SparseArrays", "SuiteSparse"]
+git-tree-sha1 = "c5aeb516a84459e0318a02507d2261edad97eb75"
 uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
-version = "7.10.0"
+version = "7.7.1"
 
     [deps.ArrayInterface.extensions]
     ArrayInterfaceBandedMatricesExt = "BandedMatrices"
     ArrayInterfaceBlockBandedMatricesExt = "BlockBandedMatrices"
     ArrayInterfaceCUDAExt = "CUDA"
-    ArrayInterfaceCUDSSExt = "CUDSS"
-    ArrayInterfaceChainRulesExt = "ChainRules"
     ArrayInterfaceGPUArraysCoreExt = "GPUArraysCore"
-    ArrayInterfaceReverseDiffExt = "ReverseDiff"
     ArrayInterfaceStaticArraysCoreExt = "StaticArraysCore"
     ArrayInterfaceTrackerExt = "Tracker"
 
@@ -313,10 +554,7 @@ version = "7.10.0"
     BandedMatrices = "aae01518-5342-5314-be14-df237901396f"
     BlockBandedMatrices = "ffab5731-97b5-5995-9138-79e8c1846df0"
     CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
-    CUDSS = "45b445bb-4962-46a0-9369-b4df9d0f772e"
-    ChainRules = "082447d4-558c-5d27-93f4-14fc19e9eca2"
     GPUArraysCore = "46192b85-c4d5-4398-a991-12ede77f4527"
-    ReverseDiff = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
     StaticArraysCore = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
     Tracker = "9f7883ad-71c0-57eb-9f7f-b5c9e6d3789c"
 
@@ -456,7 +694,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.0.5+0"
 
 [[deps.CompositionsBase]]
 git-tree-sha1 = "802bb88cd69dfd1509f6670416bd4434015693ad"
@@ -590,9 +828,9 @@ version = "2.2.8"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "4558ab818dcceaab612d1bb8c19cee87eda2b83c"
+git-tree-sha1 = "1c6317308b9dc757616f0b5cb379db10494443a7"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-version = "2.5.0+0"
+version = "2.6.2+0"
 
 [[deps.Extents]]
 git-tree-sha1 = "2140cd04483da90b2da7f99b2add0750504fc39c"
@@ -652,9 +890,9 @@ weakdeps = ["PDMats", "SparseArrays", "Statistics"]
 
 [[deps.FiniteDiff]]
 deps = ["ArrayInterface", "LinearAlgebra", "Requires", "Setfield", "SparseArrays"]
-git-tree-sha1 = "2de436b72c3422940cbe1367611d137008af7ec3"
+git-tree-sha1 = "73d1214fec245096717847c62d389a5d2ac86504"
 uuid = "6a86dc24-6348-571c-b903-95158fe2bd41"
-version = "2.23.1"
+version = "2.22.0"
 
     [deps.FiniteDiff.extensions]
     FiniteDiffBandedMatricesExt = "BandedMatrices"
@@ -836,9 +1074,9 @@ version = "0.9.9"
 
 [[deps.Imath_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "3d09a9f60edf77f8a4d99f9e015e8fbf9989605d"
+git-tree-sha1 = "0936ba688c6d201805a83da835b55c61a180db52"
 uuid = "905a6f67-0a94-5f89-b386-d35d92009cd1"
-version = "3.1.7+0"
+version = "3.1.11+0"
 
 [[deps.IndirectArrays]]
 git-tree-sha1 = "012e604e1c7458645cb8b436f8fba789a51b257f"
@@ -992,26 +1230,21 @@ version = "0.3.1"
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.6.4"
+version = "0.6.3"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.4.0+0"
+version = "7.84.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
+deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
-
-[[deps.LibGit2_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
-uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.6.4+0"
 
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.11.0+1"
+version = "1.10.2+0"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -1140,7 +1373,7 @@ version = "0.5.7"
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.2+1"
+version = "2.28.2+0"
 
 [[deps.Missings]]
 deps = ["DataAPI"]
@@ -1164,7 +1397,7 @@ version = "0.3.4"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.1.10"
+version = "2022.10.11"
 
 [[deps.Multisets]]
 git-tree-sha1 = "8d852646862c96e226367ad10c8af56099b4047e"
@@ -1216,7 +1449,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+4"
+version = "0.3.21+4"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -1226,14 +1459,14 @@ version = "0.3.2"
 
 [[deps.OpenEXR_jll]]
 deps = ["Artifacts", "Imath_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "a4ca623df1ae99d09bc9868b008262d0c0ac1e4f"
+git-tree-sha1 = "8292dd5c8a38257111ada2174000a33745b06d4e"
 uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
-version = "3.1.4+0"
+version = "3.2.4+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
+version = "0.8.1+0"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1273,7 +1506,7 @@ version = "1.6.3"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+1"
+version = "10.42.0+0"
 
 [[deps.PDMats]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
@@ -1332,7 +1565,7 @@ version = "0.42.2+0"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.10.0"
+version = "1.9.2"
 
 [[deps.PkgVersion]]
 deps = ["Pkg"]
@@ -1426,7 +1659,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[deps.Random]]
-deps = ["SHA"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[deps.RangeArrays]]
@@ -1579,7 +1812,6 @@ version = "1.2.1"
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-version = "1.10.0"
 
 [[deps.SpecialFunctions]]
 deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
@@ -1616,7 +1848,7 @@ version = "1.4.2"
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
 uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-version = "1.10.0"
+version = "1.9.0"
 
 [[deps.StatsAPI]]
 deps = ["LinearAlgebra"]
@@ -1667,9 +1899,9 @@ deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 
 [[deps.SuiteSparse_jll]]
-deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
+deps = ["Artifacts", "Libdl", "Pkg", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "7.2.1+1"
+version = "5.10.1+6"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -1820,7 +2052,7 @@ version = "1.5.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+1"
+version = "1.2.13+0"
 
 [[deps.ZygoteRules]]
 deps = ["ChainRulesCore", "MacroTools"]
@@ -1849,7 +2081,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.8.0+0"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1878,7 +2110,7 @@ version = "1.3.7+1"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.52.0+1"
+version = "1.48.0+0"
 
 [[deps.oneTBB_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1889,7 +2121,7 @@ version = "2021.12.0+0"
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+2"
+version = "17.4.0+0"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1907,6 +2139,7 @@ version = "3.5.0+0"
 # ╔═╡ Cell order:
 # ╠═6f129282-07c3-11ef-0046-991ccdeb5dff
 # ╠═d6c848d9-0bcf-4af0-ae5f-2653fbc741c7
+# ╟─18344f8c-74e2-4c0a-ac9d-e63e3f15697f
 # ╟─d32914ca-72f4-4fae-bbbc-50cafeaa6140
 # ╟─edfb55d1-f366-4ba0-90a2-8b5c6c41615d
 # ╠═3b985294-11f7-4faf-aac5-244f3f7ff071
@@ -1919,15 +2152,28 @@ version = "3.5.0+0"
 # ╠═89736d7d-05d4-4f4a-bbd0-7953cd4b1ca3
 # ╠═9f0790f4-2b9b-486b-8228-5e5f4b31f5a6
 # ╠═93edd39b-54bb-4a5e-b30b-b400685299ab
-# ╠═90649de2-fcd7-447d-9dee-623b472650de
 # ╠═b7b5a87f-a82e-4c7b-a8da-8fef3d46eac4
 # ╟─9a0ec83d-5816-46a6-b939-fe1314914636
 # ╠═fe094266-0d93-41a6-a131-ef8494001580
 # ╟─5eac6936-a8a1-4e44-8d11-61724394e2ac
-# ╠═e05be78d-8605-4d5a-8702-6a84dc797b30
 # ╠═6f139add-34e7-4a4e-b323-b766ddd98f07
 # ╠═0b518659-d1ed-40a0-864d-7e728d7a2803
-# ╠═8342d601-fe0c-4480-8d03-bf718a4a6015
+# ╠═4ac9a8b2-f627-4275-b6cd-f628adfcf573
+# ╟─8342d601-fe0c-4480-8d03-bf718a4a6015
 # ╠═f4574164-a6e8-4f89-a17d-146dc7d3211c
+# ╟─66fe92f5-59a1-4a78-ac57-e37c904911d0
+# ╠═37c1e3ee-3da9-4488-bbdf-052cc2c89d81
+# ╠═933eea31-6afb-4f18-894d-27f9a4bbc28a
+# ╠═a89b383a-bac4-41ba-ab6d-3a77f1bcf5a5
+# ╟─ac49e85c-fb88-4046-8230-d7bbfa518b25
+# ╠═853556bb-a37b-45e7-9940-f32b7e6f07d8
+# ╠═2bb0d5ae-a1ff-4ab9-b2f4-e91c202468d9
+# ╠═ce6bdbfb-68a3-4b4c-b1c4-11e9033ac4ba
+# ╠═6bd2159d-0116-4a49-a12c-ae3a9bcd14d1
+# ╠═09827650-e733-4036-82e9-8860af14c864
+# ╠═a983b3ab-0eb7-4642-9b74-e9f472bf7e6c
+# ╠═d5d7f3fd-d424-4062-8ead-3741e07d5b95
+# ╠═ebe2afc8-920d-492d-a7a9-e25ec226d23f
+# ╠═d40ef562-6013-4465-b501-f4bd6cdf07ae
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
