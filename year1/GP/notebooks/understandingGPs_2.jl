@@ -160,15 +160,6 @@ md"""
 #### Train/test split
 """
 
-# ╔═╡ 8342d601-fe0c-4480-8d03-bf718a4a6015
-md"""
-Noise variance = $(@bind noise_var PlutoUI.Slider(0.0:0.01:0.5; default=0.05, show_value=true))
-
-"""
-
-# ╔═╡ 4ac9a8b2-f627-4275-b6cd-f628adfcf573
-yerr = 2 * noise_var
-
 # ╔═╡ 66fe92f5-59a1-4a78-ac57-e37c904911d0
 md"""
 #### Gaussian Process Regression with SE kernel
@@ -188,6 +179,12 @@ Spacing: $\quad$ $(@bind space_idx Select([1 =>"Regular",
 
 """
 
+# ╔═╡ 8d0a3033-831e-4132-a183-437cbfcaea26
+md"""
+Noise variance = $(@bind noise_var PlutoUI.Slider(0.0:0.01:0.4; default=0.05, show_value=true))
+
+"""
+
 # ╔═╡ 93edd39b-54bb-4a5e-b30b-b400685299ab
 begin
 	x = spacing_list[space_idx]
@@ -201,6 +198,9 @@ begin
 	y_exp = sin.(exponential_spacing) + eps
 	y_rand = sin.(random_spacing) + eps
 end
+
+# ╔═╡ 6f139add-34e7-4a4e-b323-b766ddd98f07
+shuffled_numbers = shuffle(1:length(x))
 
 # ╔═╡ fe094266-0d93-41a6-a131-ef8494001580
 begin
@@ -241,9 +241,6 @@ begin
 	fig
 end
 
-# ╔═╡ 6f139add-34e7-4a4e-b323-b766ddd98f07
-shuffled_numbers = shuffle(1:length(x))
-
 # ╔═╡ 0b518659-d1ed-40a0-864d-7e728d7a2803
 begin
 	n = length(x)
@@ -262,6 +259,9 @@ begin
 
 
 end
+
+# ╔═╡ 4ac9a8b2-f627-4275-b6cd-f628adfcf573
+yerr = 2 * noise_var
 
 # ╔═╡ f4574164-a6e8-4f89-a17d-146dc7d3211c
 let
@@ -300,16 +300,13 @@ end
 # compute the posterior Gaussian process given the training data
 p_fx = posterior(fx, y_train)
 
-# ╔═╡ 853556bb-a37b-45e7-9940-f32b7e6f07d8
-Cycled(2)
-
 # ╔═╡ 2bb0d5ae-a1ff-4ab9-b2f4-e91c202468d9
 let
 	fig = Figure(size = (1000, 500))
 
 	Axis(fig[1, 1]; 
 			xlabel = L"x", ylabel = L"x", title = "Kernel", 
-			width = 250, height = 250
+			width = 350, height = 350
 	) 
 	
 	hmap = heatmap!(x, x, kernelmatrix(k_se, x); )	
@@ -323,7 +320,7 @@ let
 	ax1 = Axis(fig[1, 3]; 
 			xlabel = L"x", ylabel = L"y", 
 			title = spacing_titles[space_idx], 
-			width = 250, height = 250
+			width = 350, height = 350
 	) 
 	xlims!(ax1, 0, 15)
 	ylims!(ax1, -2, 2)
@@ -398,12 +395,11 @@ end
 
 # ╔═╡ d40ef562-6013-4465-b501-f4bd6cdf07ae
 let
-	fig = Figure(size = (600, 450))
+	fig = Figure(size = (800, 450))
 	ax = Axis(fig[1, 1], xlabel = "x", ylabel = "y", title="Posterior distribution",)
 
-	plot!(0:0.01:15, opt_p_fx; 
-		bandscale=2, color=Cycled(2), 
-		label="Optimized parameters"
+	pl1 = plot!(0:0.01:15, opt_p_fx; 
+		bandscale=2, color=Cycled(2),
 	)
 	gpsample!(0:0.01:15, opt_p_fx; 
 				samples=2, 
@@ -411,14 +407,141 @@ let
 				color=:gray,
 	)
 
-	lines!(x_dense, sin.(x_dense); 
+	lines = lines!(x_dense, sin.(x_dense); 
 			linewidth = 0.5, 
 			linestyle = :dashdot, 
 			color = :black,
-			label=L"\sin(x)"
 	)
 
-	scatter!(
+	sca1 = scatter!(
+	    x_train,
+	    y_train;
+	    xlim=(0, 16),
+		ylim=(-1.8, 1.8),
+	    color=logocolors.green,
+	)
+	sca2 = scatter!(x_test, y_test; 
+		color=logocolors.red,
+	)
+	
+	# axislegend(ax, position=(1,1),)
+	Legend(fig[1, 2], 
+		[pl1, lines, sca1, sca2], 
+		[L"\text{Optimized } l \text{ and } \sigma_{f}", 
+			L"\sin(x)",
+			L"\text{Train}", 
+			L"\text{Test}"]
+	)
+	fig
+end
+
+# ╔═╡ 2cd9158e-c1ed-41fe-aaa7-b96376248d17
+md"""
+The **SE kernel** assumes that nearby points in the input space have similar function values. Therefore, we can observe:
+- smoothing effect:
+  + assumes that the underlying function being modeled is smooth and differentiable;
+  + assigns higher similarity (covariance) between points that are closer together;
+- poor extrapolation beyond the range of the observed data;
+- loss of frequency information;
+- sensitive to the noise.
+"""
+
+# ╔═╡ 3ac3a817-4b93-46ed-a8c3-fc128f4cf098
+md"""
+#### Noise variance as a hyperparameter
+"""
+
+# ╔═╡ 2dc1e1b8-455d-4e50-9891-5a8b17bd4a97
+function loss_sigma(x, y, k=SqExponentialKernel())
+    function negativelogmarginallikelihood(params)
+		
+        f = GP(k)
+		# sigmoid function
+        fx = f(x, logistic(params[1]))
+        return -logpdf(fx, y)
+    end
+    return negativelogmarginallikelihood
+end
+
+# ╔═╡ 91e7cef7-3821-4351-9b6a-992dad61878a
+begin
+	local θ_0 = randn(1)
+	opt_sigma = Optim.optimize(loss_sigma(x_train, y_train, opt_kernel), θ_0, LBFGS())
+end
+
+# ╔═╡ 1de4de6e-ecb2-4c2e-9659-d6f861942af6
+opt_sigma.minimizer
+
+# ╔═╡ 248e6af6-66a6-4ede-bf77-fa9ee0813915
+logistic(opt_sigma.minimizer[1])
+
+# ╔═╡ 103d6fcc-560f-424d-b206-6259786cc405
+begin
+	f_opt_sigma = GP(opt_kernel)
+	fx_opt_sigma = f_opt_sigma(x_train, logistic(opt_sigma.minimizer[1]))
+	post_opt_sigma = posterior(fx_opt_sigma, y_train)
+end
+
+# ╔═╡ e81d79a4-77fc-4965-87fc-554d0dd37025
+-logpdf(opt_p_fx(x_test, noise_var), y_test)
+
+# ╔═╡ 4b274a22-f027-4ab5-ae52-354b37148bc5
+-logpdf(post_opt_sigma(x_test, logistic(opt_sigma.minimizer[1])), y_test)
+
+# ╔═╡ 8b3451a2-a2d5-4de2-845c-a74f454e5273
+md"""
+Comparing predicted values to the actual values.
+"""
+
+# ╔═╡ 283644c5-2dcf-41e5-b0ff-2979fb2f939f
+let 
+	μ_opt = mean(opt_p_fx(x_test, noise_var))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 8b6f28c7-5007-414c-9edb-7c641c730da2
+let 
+	μ_opt = mean(post_opt_sigma(x_test, logistic(opt_sigma.minimizer[1])))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 42b6ac42-35da-41ac-bfaf-0c6d6bb90ad2
+let
+	fig = Figure(size = (800, 450))
+	ax = Axis(fig[1, 1], xlabel = L"x", ylabel = L"y", title="Posterior distribution",)
+
+	pl1 = plot!(
+		0:0.01:15, 
+		opt_p_fx; 
+		bandscale=2, color=Cycled(2), 
+		label=L"\text{Optimized } l \text{ and } \sigma_{f}"
+	)
+	
+	pl2 = plot!(
+		0:0.01:15, 
+		post_opt_sigma; 
+		bandscale=2, color=Cycled(1), 
+		label=L"\text{Optimized } \sigma_{noise}"
+	)
+	
+	gpsample!(
+		0:0.01:15, 
+		post_opt_sigma; 
+		samples=2, 
+		linewidth = 0.5, 
+		color=:gray,
+	)
+
+	lines = lines!(
+		x_dense, 
+		sin.(x_dense); 
+		linewidth = 0.5, 
+		linestyle = :dashdot, 
+		color = :black,
+		label=L"\sin(x)"
+	)
+
+	sca1 = scatter!(
 	    x_train,
 	    y_train;
 	    xlim=(0, 16),
@@ -426,14 +549,309 @@ let
 	    color=logocolors.green,
 	    label="Train Data",
 	)
-	scatter!(x_test, y_test; 
+	sca2 = scatter!(
+		x_test, 
+		y_test; 
 		color=logocolors.red,
 		label="Test Data"
 	)
 	
-	axislegend(ax, position=:rt,)
+	# axislegend(ax, position=:rt,)
+	Legend(fig[1, 2], 
+		[pl1, pl2, lines, sca1, sca2], 
+		[L"\text{Optimized } l \text{ and } \sigma_{f}", 
+			L"\text{Optimized } \sigma_{noise}",
+			L"\sin(x)",
+			L"\text{Train}", 
+			L"\text{Test}"]
+	)
 	fig
 end
+
+# ╔═╡ 9a423753-ea18-435a-b4b7-98e40dcd3f28
+md"""
+#### Optimizing all three parameters simultaneously
+"""
+
+# ╔═╡ d536637e-503e-4703-89ed-279a7c525a15
+function loss_all_params(x, y, kernel_function=SqExponentialKernel())
+    function negativelogmarginallikelihood(params)
+		
+        k = softplus(params[1]) * 
+			(kernel_function ∘ ScaleTransform(softplus(params[2])))
+		
+        f = GP(k)
+        fx = f(x, logistic.(params[3])) # sigmoid function
+        return -logpdf(fx, y)
+    end
+    return negativelogmarginallikelihood
+end
+
+# ╔═╡ b153585b-4b76-4a0b-a997-541b70093c72
+found_params = [opt.minimizer; opt_sigma.minimizer]
+
+# ╔═╡ f1aaf1cf-0e3e-4284-b12f-f2b1586c26e5
+begin
+	θ_0 = randn(3) # found_params
+	opt_params = Optim.optimize(loss_all_params(x_train, y_train), θ_0, LBFGS())
+end
+
+# ╔═╡ db618b86-5fe4-4e61-a20b-e10ef929b3f6
+opt_params.minimizer
+
+# ╔═╡ b77cdd3f-f7b3-4054-a6af-be148bd09df7
+begin
+	k_opt_params =
+		    softplus(opt_params.minimizer[1]) *
+		    (k_se ∘ ScaleTransform(softplus(opt_params.minimizer[2])))
+		
+	f_opt_params = GP(k_opt_params)
+	fx_opt_params = f_opt_params(x_train, logistic(opt_params.minimizer[3]))
+	post_opt_params = posterior(fx_opt_params, y_train)
+end
+
+# ╔═╡ ee70d3ae-317b-499b-8718-12ac534b8369
+post_opt_sigma(x_test, noise_var)
+
+# ╔═╡ a9333369-6b06-41ee-b45b-6a56b00500b1
+post_opt_sigma(x_test, 0.)
+
+# ╔═╡ ea0d391e-06b3-4142-8bfe-a33633c9e1f4
+-logpdf(opt_p_fx(x_test, noise_var), y_test)
+
+# ╔═╡ 900690d1-0f67-4b71-88d2-9d8fbbcc5d93
+-logpdf(post_opt_sigma(x_test, noise_var), y_test)
+
+# ╔═╡ e02e0ced-8221-4d2d-96c0-6dfd2a97b8d3
+-logpdf(post_opt_params(x_test, noise_var), y_test)
+
+# ╔═╡ 4c0232c0-fb0f-4c73-a189-cc1801575c83
+let 
+	μ_opt = mean(opt_p_fx(x_test, noise_var))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 954e7ff7-33ba-4d98-9bf8-1c0559896fe8
+let 
+	μ_opt = mean(post_opt_sigma(x_test, noise_var))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 6b1e1cdc-6008-4a42-9a3d-d3e548acb546
+let 
+	μ_opt = mean(post_opt_params(x_test, noise_var))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 830701d9-aa9b-42e8-bfd6-97332c9ae2c1
+let
+	fig = Figure(size = (800, 450))
+	ax = Axis(fig[1, 1], xlabel = L"x", ylabel = L"y", title="Posterior distribution",)
+
+	pl1 = plot!(
+		0:0.01:15, 
+		opt_p_fx; 
+		bandscale=2, color=Cycled(2), 
+		label=L"\text{Optimized } l \text{ and } \sigma_{f}"
+	)
+	
+	pl2 = plot!(
+		0:0.01:15, 
+		post_opt_sigma; 
+		bandscale=2, color=Cycled(1), 
+		label=L"\text{Optimized } \sigma_{noise}"
+	)
+	
+	pl3 = plot!(
+		0:0.01:15, 
+		post_opt_params; 
+		bandscale=2, color=Cycled(3), 
+		label=L"\text{Optimized } l, \quad \sigma_{f} \text{ and } \sigma_{noise}"
+	)
+	gpsample!(
+		0:0.01:15, 
+		post_opt_sigma; 
+		samples=2, 
+		linewidth = 0.5, 
+		color=:gray,
+	)
+
+	lines = lines!(
+		x_dense, 
+		sin.(x_dense); 
+		linewidth = 0.5, 
+		linestyle = :dashdot, 
+		color = :black,
+		label=L"\sin(x)"
+	)
+
+	sca1 = scatter!(
+	    x_train,
+	    y_train;
+	    xlim=(0, 16),
+		ylim=(-1.8, 1.8),
+	    color=logocolors.green,
+	    label="Train Data",
+	)
+	sca2 = scatter!(
+		x_test, 
+		y_test; 
+		color=logocolors.red,
+		label="Test Data"
+	)
+	
+	# axislegend(ax, position=:rt,)
+	Legend(fig[1, 2], 
+		[pl1, pl2, pl3, lines, sca1, sca2], 
+		[	
+			L"\text{Optimized } l \text{ and } \sigma_{f}", 
+			L"\text{Optimized } \sigma_{noise}",
+			L"\text{Optimized } l, ~ \sigma_{f} \text{ and } \sigma_{noise}",
+			L"\sin(x)",
+			L"\text{Train}", 
+			L"\text{Test}"
+		]
+	)
+	fig
+end
+
+# ╔═╡ bfaf3284-89d1-4444-9570-636e2e217739
+md"""
+#### Optimizing noise variance as a vector
+"""
+
+# ╔═╡ df88d68f-d88b-4c70-b365-64ef438e4048
+function loss_s_vec(x, y, k=SqExponentialKernel())
+    function negativelogmarginallikelihood(params)
+		
+        f = GP(k)
+		# sigmoid function
+        fx = f(x, logistic.(params[1:length(x)]))
+        return -logpdf(fx, y)
+    end
+    return negativelogmarginallikelihood
+end
+
+# ╔═╡ a9eba31d-8a3c-4e49-905c-7c420848d05d
+begin
+	θ_init_vec = randn(length(x_train))
+	opt_s_vec = Optim.optimize(loss_s_vec(x_train, y_train, opt_kernel), θ_init_vec, LBFGS())
+end
+
+# ╔═╡ c30473dc-d85b-485c-bb8a-ab16a414f82f
+θ_init_vec
+
+# ╔═╡ 979f19b8-e3ce-48d6-8947-0d6337495836
+opt_s_vec.minimizer
+
+# ╔═╡ 64f5d5cc-a2ba-4e29-a101-ef105aa879e4
+s_vec = logistic.(opt_s_vec.minimizer[1:length(x_train)])
+
+# ╔═╡ 9648c4ca-1219-403b-8039-f2ce731b4750
+begin
+	f_opt_s_vec = GP(opt_kernel)
+	fx_opt_s_vec = f_opt_s_vec(x_train, 
+						logistic.(opt_s_vec.minimizer[1:length(x_train)]))
+	post_opt_s_vec = posterior(fx_opt_s_vec, y_train)
+end
+
+# ╔═╡ 2bce0851-d006-47eb-9dbd-58046c06fd70
+let 
+	μ_opt = mean(opt_p_fx(x_test, noise_var))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 43421073-5a8f-4cc4-947c-b186bd8c96a0
+let 
+	μ_opt = mean(post_opt_sigma(x_test, noise_var))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 035fbe04-0d6f-421c-b6a4-317aecf98708
+let 
+	μ_opt = mean(post_opt_params(x_test, noise_var))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 630003cf-74ba-4b61-8d92-de0276cb404d
+let 
+	μ_opt = mean(post_opt_s_vec(x_test, noise_var))
+	sum((μ_opt .- sin.(x_test)).^2)
+end
+
+# ╔═╡ 5b4d4438-fa12-4514-b477-63b03a490ff9
+-logpdf(opt_p_fx(x_test, noise_var), y_test)
+
+# ╔═╡ df878b9e-109d-48e2-a66f-3a87bea534f3
+-logpdf(post_opt_sigma(x_test, noise_var), y_test)
+
+# ╔═╡ ab8b9df6-a6b9-49de-862f-7d64a7f97162
+-logpdf(post_opt_params(x_test, noise_var), y_test)
+
+# ╔═╡ cb990e9b-2265-4c56-895f-be2769fb9cd6
+-logpdf(post_opt_s_vec(x_test, noise_var), y_test)
+
+# ╔═╡ a42997e6-7f81-41bd-a66b-a201eefc79b4
+let
+	fig = Figure(size = (800, 450))
+	ax = Axis(fig[1, 1], xlabel = L"x", ylabel = L"y", title="Posterior distribution",)
+
+	pl1 = plot!(
+		0:0.01:15, 
+		post_opt_params; 
+		bandscale=2, color=Cycled(2), 
+	)
+	
+	pl2 = plot!(
+		0:0.01:15, 
+		post_opt_s_vec; 
+		bandscale=2, color=Cycled(1), 
+	)
+
+	lines = lines!(
+		x_dense, 
+		sin.(x_dense); 
+		linewidth = 0.5, 
+		linestyle = :dashdot, 
+		color = :black,
+		label=L"\sin(x)"
+	)
+
+	sca1 = scatter!(
+	    x_train,
+	    y_train;
+	    xlim=(0, 16),
+		ylim=(-1.8, 1.8),
+	    color=logocolors.green,
+	    label="Train Data",
+	)
+	sca2 = scatter!(
+		x_test, 
+		y_test; 
+		color=logocolors.red,
+		label="Test Data"
+	)
+	
+	# axislegend(ax, position=:rt,)
+	Legend(fig[1, 2], [pl1, pl2, lines, sca1, sca2], 
+		[	L"\text{Optimized } l, ~ \sigma_{f} \text{ and } \sigma_{noise}",
+			L"\text{Optimized vector } \sigma_{noise}",
+			L"\sin(x)",
+			L"\text{Train}", 
+			L"\text{Test}"
+		]
+	)
+	fig
+end
+
+# ╔═╡ d28ed904-c2af-42f9-86cd-511d76142a95
+
+# How to compare?
+
+# -logpdf(post_opt_s_vec(x_test, 
+# 	logistic.(opt_s_vec.minimizer[1:length(x_train)])), 
+# 	y_test
+# )
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2159,14 +2577,12 @@ version = "3.5.0+0"
 # ╠═6f139add-34e7-4a4e-b323-b766ddd98f07
 # ╠═0b518659-d1ed-40a0-864d-7e728d7a2803
 # ╠═4ac9a8b2-f627-4275-b6cd-f628adfcf573
-# ╟─8342d601-fe0c-4480-8d03-bf718a4a6015
 # ╠═f4574164-a6e8-4f89-a17d-146dc7d3211c
 # ╟─66fe92f5-59a1-4a78-ac57-e37c904911d0
 # ╠═37c1e3ee-3da9-4488-bbdf-052cc2c89d81
 # ╠═933eea31-6afb-4f18-894d-27f9a4bbc28a
 # ╠═a89b383a-bac4-41ba-ab6d-3a77f1bcf5a5
 # ╟─ac49e85c-fb88-4046-8230-d7bbfa518b25
-# ╠═853556bb-a37b-45e7-9940-f32b7e6f07d8
 # ╠═2bb0d5ae-a1ff-4ab9-b2f4-e91c202468d9
 # ╠═ce6bdbfb-68a3-4b4c-b1c4-11e9033ac4ba
 # ╠═6bd2159d-0116-4a49-a12c-ae3a9bcd14d1
@@ -2174,6 +2590,52 @@ version = "3.5.0+0"
 # ╠═a983b3ab-0eb7-4642-9b74-e9f472bf7e6c
 # ╠═d5d7f3fd-d424-4062-8ead-3741e07d5b95
 # ╠═ebe2afc8-920d-492d-a7a9-e25ec226d23f
+# ╟─8d0a3033-831e-4132-a183-437cbfcaea26
 # ╠═d40ef562-6013-4465-b501-f4bd6cdf07ae
+# ╟─2cd9158e-c1ed-41fe-aaa7-b96376248d17
+# ╟─3ac3a817-4b93-46ed-a8c3-fc128f4cf098
+# ╠═2dc1e1b8-455d-4e50-9891-5a8b17bd4a97
+# ╠═91e7cef7-3821-4351-9b6a-992dad61878a
+# ╠═1de4de6e-ecb2-4c2e-9659-d6f861942af6
+# ╠═248e6af6-66a6-4ede-bf77-fa9ee0813915
+# ╠═103d6fcc-560f-424d-b206-6259786cc405
+# ╠═e81d79a4-77fc-4965-87fc-554d0dd37025
+# ╠═4b274a22-f027-4ab5-ae52-354b37148bc5
+# ╟─8b3451a2-a2d5-4de2-845c-a74f454e5273
+# ╠═283644c5-2dcf-41e5-b0ff-2979fb2f939f
+# ╠═8b6f28c7-5007-414c-9edb-7c641c730da2
+# ╠═42b6ac42-35da-41ac-bfaf-0c6d6bb90ad2
+# ╟─9a423753-ea18-435a-b4b7-98e40dcd3f28
+# ╠═d536637e-503e-4703-89ed-279a7c525a15
+# ╠═b153585b-4b76-4a0b-a997-541b70093c72
+# ╠═f1aaf1cf-0e3e-4284-b12f-f2b1586c26e5
+# ╠═db618b86-5fe4-4e61-a20b-e10ef929b3f6
+# ╠═b77cdd3f-f7b3-4054-a6af-be148bd09df7
+# ╠═ee70d3ae-317b-499b-8718-12ac534b8369
+# ╠═a9333369-6b06-41ee-b45b-6a56b00500b1
+# ╠═ea0d391e-06b3-4142-8bfe-a33633c9e1f4
+# ╠═900690d1-0f67-4b71-88d2-9d8fbbcc5d93
+# ╠═e02e0ced-8221-4d2d-96c0-6dfd2a97b8d3
+# ╠═4c0232c0-fb0f-4c73-a189-cc1801575c83
+# ╠═954e7ff7-33ba-4d98-9bf8-1c0559896fe8
+# ╠═6b1e1cdc-6008-4a42-9a3d-d3e548acb546
+# ╠═830701d9-aa9b-42e8-bfd6-97332c9ae2c1
+# ╟─bfaf3284-89d1-4444-9570-636e2e217739
+# ╠═df88d68f-d88b-4c70-b365-64ef438e4048
+# ╠═a9eba31d-8a3c-4e49-905c-7c420848d05d
+# ╠═c30473dc-d85b-485c-bb8a-ab16a414f82f
+# ╠═979f19b8-e3ce-48d6-8947-0d6337495836
+# ╠═64f5d5cc-a2ba-4e29-a101-ef105aa879e4
+# ╠═9648c4ca-1219-403b-8039-f2ce731b4750
+# ╠═2bce0851-d006-47eb-9dbd-58046c06fd70
+# ╠═43421073-5a8f-4cc4-947c-b186bd8c96a0
+# ╠═035fbe04-0d6f-421c-b6a4-317aecf98708
+# ╠═630003cf-74ba-4b61-8d92-de0276cb404d
+# ╠═5b4d4438-fa12-4514-b477-63b03a490ff9
+# ╠═df878b9e-109d-48e2-a66f-3a87bea534f3
+# ╠═ab8b9df6-a6b9-49de-862f-7d64a7f97162
+# ╠═cb990e9b-2265-4c56-895f-be2769fb9cd6
+# ╠═a42997e6-7f81-41bd-a66b-a201eefc79b4
+# ╠═d28ed904-c2af-42f9-86cd-511d76142a95
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

@@ -474,7 +474,7 @@ begin
 
 	x_grid = -10:0.5:10
 	
-	xlims!(axis, -10, 10)
+	xlims!(axis, -10, 20)
 	plot!(axis, x_grid, softplus.(x_grid))
 	figure
 end
@@ -2602,7 +2602,7 @@ version = "3.5.0+0"
 # ╠═ace3edf4-8f41-40c5-9dc6-15acf8314862
 # ╠═e4a7f0aa-fb4f-4d75-bb4f-1383d66b3d6c
 # ╟─12a06a96-49a1-4b3a-86d5-d684eb769e55
-# ╠═ecc8c828-cef7-46ca-b252-8458104a0b21
+# ╟─ecc8c828-cef7-46ca-b252-8458104a0b21
 # ╠═328451f4-f1e0-41f4-b8f0-3611eda5f332
 # ╟─075d1ddf-4f68-45ed-b46b-dfe78bec4e6b
 # ╠═62f1f4af-4559-45d0-a3c1-c5bca7af9add
