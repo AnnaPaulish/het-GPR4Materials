@@ -142,9 +142,35 @@ fx.Σy
 # ╔═╡ 0948927d-f1f2-4e5b-a8d6-6d8a2be8f752
 size(fx.Σy)
 
+# ╔═╡ a6c7756a-753f-4cc3-90cb-7fe8e7474d1e
+length(x_train)
+
+# ╔═╡ 22f10c4e-15c2-4907-917e-17ac341ad556
+# m and k are the mean function and kernel of fx.f
+
+# ╔═╡ a5becdd7-2511-4716-b3c4-93347e547d0e
+begin
+	k = k_se
+	z = y_train
+	
+	
+end
+
 # ╔═╡ 7daf846d-7e44-45ab-b75b-94482848d976
 # mean of the posterior
 m_posterior(x) = m(x) + k(x, fx.x)inv(cov(fx))(y - mean(fx))
+
+# ╔═╡ baafe111-d337-4f10-ba73-230c8e7ae41b
+k(x, fx.x)
+
+# ╔═╡ c60b3a6d-7f09-4092-9e44-79fe16fdcd42
+k_posterior(x, z) = k(x, z) - k(x, fx.x)inv(cov(fx))k(fx.x, z)
+
+# ╔═╡ 0f00b9a5-c1e0-4ece-a40e-f0fccb342a88
+#k(x_train, z) - k(x_test, fx.x)inv(cov(fx))k(fx.x, z)
+
+# ╔═╡ ba6aa7d2-c272-41fb-8a39-0759c7aa450e
+k(x_train, z)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1874,6 +1900,13 @@ version = "3.5.0+0"
 # ╠═4ce93c4d-09bf-4657-9df9-09991a6caee7
 # ╠═364b8f15-505a-4877-a5ea-f24c8e2bd580
 # ╠═0948927d-f1f2-4e5b-a8d6-6d8a2be8f752
+# ╠═a6c7756a-753f-4cc3-90cb-7fe8e7474d1e
 # ╠═7daf846d-7e44-45ab-b75b-94482848d976
+# ╠═baafe111-d337-4f10-ba73-230c8e7ae41b
+# ╠═c60b3a6d-7f09-4092-9e44-79fe16fdcd42
+# ╠═22f10c4e-15c2-4907-917e-17ac341ad556
+# ╠═a5becdd7-2511-4716-b3c4-93347e547d0e
+# ╠═0f00b9a5-c1e0-4ece-a40e-f0fccb342a88
+# ╠═ba6aa7d2-c272-41fb-8a39-0759c7aa450e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
