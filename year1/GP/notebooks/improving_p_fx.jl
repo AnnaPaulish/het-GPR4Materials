@@ -51,6 +51,18 @@ begin
 	f_ref = sin
 end
 
+# ╔═╡ dd163533-a13d-4841-ae04-0b55b3cf8170
+md"""
+##### Observation model
+
+Additive Gaussian noise:
+
+```math
+y = f(x) + \epsilon.
+```
+
+"""
+
 # ╔═╡ 678dfa97-9fbc-46d1-baac-54260731c17c
 obs_noise = 0.1
 
@@ -1889,6 +1901,7 @@ version = "3.5.0+0"
 # ╠═63189b4e-1d82-4831-a9c5-c2ea5bfb355a
 # ╟─2216826c-7bca-429a-af7e-97fe3cf86367
 # ╠═c9c2b0e6-7ebe-4618-b28e-bb7ca9deb293
+# ╠═dd163533-a13d-4841-ae04-0b55b3cf8170
 # ╠═678dfa97-9fbc-46d1-baac-54260731c17c
 # ╠═38c9ae97-cba9-4e35-a464-119587cbb64b
 # ╠═66ea66fe-8e40-4c55-a7e8-e85e94521745
