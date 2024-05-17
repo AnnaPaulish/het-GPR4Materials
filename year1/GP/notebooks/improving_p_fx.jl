@@ -63,6 +63,24 @@ y = f(x) + \epsilon.
 
 """
 
+# ╔═╡ eca31302-e1e7-4f9c-bc2a-21fb6a55143f
+md"""
+Building an **optimization policy**:
+
+- choosing a model of the objective function \
+  --> GPs;
+- deciding what source of data we seek to obtain \
+  --> utility functions;
+- transforming thse beliefs and preferences into an optimization policy \
+  --> Bayesian decision theory.
+
+"""
+
+# ╔═╡ 08a5143e-e67b-485f-a6df-0a81fede8853
+md"""
+#### Exploitation & exploration tradoff
+"""
+
 # ╔═╡ 678dfa97-9fbc-46d1-baac-54260731c17c
 obs_noise = 0.1
 
@@ -183,6 +201,41 @@ k_posterior(x, z) = k(x, z) - k(x, fx.x)inv(cov(fx))k(fx.x, z)
 
 # ╔═╡ ba6aa7d2-c272-41fb-8a39-0759c7aa450e
 k(x_train, z)
+
+# ╔═╡ 5777dbea-16c1-4615-8a60-506a20e24ee2
+
+
+# ╔═╡ d3a8237e-9321-4620-a0d5-33be5b94f7b6
+
+
+# ╔═╡ 55c6ab64-da8b-4459-9608-45bb828d40d2
+md"""
+#### Derivative Observations
+
+"""
+
+# ╔═╡ 9e590901-b5e9-46c3-b6bb-1be3722f5086
+md"""
+The derivative of a Gaussian process is another Gaussian process, meaning that we can: 
+- use GPs to make predictions about derivative,
+- make inference based on derivative information.
+
+"""
+
+# ╔═╡ 0c1d618b-7b94-4bce-85b0-b95a8ba14235
+md"""
+A covariance function $k(\cdot, \cdot)$ on function
+values implies the following (mixed) covariance between function values and
+partial derivatives, and between partial derivatives:
+
+$\text{cov}(f_i, \frac{\partial f_{j}}{\partial x_{d_j}}) = \frac{\partial k(x_i, x_j)}{\partial x_{d_j}},$
+
+$\text{cov}(\frac{\partial f_{i}}{\partial x_{d_i}}, \frac{\partial f_{j}}{\partial x_{e_j}}) = \frac{\partial^2 k(x_i, x_j)}{\partial x_{d_i} \partial x_{e_j}}.$
+
+"""
+
+# ╔═╡ ae523586-1f96-4d72-8c69-91df21c4c4e6
+
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1902,6 +1955,8 @@ version = "3.5.0+0"
 # ╟─2216826c-7bca-429a-af7e-97fe3cf86367
 # ╠═c9c2b0e6-7ebe-4618-b28e-bb7ca9deb293
 # ╠═dd163533-a13d-4841-ae04-0b55b3cf8170
+# ╟─eca31302-e1e7-4f9c-bc2a-21fb6a55143f
+# ╠═08a5143e-e67b-485f-a6df-0a81fede8853
 # ╠═678dfa97-9fbc-46d1-baac-54260731c17c
 # ╠═38c9ae97-cba9-4e35-a464-119587cbb64b
 # ╠═66ea66fe-8e40-4c55-a7e8-e85e94521745
@@ -1921,5 +1976,11 @@ version = "3.5.0+0"
 # ╠═a5becdd7-2511-4716-b3c4-93347e547d0e
 # ╠═0f00b9a5-c1e0-4ece-a40e-f0fccb342a88
 # ╠═ba6aa7d2-c272-41fb-8a39-0759c7aa450e
+# ╠═5777dbea-16c1-4615-8a60-506a20e24ee2
+# ╠═d3a8237e-9321-4620-a0d5-33be5b94f7b6
+# ╟─55c6ab64-da8b-4459-9608-45bb828d40d2
+# ╟─9e590901-b5e9-46c3-b6bb-1be3722f5086
+# ╟─0c1d618b-7b94-4bce-85b0-b95a8ba14235
+# ╠═ae523586-1f96-4d72-8c69-91df21c4c4e6
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
