@@ -31,6 +31,18 @@ begin
 	)
 end
 
+# ╔═╡ 2d9bb0e6-6407-4404-9952-71d8280e77f8
+begin
+	using Surrogates
+	using SurrogatesAbstractGPs
+end
+
+# ╔═╡ 12cae9e0-4a17-4717-bcfc-185856315427
+using Zygote
+
+# ╔═╡ a86222a6-0d29-445c-9eab-444ac3f74cd1
+using Optim
+
 # ╔═╡ 63189b4e-1d82-4831-a9c5-c2ea5bfb355a
 logocolors = Colors.JULIA_LOGO_COLORS;
 
@@ -51,17 +63,84 @@ begin
 	f_ref = sin
 end
 
-# ╔═╡ dd163533-a13d-4841-ae04-0b55b3cf8170
+# ╔═╡ 78fa4939-6658-4149-ae0c-cb7ecfdbfce9
 md"""
-##### Observation model
+##### Sequential optimization algorithm.
 
-Additive Gaussian noise:
+We do not require that the objective function have a known functional
+form or even be computable directly. Avoiding
+the need for an explicit expression for objective function allows us to consider so-called
+“black box” optimization, where a system is optimized through indirect
+measurements of its quality, one of the greatest strengths of
+Bayesian optimization.
 
-```math
-y = f(x) + \epsilon.
-```
+**Input:** initial dataset $\mathcal{D}$ \
+**repeat** \
+$\quad x \leftarrow \text{policy}(\mathcal{D})$ \
+$\quad y \leftarrow \text{observe}(\mathcal{D})$ \
+$\quad \mathcal{D} \leftarrow \mathcal{D} \cup \{ (x, y) \}$ \
+**until** termination condition reached \
+**return** $\mathcal{D}$
 
 """
+
+# ╔═╡ 1f4e4b86-593b-4654-b9d0-be5589e5ffc8
+md"""
+
+##### Optimization policy
+
+-- examines any already gathered data and makes the fundamental decision of where to make the next observation. 
+
+It can be defined through so-called *acquisition function* $\alpha(x; \mathcal{D})$ that provides a score to each potential observation location:
+
+$\alpha: \mathcal{X} \rightarrow \mathbb{R}$
+
+We then define a **policy** by observing at a point
+judged most promising by the acquisition function:
+
+$x \in \operatorname*{arg\,max}_{x' \in \mathcal{X}} ~ \alpha (x'; \mathcal{D}).$
+
+
+"""
+
+# ╔═╡ 728ae80e-94c8-4f6e-b3bf-bba814fa9559
+md"""
+**Utility function** to guide our choice to select a decision from an action space $\mathcal{A}$ under uncertainty in $\psi$, informed by a set of observed data $\mathcal{D}$:
+
+$u(a, \psi, \mathcal{D}).$
+
+**Expected** utility, which maps each available action to a real value: 
+
+$\mathbb{E}[u(a, \psi, \mathcal{D}) ~ | ~ a, \mathcal{D}] = \int u(a, \psi, \mathcal{D}) ~ p(\psi ~ | ~ \mathcal{D}) ~ \text{d} \psi,$
+
+where $p(\psi ~ | ~ \mathcal{D})$ is the posterior distribution.
+
+We pick an action maximizing the expected utility:
+
+$a \in \operatorname*{arg\,max}_{a' \in \mathcal{A}} ~ \mathbb{E}[u(a', \psi, \mathcal{D}) ~ | ~ a', \mathcal{D}].$
+
+**Expected increase** in utility:
+
+$\alpha_{\tau} = \mathbb{E}[u(\mathcal{D}_{\tau}) ~ | ~ x, \mathcal{D}] - u(\mathcal{D}),$
+
+achieved when beginning from an
+arbitrary dataset $\mathcal{D}$, making an observation at $x$, and then continuing
+optimally until termination 𝜏 steps in the future.
+
+
+"""
+
+# ╔═╡ ca4863ed-02af-4409-a9a5-32a9e7ee05ed
+md"""
+**Simple reward** utility function
+
+$u(\mathcal{D}) = \max \mu_{\mathcal{D}} (x)$
+
+together with one-step lookahead defines 
+"""
+
+# ╔═╡ 58a6f6bb-2e91-4f89-85a9-4fe6670aaaa2
+
 
 # ╔═╡ eca31302-e1e7-4f9c-bc2a-21fb6a55143f
 md"""
@@ -76,9 +155,38 @@ Building an **optimization policy**:
 
 """
 
+# ╔═╡ 389ebd27-2659-49fd-8c14-f6ee23bd6013
+md""" 
+Bayesian decision theory -- 
+"""
+
+# ╔═╡ 3ff05dec-ba97-4a87-a9fd-50458085f2fe
+
+
 # ╔═╡ 08a5143e-e67b-485f-a6df-0a81fede8853
 md"""
 #### Exploitation & exploration tradoff
+"""
+
+# ╔═╡ 9985e2b6-4984-483f-afb7-a70eac124247
+
+
+# ╔═╡ 25b450f6-e369-4328-bc3e-2ef74bb5a82f
+
+
+# ╔═╡ f6582c4d-fb77-433a-bccf-52ed52520125
+
+
+# ╔═╡ dd163533-a13d-4841-ae04-0b55b3cf8170
+md"""
+##### Observation model
+
+Additive Gaussian noise:
+
+```math
+y = f(x) + \epsilon.
+```
+
 """
 
 # ╔═╡ 678dfa97-9fbc-46d1-baac-54260731c17c
@@ -203,7 +311,58 @@ k_posterior(x, z) = k(x, z) - k(x, fx.x)inv(cov(fx))k(fx.x, z)
 k(x_train, z)
 
 # ╔═╡ 5777dbea-16c1-4615-8a60-506a20e24ee2
+md"""
+Common acquisition functions in Bayesian Optimization include Expected Improvement (EI), Probability of Improvement (PI), and Upper Confidence Bound (UCB).
+"""
 
+# ╔═╡ a3864375-2b3c-41f7-9f69-69c0198c1d5d
+md"""
+#### Expected Improvement (EI)
+
+"""
+
+# ╔═╡ 839ead0a-cc2e-42e9-b4b5-a93a2e1a6cc4
+md"""
+
+"""
+
+# ╔═╡ 50c3708d-568d-4289-9951-c3bcb300fb6c
+function expected_improvement(gp_posterior, x_new, y_best)
+    μ, σ = AbstractGPs.predict(gp_posterior, x_new)
+    σ = σ + 1e-9  # To avoid division by zero
+    z = (μ - y_best) / σ
+    return (μ - y_best) * cdf(Normal(), z) + σ * pdf(Normal(), z)
+end
+
+# ╔═╡ 6314cb5f-9a4a-4a21-8afa-93d2074a00c3
+function find_next_point(gp_posterior, y_best)
+    objective(x) = -expected_improvement(gp_posterior, [x], y_best)  # We minimize the negative EI
+
+    result = optimize(objective, 0.0, 5.0)  # Search in the interval [0, 5]
+    return Optim.minimizer(result)
+end
+
+# ╔═╡ c1e7c15d-d058-4c7d-87c8-ddf0ca7c9815
+# Bayesian Optimization loop
+n_iterations = 10
+
+# ╔═╡ 6deb8d6d-ef2a-474d-ac58-685d907399a2
+for i in 1:n_iterations
+    # Find the next point to sample
+    x_next = find_next_point(posterior, maximum(y))
+
+    # Evaluate the objective function
+    y_next = objective_function(x_next)
+
+    # Update the dataset
+    X = vcat(X, x_next)
+    y = vcat(y, y_next)
+
+    # Update the GP
+    posterior = gp(X, y, mean_func)
+
+    println("Iteration $i: x_next = $x_next, y_next = $y_next")
+end
 
 # ╔═╡ d3a8237e-9321-4620-a0d5-33be5b94f7b6
 
@@ -247,9 +406,13 @@ Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 FillArrays = "1a297f60-69ca-5386-bcde-b61e274b549b"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 StatsFuns = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
+Surrogates = "6fc51010-71bc-11e9-0e15-a3fcc6593c49"
+SurrogatesAbstractGPs = "78aa1720-c2af-471b-b307-964fd38f9b5f"
+Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
 
 [compat]
 AbstractGPs = "~0.5.21"
@@ -259,8 +422,12 @@ Colors = "~0.12.10"
 Distributions = "~0.25.108"
 FillArrays = "~1.10.2"
 LaTeXStrings = "~1.3.1"
+Optim = "~1.9.4"
 PlutoUI = "~0.7.59"
 StatsFuns = "~1.3.1"
+Surrogates = "~6.9.0"
+SurrogatesAbstractGPs = "~0.1.0"
+Zygote = "~0.6.69"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -269,7 +436,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "0456684db511faac9040bae6a6e86b666d07acef"
+project_hash = "c55f6c766965df5c6379fe5c477cec5fe0d6dc9e"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -309,6 +476,27 @@ version = "1.3.2"
 git-tree-sha1 = "2d9c9a55f9c93e8887ad391fbae72f8ef55e1177"
 uuid = "1520ce14-60c1-5f80-bbc7-55ef81b5835c"
 version = "0.4.5"
+
+[[deps.Accessors]]
+deps = ["CompositionsBase", "ConstructionBase", "Dates", "InverseFunctions", "LinearAlgebra", "MacroTools", "Markdown", "Test"]
+git-tree-sha1 = "c0d491ef0b135fd7d63cbc6404286bc633329425"
+uuid = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
+version = "0.1.36"
+
+    [deps.Accessors.extensions]
+    AccessorsAxisKeysExt = "AxisKeys"
+    AccessorsIntervalSetsExt = "IntervalSets"
+    AccessorsStaticArraysExt = "StaticArrays"
+    AccessorsStructArraysExt = "StructArrays"
+    AccessorsUnitfulExt = "Unitful"
+
+    [deps.Accessors.weakdeps]
+    AxisKeys = "94b1ba4f-4ee9-5380-92f1-94cde586c3c5"
+    IntervalSets = "8197267c-284f-5f27-9208-e0e47529a953"
+    Requires = "ae029012-a4dd-5104-9daa-d747884805df"
+    StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+    StructArrays = "09ab397b-f2b6-538f-b94a-2f83cf4a842a"
+    Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra", "Requires"]
@@ -432,6 +620,12 @@ git-tree-sha1 = "f641eb0a4f00c343bbc32346e1217b86f3ce9dad"
 uuid = "49dc2e85-a5d0-5ad3-a950-438e2897f1b9"
 version = "0.5.1"
 
+[[deps.ChainRules]]
+deps = ["Adapt", "ChainRulesCore", "Compat", "Distributed", "GPUArraysCore", "IrrationalConstants", "LinearAlgebra", "Random", "RealDot", "SparseArrays", "SparseInverseSubset", "Statistics", "StructArrays", "SuiteSparse"]
+git-tree-sha1 = "e7d1016142a71c980309114ee30a3e4f870902f4"
+uuid = "082447d4-558c-5d27-93f4-14fc19e9eca2"
+version = "1.65.0"
+
 [[deps.ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra"]
 git-tree-sha1 = "575cd02e080939a33b6df6c5853d14924c08e35b"
@@ -506,12 +700,15 @@ version = "1.1.0+0"
 git-tree-sha1 = "802bb88cd69dfd1509f6670416bd4434015693ad"
 uuid = "a33af91c-f02d-484b-be07-31d278c5ca2b"
 version = "0.1.2"
+weakdeps = ["InverseFunctions"]
 
     [deps.CompositionsBase.extensions]
     CompositionsBaseInverseFunctionsExt = "InverseFunctions"
 
-    [deps.CompositionsBase.weakdeps]
-    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
+[[deps.ConcreteStructs]]
+git-tree-sha1 = "f749037478283d372048690eb3b5f92a79432b34"
+uuid = "2569d6c7-a4a2-43d3-a901-331e8e4be471"
+version = "0.2.3"
 
 [[deps.ConstructionBase]]
 deps = ["LinearAlgebra"]
@@ -554,6 +751,12 @@ deps = ["DataStructures", "EnumX", "ExactPredicates", "Random", "SimpleGraphs"]
 git-tree-sha1 = "d4e9dc4c6106b8d44e40cd4faf8261a678552c7c"
 uuid = "927a84f5-c5f4-47a5-9785-b46e178433df"
 version = "0.8.12"
+
+[[deps.DelimitedFiles]]
+deps = ["Mmap"]
+git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
+uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+version = "1.9.1"
 
 [[deps.DiffResults]]
 deps = ["StaticArraysCore"]
@@ -637,6 +840,24 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "1c6317308b9dc757616f0b5cb379db10494443a7"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
 version = "2.6.2+0"
+
+[[deps.ExtendableSparse]]
+deps = ["DocStringExtensions", "ILUZero", "LinearAlgebra", "Printf", "Requires", "SparseArrays", "Sparspak", "StaticArrays", "SuiteSparse", "Test"]
+git-tree-sha1 = "05585b2f21ed4c51878247cb5ce0beb87a71b631"
+uuid = "95c220a8-a1cf-11e9-0c77-dbfce5f500b3"
+version = "1.4.0"
+
+    [deps.ExtendableSparse.extensions]
+    ExtendableSparseAMGCLWrapExt = "AMGCLWrap"
+    ExtendableSparseAlgebraicMultigridExt = "AlgebraicMultigrid"
+    ExtendableSparseIncompleteLUExt = "IncompleteLU"
+    ExtendableSparsePardisoExt = "Pardiso"
+
+    [deps.ExtendableSparse.weakdeps]
+    AMGCLWrap = "4f76b812-4ba5-496d-b042-d70715554288"
+    AlgebraicMultigrid = "2169fc97-5a83-5252-b627-83903c6c433c"
+    IncompleteLU = "40713840-3770-5561-ab4c-a76e7d0d7895"
+    Pardiso = "46dd5b70-b6fb-5a00-ae2d-e8fea33afaf2"
 
 [[deps.Extents]]
 git-tree-sha1 = "2140cd04483da90b2da7f99b2add0750504fc39c"
@@ -771,6 +992,24 @@ version = "0.4.10"
 deps = ["Random"]
 uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
+[[deps.GLM]]
+deps = ["Distributions", "LinearAlgebra", "Printf", "Reexport", "SparseArrays", "SpecialFunctions", "Statistics", "StatsAPI", "StatsBase", "StatsFuns", "StatsModels"]
+git-tree-sha1 = "273bd1cd30768a2fddfa3fd63bbc746ed7249e5f"
+uuid = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
+version = "1.9.0"
+
+[[deps.GPUArrays]]
+deps = ["Adapt", "GPUArraysCore", "LLVM", "LinearAlgebra", "Printf", "Random", "Reexport", "Serialization", "Statistics"]
+git-tree-sha1 = "68e8ff56a4a355a85d2784b94614491f8c900cde"
+uuid = "0c68f7d7-f131-5f86-a1c3-88cf8149b2d7"
+version = "10.1.0"
+
+[[deps.GPUArraysCore]]
+deps = ["Adapt"]
+git-tree-sha1 = "ec632f177c0d990e64d955ccc1b8c04c485a0950"
+uuid = "46192b85-c4d5-4398-a991-12ede77f4527"
+version = "0.1.6"
+
 [[deps.GeoInterface]]
 deps = ["Extents"]
 git-tree-sha1 = "801aef8228f7f04972e596b09d4dba481807c913"
@@ -842,11 +1081,23 @@ git-tree-sha1 = "7134810b1afce04bbc1045ca1985fbe81ce17653"
 uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 version = "0.9.5"
 
+[[deps.ILUZero]]
+deps = ["LinearAlgebra", "SparseArrays"]
+git-tree-sha1 = "b007cfc7f9bee9a958992d2301e9c5b63f332a90"
+uuid = "88f59080-6952-5380-9ea5-54057fb9a43f"
+version = "0.2.0"
+
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
 git-tree-sha1 = "8b72179abc660bfab5e28472e019392b97d0985c"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
 version = "0.2.4"
+
+[[deps.IRTools]]
+deps = ["InteractiveUtils", "MacroTools", "Test"]
+git-tree-sha1 = "d05027a62b4c9a2223820a9fdeae1110ad3946a5"
+uuid = "7869d1d1-7146-5819-86e3-90919afe41df"
+version = "0.4.13"
 
 [[deps.ImageAxes]]
 deps = ["AxisArrays", "ImageBase", "ImageCore", "Reexport", "SimpleTraits"]
@@ -944,6 +1195,16 @@ weakdeps = ["Random", "RecipesBase", "Statistics"]
     IntervalSetsRecipesBaseExt = "RecipesBase"
     IntervalSetsStatisticsExt = "Statistics"
 
+[[deps.InverseFunctions]]
+deps = ["Test"]
+git-tree-sha1 = "e7cbed5032c4c397a6ac23d1493f3289e01231c4"
+uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
+version = "0.1.14"
+weakdeps = ["Dates"]
+
+    [deps.InverseFunctions.extensions]
+    DatesExt = "Dates"
+
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
@@ -959,6 +1220,12 @@ version = "0.1.1"
 git-tree-sha1 = "42d5f897009e7ff2cf88db414a389e5ed1bdd023"
 uuid = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
 version = "1.10.0"
+
+[[deps.IterativeSolvers]]
+deps = ["LinearAlgebra", "Printf", "Random", "RecipesBase", "SparseArrays"]
+git-tree-sha1 = "59545b0a2b27208b0650df0a46b8e3019f85055b"
+uuid = "42fd0dbc-a981-5370-80f2-aaf504508153"
+version = "0.9.4"
 
 [[deps.IteratorInterfaceExtensions]]
 git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
@@ -1007,6 +1274,24 @@ git-tree-sha1 = "f6250b16881adf048549549fba48b1161acdac8c"
 uuid = "c1c5ebd0-6772-5130-a774-d5fcae4a789d"
 version = "3.100.1+0"
 
+[[deps.LLVM]]
+deps = ["CEnum", "LLVMExtra_jll", "Libdl", "Preferences", "Printf", "Requires", "Unicode"]
+git-tree-sha1 = "839c82932db86740ae729779e610f07a1640be9a"
+uuid = "929cbde3-209d-540e-8aea-75f648917ca0"
+version = "6.6.3"
+
+    [deps.LLVM.extensions]
+    BFloat16sExt = "BFloat16s"
+
+    [deps.LLVM.weakdeps]
+    BFloat16s = "ab4f0b2a-ad5b-11e8-123f-65d77653426b"
+
+[[deps.LLVMExtra_jll]]
+deps = ["Artifacts", "JLLWrappers", "LazyArtifacts", "Libdl", "TOML"]
+git-tree-sha1 = "88b916503aac4fb7f701bb625cd84ca5dd1677bc"
+uuid = "dad2f222-ce93-54a1-a47d-0025e8a3acab"
+version = "0.0.29+0"
+
 [[deps.LLVMOpenMP_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "d986ce2d884d49126836ea94ed5bfb0f12679713"
@@ -1023,6 +1308,12 @@ version = "2.10.1+0"
 git-tree-sha1 = "50901ebc375ed41dbf8058da26f9de442febbbec"
 uuid = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 version = "1.3.1"
+
+[[deps.LatticeRules]]
+deps = ["Random"]
+git-tree-sha1 = "7f5b02258a3ca0221a6a9710b0a0a2e8fb4957fe"
+uuid = "73f95e8e-ec14-4e6a-8b18-0d2e271c4e55"
+version = "0.0.1"
 
 [[deps.LazyArtifacts]]
 deps = ["Artifacts", "Pkg"]
@@ -1465,6 +1756,16 @@ git-tree-sha1 = "9b23c31e76e333e6fb4c1595ae6afa74966a729e"
 uuid = "1fd47b50-473d-5c70-9696-f719f8f3bcdc"
 version = "2.9.4"
 
+[[deps.QuasiMonteCarlo]]
+deps = ["Accessors", "ConcreteStructs", "LatticeRules", "LinearAlgebra", "Primes", "Random", "Requires", "Sobol", "StatsBase"]
+git-tree-sha1 = "cc086f8485bce77b6187141e1413c3b55f9a4341"
+uuid = "8a4e6c94-4038-4cdc-81c3-7e6ffdb2a71b"
+version = "0.3.3"
+weakdeps = ["Distributions"]
+
+    [deps.QuasiMonteCarlo.extensions]
+    QuasiMonteCarloDistributionsExt = "Distributions"
+
 [[deps.REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
@@ -1487,6 +1788,12 @@ weakdeps = ["FixedPointNumbers"]
 
     [deps.Ratios.extensions]
     RatiosFixedPointNumbersExt = "FixedPointNumbers"
+
+[[deps.RealDot]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "9f0a1b71baaf7650f4fa8a1d168c7fb6ee41f0c9"
+uuid = "c1ae055f-0cd5-4b69-90a6-9a35b1a98df9"
+version = "0.1.0"
 
 [[deps.RecipesBase]]
 deps = ["PrecompileTools"]
@@ -1563,6 +1870,11 @@ version = "0.4.1"
 deps = ["Distributed", "Mmap", "Random", "Serialization"]
 uuid = "1a1011a3-84de-559e-8e89-a11a2f7dc383"
 
+[[deps.ShiftedArrays]]
+git-tree-sha1 = "503688b59397b3307443af35cd953a13e8005c16"
+uuid = "1277b4bf-5013-50f5-be3d-901d8477a67a"
+version = "2.0.0"
+
 [[deps.Showoff]]
 deps = ["Dates", "Grisu"]
 git-tree-sha1 = "91eddf657aca81df9ae6ceb20b959ae5653ad1de"
@@ -1611,6 +1923,12 @@ git-tree-sha1 = "2da10356e31327c7096832eb9cd86307a50b1eb6"
 uuid = "45858cf5-a6b0-47a3-bbea-62219f50df47"
 version = "0.1.3"
 
+[[deps.Sobol]]
+deps = ["DelimitedFiles", "Random"]
+git-tree-sha1 = "5a74ac22a9daef23705f010f72c81d6925b19df8"
+uuid = "ed01d8cd-4d21-5b2a-85b4-cc3bdc58bad4"
+version = "1.5.0"
+
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
 
@@ -1624,6 +1942,18 @@ version = "1.2.1"
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 version = "1.10.0"
+
+[[deps.SparseInverseSubset]]
+deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
+git-tree-sha1 = "52962839426b75b3021296f7df242e40ecfc0852"
+uuid = "dc90abb0-5640-4711-901d-7e5b23a2fada"
+version = "0.1.2"
+
+[[deps.Sparspak]]
+deps = ["Libdl", "LinearAlgebra", "Logging", "OffsetArrays", "Printf", "SparseArrays", "Test"]
+git-tree-sha1 = "342cf4b449c299d8d1ceaf00b7a49f4fbc7940e7"
+uuid = "e56a9233-b9d6-4f03-8d0f-1825330902ac"
+version = "0.3.9"
 
 [[deps.SpecialFunctions]]
 deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
@@ -1679,32 +2009,30 @@ deps = ["HypergeometricFunctions", "IrrationalConstants", "LogExpFunctions", "Re
 git-tree-sha1 = "cef0472124fab0695b58ca35a77c6fb942fdab8a"
 uuid = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
 version = "1.3.1"
+weakdeps = ["ChainRulesCore", "InverseFunctions"]
 
     [deps.StatsFuns.extensions]
     StatsFunsChainRulesCoreExt = "ChainRulesCore"
     StatsFunsInverseFunctionsExt = "InverseFunctions"
 
-    [deps.StatsFuns.weakdeps]
-    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
+[[deps.StatsModels]]
+deps = ["DataAPI", "DataStructures", "LinearAlgebra", "Printf", "REPL", "ShiftedArrays", "SparseArrays", "StatsAPI", "StatsBase", "StatsFuns", "Tables"]
+git-tree-sha1 = "5cf6c4583533ee38639f73b880f35fc85f2941e0"
+uuid = "3eaba693-59b7-5ba5-a881-562e759f1c8d"
+version = "0.7.3"
 
 [[deps.StructArrays]]
 deps = ["ConstructionBase", "DataAPI", "Tables"]
 git-tree-sha1 = "f4dc295e983502292c4c3f951dbb4e985e35b3be"
 uuid = "09ab397b-f2b6-538f-b94a-2f83cf4a842a"
 version = "0.6.18"
+weakdeps = ["Adapt", "GPUArraysCore", "SparseArrays", "StaticArrays"]
 
     [deps.StructArrays.extensions]
     StructArraysAdaptExt = "Adapt"
     StructArraysGPUArraysCoreExt = "GPUArraysCore"
     StructArraysSparseArraysExt = "SparseArrays"
     StructArraysStaticArraysExt = "StaticArrays"
-
-    [deps.StructArrays.weakdeps]
-    Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
-    GPUArraysCore = "46192b85-c4d5-4398-a991-12ede77f4527"
-    SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-    StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 
 [[deps.SuiteSparse]]
 deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
@@ -1714,6 +2042,18 @@ uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
 version = "7.2.1+1"
+
+[[deps.Surrogates]]
+deps = ["Distributions", "ExtendableSparse", "GLM", "IterativeSolvers", "LinearAlgebra", "QuasiMonteCarlo", "SparseArrays", "Statistics", "Zygote"]
+git-tree-sha1 = "48719c76eb2061bfd681497c6f3c81cce0a9f6cf"
+uuid = "6fc51010-71bc-11e9-0e15-a3fcc6593c49"
+version = "6.9.0"
+
+[[deps.SurrogatesAbstractGPs]]
+deps = ["AbstractGPs", "Surrogates"]
+git-tree-sha1 = "4c5605ca036a5ede3bb0927aef8854b3481f9923"
+uuid = "78aa1720-c2af-471b-b307-964fd38f9b5f"
+version = "0.1.0"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -1866,6 +2206,22 @@ deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
 version = "1.2.13+1"
 
+[[deps.Zygote]]
+deps = ["AbstractFFTs", "ChainRules", "ChainRulesCore", "DiffRules", "Distributed", "FillArrays", "ForwardDiff", "GPUArrays", "GPUArraysCore", "IRTools", "InteractiveUtils", "LinearAlgebra", "LogExpFunctions", "MacroTools", "NaNMath", "PrecompileTools", "Random", "Requires", "SparseArrays", "SpecialFunctions", "Statistics", "ZygoteRules"]
+git-tree-sha1 = "4ddb4470e47b0094c93055a3bcae799165cc68f1"
+uuid = "e88e6eb3-aa80-5325-afca-941959d7151f"
+version = "0.6.69"
+
+    [deps.Zygote.extensions]
+    ZygoteColorsExt = "Colors"
+    ZygoteDistancesExt = "Distances"
+    ZygoteTrackerExt = "Tracker"
+
+    [deps.Zygote.weakdeps]
+    Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
+    Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+    Tracker = "9f7883ad-71c0-57eb-9f7f-b5c9e6d3789c"
+
 [[deps.ZygoteRules]]
 deps = ["ChainRulesCore", "MacroTools"]
 git-tree-sha1 = "27798139afc0a2afa7b1824c206d5e87ea587a00"
@@ -1954,9 +2310,20 @@ version = "3.5.0+0"
 # ╠═63189b4e-1d82-4831-a9c5-c2ea5bfb355a
 # ╟─2216826c-7bca-429a-af7e-97fe3cf86367
 # ╠═c9c2b0e6-7ebe-4618-b28e-bb7ca9deb293
-# ╠═dd163533-a13d-4841-ae04-0b55b3cf8170
-# ╟─eca31302-e1e7-4f9c-bc2a-21fb6a55143f
-# ╠═08a5143e-e67b-485f-a6df-0a81fede8853
+# ╟─78fa4939-6658-4149-ae0c-cb7ecfdbfce9
+# ╟─1f4e4b86-593b-4654-b9d0-be5589e5ffc8
+# ╠═728ae80e-94c8-4f6e-b3bf-bba814fa9559
+# ╠═ca4863ed-02af-4409-a9a5-32a9e7ee05ed
+# ╠═58a6f6bb-2e91-4f89-85a9-4fe6670aaaa2
+# ╠═eca31302-e1e7-4f9c-bc2a-21fb6a55143f
+# ╠═389ebd27-2659-49fd-8c14-f6ee23bd6013
+# ╠═3ff05dec-ba97-4a87-a9fd-50458085f2fe
+# ╟─08a5143e-e67b-485f-a6df-0a81fede8853
+# ╠═9985e2b6-4984-483f-afb7-a70eac124247
+# ╠═2d9bb0e6-6407-4404-9952-71d8280e77f8
+# ╠═25b450f6-e369-4328-bc3e-2ef74bb5a82f
+# ╠═f6582c4d-fb77-433a-bccf-52ed52520125
+# ╟─dd163533-a13d-4841-ae04-0b55b3cf8170
 # ╠═678dfa97-9fbc-46d1-baac-54260731c17c
 # ╠═38c9ae97-cba9-4e35-a464-119587cbb64b
 # ╠═66ea66fe-8e40-4c55-a7e8-e85e94521745
@@ -1977,6 +2344,14 @@ version = "3.5.0+0"
 # ╠═0f00b9a5-c1e0-4ece-a40e-f0fccb342a88
 # ╠═ba6aa7d2-c272-41fb-8a39-0759c7aa450e
 # ╠═5777dbea-16c1-4615-8a60-506a20e24ee2
+# ╟─a3864375-2b3c-41f7-9f69-69c0198c1d5d
+# ╠═839ead0a-cc2e-42e9-b4b5-a93a2e1a6cc4
+# ╠═12cae9e0-4a17-4717-bcfc-185856315427
+# ╠═50c3708d-568d-4289-9951-c3bcb300fb6c
+# ╠═a86222a6-0d29-445c-9eab-444ac3f74cd1
+# ╠═6314cb5f-9a4a-4a21-8afa-93d2074a00c3
+# ╠═c1e7c15d-d058-4c7d-87c8-ddf0ca7c9815
+# ╠═6deb8d6d-ef2a-474d-ac58-685d907399a2
 # ╠═d3a8237e-9321-4620-a0d5-33be5b94f7b6
 # ╟─55c6ab64-da8b-4459-9608-45bb828d40d2
 # ╟─9e590901-b5e9-46c3-b6bb-1be3722f5086
