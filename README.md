@@ -4,10 +4,10 @@
 
 This repository provides a Gaussian process regression framework for predicting density functional theory (DFT) quantities—such as energies and forces—with:
 
-- ✅ Predictive **uncertainty quantification**
-- ✅ Support for **input-dependent noise**
-- ✅ Accurate energy and force predictions using **SOAP descriptors**
-- ✅ Modular design using PyTorch and Metatensor
+- Predictive **uncertainty quantification**
+- Support for **input-dependent noise**
+- Accurate energy and force predictions using **SOAP descriptors**
+- Modular design using PyTorch and Metatensor
 
 ---
 
