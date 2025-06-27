@@ -7,7 +7,7 @@ This repository provides a Gaussian process regression framework for predicting 
 - Predictive **uncertainty quantification**
 - Support for **input-dependent noise**
 - Accurate energy and force predictions using **SOAP descriptors**
-- Modular design using PyTorch and Metatensor
+- Modular design using PyTorch and [**Metatensor**](https://metatensor.org)
 
 ---
 
