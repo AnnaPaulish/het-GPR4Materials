@@ -1,0 +1,15 @@
+torch>=1.12
+numpy>=1.21
+scipy>=1.8
+matplotlib>=3.5
+pyyaml>=6.0
+ase>=3.22
+notebook
+
+# Metatensor and Metatrain with GAP support
+metatensor>=0.7
+metatrain@git+https://github.com/metatensor/metatrain.git#egg=metatrain[gap]
+
+# featomic is used for SOAP descriptors
+featomic@git+https://github.com/metatensor/featomic.git
+
