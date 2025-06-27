@@ -48,6 +48,7 @@ pip install -r requirements.txt
 ├── gpr.py               # Core GPR model and kernel solver
 ├── gpr_example.ipynb    # End-to-end training + evaluation notebook
 ├── options.yaml         # Model, training, and dataset configuration
-├── images/              # Saved plots (optional)
+├── data/                # Train and test data
+├── report/              # Report and slides
 └── README.md
 ```
