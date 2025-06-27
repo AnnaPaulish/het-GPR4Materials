@@ -1,0 +1,615 @@
+2
+Lattice="2.038674 -2.15884 -1.214062 -2.224141 2.221598 -1.668881 2.180158 2.114857 1.55487" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=16.8771979 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-227.91079527 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 14 12" structure_id=27 energy_units=eV pbc="T T T"
+Si       1.10554620      -0.16128625       1.08036032       0.00000000       0.00000000       0.00000000       1.86565952       6.43789604       1.01191983 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.10554620       0.16128625      -1.08036032       0.00000000       0.00000000       0.00000000      -1.86565952      -6.43789604      -1.01191983 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.394776 -2.619661 -1.159337 -2.486624 2.529807 -1.163389 2.657275 2.790312 1.328223" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=20.54369739 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.27298091 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="17 17 9" structure_id=28 energy_units=eV pbc="T T T"
+Si       1.29853056       0.11377103       0.82031472       0.00000000       0.00000000       0.00000000       0.04064522       0.05965485       0.02510031 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.29853056      -0.11377103      -0.82031472       0.00000000       0.00000000       0.00000000      -0.04064522      -0.05965485      -0.02510031 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.271726 -2.135221 -1.398419 -2.304929 2.188543 -1.55738 2.261221 2.091514 1.458894" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=19.56067039 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.24532227 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="14 14 11" structure_id=29 energy_units=eV pbc="T T T"
+Si       1.08986942       0.01150858       1.16671081       0.00000000       0.00000000       0.00000000       1.29259371      -0.65563947       0.31695740 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.08986942      -0.01150858      -1.16671081       0.00000000       0.00000000       0.00000000      -1.29259371       0.65563947      -0.31695740 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.129967 -2.246183 -1.408138 -2.205431 2.210935 -1.481853 2.250412 2.291165 1.54729" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=21.43585118 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.13633968 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="15 14 11" structure_id=30 energy_units=eV pbc="T T T"
+Si       1.15443700      -0.04151774       0.79586630       0.00000000       0.00000000       0.00000000       0.10290419       2.64717120       0.22512042 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.15443700       0.04151774      -0.79586630       0.00000000       0.00000000       0.00000000      -0.10290419      -2.64717120      -0.22512042 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.652917 -2.331746 -1.029376 -2.682037 2.476096 -1.349239 2.896721 2.546429 1.083423" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=15.24204402 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.25645371 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 15 9" structure_id=31 energy_units=eV pbc="T T T"
+Si       1.46360955       0.04330307       1.01698622       0.00000000       0.00000000       0.00000000       0.19470711      -0.17238689       0.01215744 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.46360955      -0.04330307      -1.01698622       0.00000000       0.00000000       0.00000000      -0.19470711       0.17238689      -0.01215744 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.733615 -2.401513 -1.258119 -2.690895 2.390739 -1.161292 2.8922 2.602818 1.180496" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=19.44222446 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.27449502 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="15 16 9" structure_id=32 energy_units=eV pbc="T T T"
+Si       1.50107889       0.12502432       1.10696507       0.00000000       0.00000000       0.00000000       0.23689383      -0.22104880      -0.05247993 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.50107889      -0.12502432      -1.10696507       0.00000000       0.00000000       0.00000000      -0.23689383       0.22104880       0.05247993 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.585829 -2.070923 -1.782858 -2.478697 1.845882 -1.17142 2.391809 1.984035 1.585414" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=19.07723485 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-228.39069442 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="13 16 12" structure_id=33 energy_units=eV pbc="T T T"
+Si       1.13130421       0.08270456       1.61138877       0.00000000       0.00000000       0.00000000      -0.16308252       4.74008090      -2.55484290 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.13130421      -0.08270456      -1.61138877       0.00000000       0.00000000       0.00000000       0.16308252      -4.74008090       2.55484290 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.56772 -2.216309 -1.006067 -2.616085 2.385124 -1.406167 2.971604 2.571828 1.095042" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=19.70983546 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.24126739 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 15 9" structure_id=34 energy_units=eV pbc="T T T"
+Si       1.42128949       0.09173394       1.17766490       0.00000000       0.00000000       0.00000000       0.09125676      -0.45677101      -0.08722547 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.42128949      -0.09173394      -1.17766490       0.00000000       0.00000000       0.00000000      -0.09125676       0.45677101       0.08722547 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.389717 -2.512429 -1.247333 -2.363056 2.573099 -1.310501 2.34702 2.496392 1.198972" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=21.40975978 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.4679367 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="15 15 10" structure_id=35 energy_units=eV pbc="T T T"
+Si       1.24021330      -0.03084452       1.07490369       0.00000000       0.00000000       0.00000000      -1.66207390      -0.05930115      -0.32932971 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.24021330       0.03084452      -1.07490369       0.00000000       0.00000000       0.00000000       1.66207390       0.05930115       0.32932971 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.498808 -2.277911 -1.443497 -2.412508 2.282588 -1.293325 2.567352 2.432755 1.284292" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=18.712372 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.52312912 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="14 15 10" structure_id=36 energy_units=eV pbc="T T T"
+Si       1.16259394       0.07896997       1.37880905       0.00000000       0.00000000       0.00000000       0.60762681      -0.12975277       0.09130818 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.16259394      -0.07896997      -1.37880905       0.00000000       0.00000000       0.00000000      -0.60762681       0.12975277      -0.09130818 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.68356 -2.152695 -1.387968 -2.504842 2.256641 -1.249832 2.514378 2.162231 1.058228" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=20.03118195 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.42126504 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="14 15 10" structure_id=37 energy_units=eV pbc="T T T"
+Si       1.14079923      -0.04558211       1.42908811       0.00000000       0.00000000       0.00000000      -0.04395289      -0.83395998      -0.33474373 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.14079923       0.04558211      -1.42908811       0.00000000       0.00000000       0.00000000       0.04395289       0.83395998       0.33474373 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.376957 -2.734522 -1.395526 -2.226139 2.635317 -0.933763 2.440684 2.949067 1.116818" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=18.9917284 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.00910252 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 17 9" structure_id=38 energy_units=eV pbc="T T T"
+Si       1.08724020       0.03180390       0.35730293       0.00000000       0.00000000       0.00000000       1.42881894      -0.10424976       0.34018017 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.08724020      -0.03180390      -0.35730293       0.00000000       0.00000000       0.00000000      -1.42881894       0.10424976      -0.34018017 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.49507 -2.59371 -1.141981 -2.480919 2.624266 -1.172544 2.555631 2.668423 1.116268" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=19.37280747 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.28630282 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 16 9" structure_id=39 energy_units=eV pbc="T T T"
+Si       1.29571303       0.00976893       0.62421499       0.00000000       0.00000000       0.00000000      -0.06625815       0.02403429      -0.00584164 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.29571303      -0.00976893      -0.62421499       0.00000000       0.00000000       0.00000000       0.06625815      -0.02403429       0.00584164 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="1.854978 -2.011243 -1.348422 -1.849253 2.067258 -1.441201 2.120549 2.282539 1.338232" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=12.01087064 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-228.33591513 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="15 14 11" structure_id=40 energy_units=eV pbc="T T T"
+Si       1.01998796       0.03249739       0.90406032       0.00000000       0.00000000       0.00000000      -0.83921970       0.92691952      -0.82303202 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.01998796      -0.03249739      -0.90406032       0.00000000       0.00000000       0.00000000       0.83921970      -0.92691952       0.82303202 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.297508 -2.402235 -1.107922 -2.388519 2.358271 -1.194206 2.600344 2.61406 1.275903" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=23.19495411 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.22316871 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="17 17 10" structure_id=41 energy_units=eV pbc="T T T"
+Si       1.29408271       0.00056571       1.03714859       0.00000000       0.00000000       0.00000000      -0.40608549       0.29422423      -0.00623092 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.29408271      -0.00056571      -1.03714859       0.00000000       0.00000000       0.00000000       0.40608549      -0.29422423       0.00623092 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="1.850844 -2.133599 -1.370786 -1.801557 2.1402 -1.293203 2.269643 2.601685 1.280479" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=14.37502071 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.01518857 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="15 15 10" structure_id=42 energy_units=eV pbc="T T T"
+Si       1.06504020       0.17527888       0.59946502       0.00000000       0.00000000       0.00000000      -0.85003967      -1.32337785      -0.00592676 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.06504020      -0.17527888      -0.59946502       0.00000000       0.00000000       0.00000000       0.85003967       1.32337785       0.00592676 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.696304 -2.436941 -1.269483 -2.69442 2.299358 -1.010815 2.511467 2.253988 1.265221" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=28.94306445 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-228.82000122 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="17 18 11" structure_id=43 energy_units=eV pbc="T T T"
+Si       1.21966465      -0.05751233       1.25199714       0.00000000       0.00000000       0.00000000      -0.02947650       2.15893918      -0.63312678 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.21966465       0.05751233      -1.25199714       0.00000000       0.00000000       0.00000000       0.02947650      -2.15893918       0.63312678 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.086507 -2.709597 -1.509226 -2.217134 2.444623 -1.261253 2.092395 2.584858 1.749727" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=23.37978906 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.17403006 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 16 11" structure_id=44 energy_units=eV pbc="T T T"
+Si       1.05847877      -0.02219603       0.55115009       0.00000000       0.00000000       0.00000000      -1.08044847       0.38052135       0.74144218 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.05847877       0.02219603      -0.55115009       0.00000000       0.00000000       0.00000000       1.08044847      -0.38052135      -0.74144218 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.806272 -2.391633 -1.118541 -2.914172 2.309902 -1.166867 2.785416 2.262877 1.317644" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=21.95215395 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-228.96534761 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="17 17 10" structure_id=45 energy_units=eV pbc="T T T"
+Si       1.49638759      -0.00958936       1.29032582       0.00000000       0.00000000       0.00000000       0.13152707       0.58983049      -0.13758445 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.49638759       0.00958936      -1.29032582       0.00000000       0.00000000       0.00000000      -0.13152707      -0.58983049       0.13758445 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.256692 -2.031805 -1.368796 -2.178368 2.146329 -1.436439 2.092206 1.945643 1.224942" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=15.26177075 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-228.56886298 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="14 14 12" structure_id=46 energy_units=eV pbc="T T T"
+Si       1.08636603      -0.03275077       1.31815537       0.00000000       0.00000000       0.00000000      -2.08567280      -0.06132505      -0.21378573 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.08636603       0.03275077      -1.31815537       0.00000000       0.00000000       0.00000000       2.08567280       0.06132505       0.21378573 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.123502 -1.976659 -1.34897 -2.153343 2.003431 -1.453683 2.247393 2.070709 1.404534" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=14.31919518 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-228.51022987 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="15 15 11" structure_id=47 energy_units=eV pbc="T T T"
+Si       1.18249255      -0.00878339       1.18782545       0.00000000       0.00000000       0.00000000      -2.85060180       0.76684250       0.12394287 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.18249255       0.00878339      -1.18782545       0.00000000       0.00000000       0.00000000       2.85060180      -0.76684250      -0.12394287 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.142006 -2.404621 -1.253449 -2.107495 2.444514 -1.262873 2.146797 2.443923 1.189859" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=20.11953342 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.34729677 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 15 11" structure_id=48 energy_units=eV pbc="T T T"
+Si       1.06237263      -0.07600332       0.68615945       0.00000000       0.00000000       0.00000000      -0.09744074       1.00236319      -0.09234189 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.06237263       0.07600332      -0.68615945       0.00000000       0.00000000       0.00000000       0.09744074      -1.00236319       0.09234189 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.10244 -2.010625 -1.174725 -2.220949 2.093214 -1.545726 2.063091 1.852767 1.393383" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=17.50906087 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-227.61754615 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 15 13" structure_id=49 energy_units=eV pbc="T T T"
+Si       1.12926570      -0.05763184       1.24504338       0.00000000       0.00000000       0.00000000      -1.17850929       0.65231113       0.07842126 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.12926570       0.05763184      -1.24504338       0.00000000       0.00000000       0.00000000       1.17850929      -0.65231113      -0.07842126 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.232546 -2.644381 -0.834659 -2.52321 2.66947 -1.416485 2.380807 2.501977 1.370435" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=25.88636897 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-228.82818536 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="19 17 11" structure_id=50 energy_units=eV pbc="T T T"
+Si       1.26124732      -0.07214671       0.76631897       0.00000000       0.00000000       0.00000000      -0.29934495       0.05348488       0.13760352 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.26124732       0.07214671      -0.76631897       0.00000000       0.00000000       0.00000000       0.29934495      -0.05348488      -0.13760352 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="2.509317 -2.418165 -1.154357 -2.4437 2.459662 -1.109383 2.508088 2.482552 1.033271" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=20.41948465 Ecut=18.0 virial_format=voigt length_units=angstrom dft_energy=-229.16662607 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="16 16 10" structure_id=51 energy_units=eV pbc="T T T"
+Si       1.19593715      -0.05737607       1.02190243       0.00000000       0.00000000       0.00000000       0.21378899       0.23965587       0.03072958 cartesian si_tiny/Si.upf eV/angstrom
+Si      -1.19593715       0.05737607      -1.02190243       0.00000000       0.00000000       0.00000000      -0.21378899      -0.23965587      -0.03072958 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.935514 0.0 0.0 1.967074 3.256574 0.0 1.728375 1.085623 3.061917" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=42.89381886 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.15711158 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=2 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.10716222       0.79356428       0.56188355 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.93079748       1.11474625       0.78824460       0.00000000       0.00000000       0.00000000       0.10716201      -0.79356427      -0.56188354 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.867451 0.0 0.0 1.903427 3.240924 0.0 1.723933 1.067353 3.256666" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=43.72226249 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.15915526 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=3 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.31954088       0.87247390      -0.77046975 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.93079670       1.11474656       0.78824344       0.00000000       0.00000000       0.00000000      -0.31954087      -0.87247387       0.77046971 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="4.053009 0.0 0.0 1.935709 3.230548 0.0 1.857244 0.963028 3.032233" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=41.52505984 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.04645081 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=4 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.56215357       1.30143940       0.90727232 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.93079559       1.11474490       0.78824413       0.00000000       0.00000000       0.00000000       0.56215320      -1.30143924      -0.90727207 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.792927 0.0 0.0 1.827085 3.356905 0.0 1.678781 1.050134 3.268531" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=39.29624123 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.15475797 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=5 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.93270139      -0.16937905      -0.70403263 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.93079552       1.11474502       0.78824547       0.00000000       0.00000000       0.00000000      -0.93270141       0.16937903       0.70403243 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="4.071919 0.0 0.0 1.89175 3.328273 0.0 1.85538 1.188504 3.07242" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=44.17606013 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.13323989 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="10 11 11" structure_id=6 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.55621946       0.21458851       0.75902645 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.93079676       1.11474537       0.78824471       0.00000000       0.00000000       0.00000000       0.55621975      -0.21458872      -0.75902662 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.993785 0.0 0.0 1.899635 3.316998 0.0 1.935359 1.192485 3.157898" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=47.42854752 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.22659815 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=7 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.49161963       0.22924604       0.03550000 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.93079697       1.11474557       0.78824292       0.00000000       0.00000000       0.00000000       0.49161915      -0.22924556      -0.03549976 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.854268 0.0 0.0 1.856715 3.324968 0.0 1.831564 1.110081 3.243055" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=44.95016211 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.23759876 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=8 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.32137489       0.10588177      -0.53365535 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.93079700       1.11474607       0.78824398       0.00000000       0.00000000       0.00000000      -0.32137483      -0.10588179       0.53365542 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.73629 0.0 0.0 1.908786 3.300978 0.0 2.031438 1.107542 3.128481" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=48.79923718 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.20751694 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="12 11 11" structure_id=9 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.35050641      -0.18902682      -0.26829828 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91066948       1.10312537       0.78002730       0.00000000       0.00000000       0.00000000      -0.35050647       0.18902686       0.26829832 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.756837 0.0 0.0 2.101772 3.287271 0.0 2.048608 1.097006 3.119596" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=45.01563044 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.18294748 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="12 11 11" structure_id=10 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.07539168      -0.08243450      -0.18489318 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91067141       1.10312598       0.78002690       0.00000000       0.00000000       0.00000000       0.07539164       0.08243451       0.18489325 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.803132 0.0 0.0 2.171038 3.328501 0.0 1.977264 1.172741 3.289355" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=51.95625198 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.1374497 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=11 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.42962003      -0.36591720      -0.83799724 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91066952       1.10312584       0.78002778       0.00000000       0.00000000       0.00000000       0.42961979       0.36591724       0.83799757 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.741986 0.0 0.0 1.811935 3.334769 0.0 1.891313 1.143828 3.042084" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=40.50361828 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.16816619 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=12 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.65619807      -0.44389480       0.57369429 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91067176       1.10312654       0.78002684       0.00000000       0.00000000       0.00000000      -0.65619804       0.44389474      -0.57369421 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.946745 0.0 0.0 1.920837 3.237153 0.0 1.904347 1.255944 3.29121" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=47.22664609 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.12276128 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=13 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.57840239       0.53716180      -0.89716729 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91067036       1.10312767       0.78002664       0.00000000       0.00000000       0.00000000       0.57840284      -0.53716289       0.89716849 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.624122 0.0 0.0 2.14393 3.408219 0.0 1.976346 1.185698 3.054084" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=47.03685766 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-229.96846788 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="12 11 11" structure_id=14 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       1.02906147      -1.36365816       0.19091929 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91067377       1.10312733       0.78002832       0.00000000       0.00000000       0.00000000      -1.02906143       1.36365822      -0.19091930 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.832877 0.0 0.0 1.918445 3.409752 0.0 2.155538 1.254499 3.09101" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=43.42419559 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.18226596 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=15 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.45490260      -0.71917903       0.27363138 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91067349       1.10312579       0.78002874       0.00000000       0.00000000       0.00000000       0.45490254       0.71917896      -0.27363133 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.847175 0.0 0.0 2.127212 3.35246 0.0 2.066594 1.063888 3.231953" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=45.27035476 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.18932461 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=16 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.74666931      -0.21902992      -0.55497085 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91067104       1.10312700       0.78002862       0.00000000       0.00000000       0.00000000       0.74666929       0.21902991       0.55497084 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.759799 0.0 0.0 2.032661 3.346142 0.0 1.959705 1.095845 3.298715" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=47.26229555 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.1597493 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=17 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.09414216      -0.40565353      -0.92346285 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.91067100       1.10312529       0.78002734       0.00000000       0.00000000       0.00000000      -0.09414229       0.40565363       0.92346312 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.821534 0.0 0.0 2.022814 3.226749 0.0 2.168477 1.374153 3.026268" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=42.12583189 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.03093949 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 12 11" structure_id=18 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.68047796       0.17457092       0.20186413 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292191       1.09287899       0.77278174       0.00000000       0.00000000       0.00000000       0.68047781      -0.17457077      -0.20186411 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.770449 0.0 0.0 1.749626 3.411298 0.0 2.025061 1.075152 3.168085" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=45.64639862 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.19622994 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=19 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.11520391      -0.77713336      -0.38703601 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292321       1.09287896       0.77278147       0.00000000       0.00000000       0.00000000      -0.11520391       0.77713335       0.38703601 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.795932 0.0 0.0 1.756331 3.372029 0.0 1.850759 0.903363 3.086017" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=46.23238909 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.19543854 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=20 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.20536894      -0.28952063       0.14116183 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292097       1.09288015       0.77278186       0.00000000       0.00000000       0.00000000      -0.20536895       0.28952079      -0.14116186 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.82268 0.0 0.0 1.881348 3.211393 0.0 2.266176 1.128244 3.031078" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=52.41660288 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.04820316 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="12 12 11" structure_id=21 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.55575869       0.55104355       0.16087140 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292215       1.09288030       0.77278243       0.00000000       0.00000000       0.00000000       0.55575866      -0.55104360      -0.16087142 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.712049 0.0 0.0 1.683761 3.175181 0.0 2.031825 1.1348 3.025875" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=43.90179763 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-229.97824531 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 12 11" structure_id=22 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.50904532       0.56506739       0.10111405 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292285       1.09287927       0.77278427       0.00000000       0.00000000       0.00000000      -0.50904531      -0.56506739      -0.10111400 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.654335 0.0 0.0 1.740304 3.319861 0.0 1.736268 1.167443 3.160902" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=44.41909072 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.0918383 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=23 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       1.40730797      -0.90272651      -0.77513679 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292283       1.09287871       0.77278364       0.00000000       0.00000000       0.00000000      -1.40730798       0.90272649       0.77513677 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.870111 0.0 0.0 2.129257 3.33211 0.0 1.543751 1.232178 3.206279" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=43.72028924 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.10210642 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=24 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -0.28570588      -0.41584820      -0.58030580 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292439       1.09287980       0.77278378       0.00000000       0.00000000       0.00000000       0.28570599       0.41584822       0.58030592 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.799633 0.0 0.0 1.765875 3.205408 0.0 1.601563 1.150309 3.123927" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=48.31254416 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.11040038 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 12 11" structure_id=25 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.42881852       0.51070710      -0.54087936 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292125       1.09287825       0.77278144       0.00000000       0.00000000       0.00000000      -0.42881850      -0.51070710       0.54087932 cartesian si_tiny/Si.upf eV/angstrom
+2
+Lattice="3.768794 0.0 0.0 1.826215 3.253884 0.0 1.817171 1.07375 3.11605" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=39.71355431 Ecut=26.0 virial_format=voigt length_units=angstrom dft_energy=-230.21037834 tol=1e-06 dataset=si_tiny_run2 kpoints_mp_grid="11 11 11" structure_id=26 energy_units=eV pbc="T T T"
+Si       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.30961107       0.16515340      -0.28841411 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.89292605       1.09288173       0.77278352       0.00000000       0.00000000       0.00000000      -0.30961107      -0.16515337       0.28841410 cartesian si_tiny/Si.upf eV/angstrom
+16
+Lattice="5.110421 5.110444 0.000153 0.000235 5.110362 5.110355 5.110427 0.000147 5.110443" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=58.88858538 Ecut=10.0 virial_format=voigt length_units=angstrom dft_energy=-1837.58186569 tol=1e-06 dataset=gap kpoints_mp_grid="6 6 6" config_type=dia structure_id=516 energy_units=eV pbc="T T T"
+Si       0.00068462       0.08838396       0.12579628       0.00000000       0.00000000       0.00000000      -0.04434025       0.18190835      -0.44866530 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.29567391       1.19108288       1.54049885       0.00000000       0.00000000       0.00000000      -0.25568161       0.45549003       0.42166086 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.85728080      -0.08471059       2.51202542       0.00000000       0.00000000       0.00000000      -0.18720891      -0.17145830       0.06345150 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.89184441       1.36139611       3.84480556       0.00000000       0.00000000       0.00000000       0.25613183       0.06126842       0.10451752 cartesian si_tiny/Si.upf eV/angstrom
+Si      -0.16017200       2.70733665       2.42639967       0.00000000       0.00000000       0.00000000       0.64730250      -0.06542926       0.07011441 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.12990303       3.75743054       3.96965707       0.00000000       0.00000000       0.00000000      -0.06572997       0.16826234      -0.73519745 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.41309865       2.39617732       5.16410412       0.00000000       0.00000000       0.00000000       0.22108948       0.08310252      -0.38203945 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.85709906       3.89083291       5.97656631       0.00000000       0.00000000       0.00000000       0.24142002       0.07194640       0.14431867 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.33659544       2.46442720       0.03296591       0.00000000       0.00000000       0.00000000      -0.42020880       0.44273741       0.06968990 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.69561096       3.84369669       1.15094088       0.00000000       0.00000000       0.00000000       0.18109922      -0.58964671      -0.14558563 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.07639226       2.60465452       2.41455923       0.00000000       0.00000000       0.00000000       0.28648881       0.33908037       0.30638428 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.45990270       3.87093108       3.69204766       0.00000000       0.00000000       0.00000000      -0.53286811      -0.06339614       0.09373923 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.67551303       4.91470703       2.77673186       0.00000000       0.00000000       0.00000000      -0.26410661       0.12609653       0.85524229 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.79664871       6.55721934       3.85364145       0.00000000       0.00000000       0.00000000       0.23215067      -0.60436228      -0.33405677 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.28229048       5.31568488       4.99196737       0.00000000       0.00000000       0.00000000       0.15161647      -0.34787924      -0.42257111 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.49702851       6.22551448       6.63201671       0.00000000       0.00000000       0.00000000      -0.44715881      -0.08772556       0.33899934 cartesian si_tiny/Si.upf eV/angstrom
+16
+Lattice="5.109653 5.109693 0.000245 0.000367 5.10957 5.109617 5.109596 0.000302 5.109682" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=65.49335809 Ecut=10.0 virial_format=voigt length_units=angstrom dft_energy=-1837.579354 tol=1e-06 dataset=gap kpoints_mp_grid="6 6 6" config_type=dia structure_id=520 energy_units=eV pbc="T T T"
+Si       0.04211548       0.15161669       0.07537969       0.00000000       0.00000000       0.00000000      -0.09089492      -0.71183116      -0.16757194 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.30085340       1.18299805       1.58049320       0.00000000       0.00000000       0.00000000      -0.17475080       0.32685417       0.31620822 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.82106728      -0.18471516       2.50326004       0.00000000       0.00000000       0.00000000      -0.51394529       0.39445432       0.87216215 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.82881339       1.32371984       3.83649496       0.00000000       0.00000000       0.00000000      -0.10180061      -0.10275217      -0.17591421 cartesian si_tiny/Si.upf eV/angstrom
+Si      -0.12260263       2.66541000       2.53398029       0.00000000       0.00000000       0.00000000       0.24811177       0.30283518      -0.39191165 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.23895931       3.84549933       3.88912471       0.00000000       0.00000000       0.00000000      -0.72185513       0.71334833      -0.52633545 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.39785754       2.46404727       5.11727677       0.00000000       0.00000000       0.00000000       0.36006279      -0.45259833       0.23511684 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.88355392       3.85440456       6.03533416       0.00000000       0.00000000       0.00000000       0.80924332      -0.64209129      -0.06536719 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.27535825       2.47313494       0.03735082       0.00000000       0.00000000       0.00000000      -0.25302083      -0.07053595      -0.40977988 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.76049637       3.75724744       1.05687642       0.00000000       0.00000000       0.00000000       0.40012306       0.61827482      -0.23271222 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.02950724       2.59838724       2.45532095       0.00000000       0.00000000       0.00000000       0.01670096       0.00756763       0.27898556 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.34671547       3.87759706       3.71936801       0.00000000       0.00000000       0.00000000       0.16750416       0.15391188       0.23453909 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.74935972       4.96483853       2.64745766       0.00000000       0.00000000       0.00000000       0.02053128      -0.78024763       0.23825267 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.77042885       6.48988833       3.87917720       0.00000000       0.00000000       0.00000000       0.11681231       0.23102212       0.33698521 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.26961870       5.32644577       5.07122928       0.00000000       0.00000000       0.00000000       0.05804309      -0.17949573      -0.25316131 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.50590105       6.30722336       6.65951921       0.00000000       0.00000000       0.00000000      -0.34086600       0.19128462      -0.28949488 cartesian si_tiny/Si.upf eV/angstrom
+16
+Lattice="5.084961 5.084818 -0.000244 -0.000156 5.084729 5.084871 5.084827 -0.00011 5.084825" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=59.09100648 Ecut=10.0 virial_format=voigt length_units=angstrom dft_energy=-1836.91166076 tol=1e-06 dataset=gap kpoints_mp_grid="6 6 6" config_type=dia structure_id=536 energy_units=eV pbc="T T T"
+Si      -0.10663365      -0.05127809      -0.11189581       0.00000000       0.00000000       0.00000000       0.35270006      -0.29518851       0.19968497 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.21904280       1.29660262       1.07523826       0.00000000       0.00000000       0.00000000      -0.20265433      -0.10648481       0.17837949 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.14272921      -0.08925265       2.56352317       0.00000000       0.00000000       0.00000000      -0.28700337      -0.16747161       0.46538777 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.72991055       1.11946924       3.58175013       0.00000000       0.00000000       0.00000000      -0.35356754       0.09095868      -0.09522665 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.13243444       2.72971718       2.41744968       0.00000000       0.00000000       0.00000000       0.20533700      -0.24460348      -0.49725004 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.40967624       3.85462932       3.81022057       0.00000000       0.00000000       0.00000000      -0.27036050      -0.03043479       0.77323124 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.65999863       2.45667688       5.02239271       0.00000000       0.00000000       0.00000000      -0.00458542      -0.08188855      -0.87521510 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.60114293       3.83280014       6.43767437       0.00000000       0.00000000       0.00000000       0.12304440       0.22723028       0.55379668 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.67821551       2.65929671       0.10454088       0.00000000       0.00000000       0.00000000      -0.35319650       0.56467951       0.44452350 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.04441923       3.77642911       1.48574108       0.00000000       0.00000000       0.00000000      -0.38262000       0.38832320      -0.44537558 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.29720689       2.32722436       2.55666384       0.00000000       0.00000000       0.00000000       0.04462313       0.17320480       0.73338458 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.11685193       3.73727113       4.11047815       0.00000000       0.00000000       0.00000000       0.61095241      -0.03043676      -0.64852856 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.70673123       5.14997443       2.61840921       0.00000000       0.00000000       0.00000000       0.23541180       0.45714027      -0.35997207 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.91085746       6.64857058       3.76061301       0.00000000       0.00000000       0.00000000       0.12042508      -0.64216161      -0.30741840 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.82745740       5.17886265       5.18572918       0.00000000       0.00000000       0.00000000      -0.22239035       0.29160516      -0.35831430 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.47807850       6.22015578       6.22869597       0.00000000       0.00000000       0.00000000       0.38388462      -0.59447417       0.23891167 cartesian si_tiny/Si.upf eV/angstrom
+16
+Lattice="5.083958 5.08364 -0.000376 -0.000297 5.083561 5.083965 5.083796 -0.000214 5.083881" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=65.66073249 Ecut=10.0 virial_format=voigt length_units=angstrom dft_energy=-1836.80831296 tol=1e-06 dataset=gap kpoints_mp_grid="6 6 6" config_type=dia structure_id=540 energy_units=eV pbc="T T T"
+Si      -0.13591075      -0.10298817      -0.20603466       0.00000000       0.00000000       0.00000000       0.12955411      -0.05649941      -0.03679368 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.15500105       1.20116791       1.06701731       0.00000000       0.00000000       0.00000000       0.72175054      -0.55992941      -0.17809692 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.11632155      -0.12210809       2.64077295       0.00000000       0.00000000       0.00000000      -1.00741135      -0.43073930      -0.20933771 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.68887693       1.12155470       3.50932713       0.00000000       0.00000000       0.00000000       0.31515934       0.21300724       0.37742274 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.20797357       2.72855951       2.32122071       0.00000000       0.00000000       0.00000000      -0.69223263       0.27495569      -0.35408489 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.41746435       3.80419353       3.78212557       0.00000000       0.00000000       0.00000000       0.66320095       0.93776110       0.22744409 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.66926822       2.43112965       4.97746929       0.00000000       0.00000000       0.00000000      -0.01070869       0.14463827       0.86347955 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.59536899       3.87544201       6.47216030       0.00000000       0.00000000       0.00000000      -0.06281590      -0.47127166      -0.43067442 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.62187141       2.71115023       0.24278844       0.00000000       0.00000000       0.00000000       0.09534562      -0.99926000      -0.54457259 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.99591532       3.88636809       1.48288514       0.00000000       0.00000000       0.00000000       0.09132768       0.53523567       0.56920824 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.23410528       2.32312341       2.48431170       0.00000000       0.00000000       0.00000000       0.54589190       0.06181789      -0.34731056 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.09292531       3.61696027       4.10819733       0.00000000       0.00000000       0.00000000      -0.06498981       0.47112136      -0.50179502 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.78847981       5.30888083       2.74929503       0.00000000       0.00000000       0.00000000      -0.40549576      -0.81794226      -0.01893296 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.04549761       6.76651471       3.83818237       0.00000000       0.00000000       0.00000000      -0.78564548       0.90034109       0.28920323 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.81524852       5.16798724       5.11998426       0.00000000       0.00000000       0.00000000       0.63018979      -0.50713088       0.48447914 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.52877615       6.11687717       6.24754548       0.00000000       0.00000000       0.00000000      -0.16311794       0.30389356      -0.18963850 cartesian si_tiny/Si.upf eV/angstrom
+16
+Lattice="5.081613 5.081117 -0.000484 -0.00048 5.081113 5.081891 5.081445 -0.000316 5.081727" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=64.47713719 Ecut=10.0 virial_format=voigt length_units=angstrom dft_energy=-1836.74712841 tol=1e-06 dataset=gap kpoints_mp_grid="6 6 6" config_type=dia structure_id=544 energy_units=eV pbc="T T T"
+Si      -0.18125336      -0.14731400      -0.21804953       0.00000000       0.00000000       0.00000000       0.43162796      -0.32088588       1.10841222 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.15601709       1.08127442       1.13694017       0.00000000       0.00000000       0.00000000       0.54184703      -0.86815630      -0.41047466 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.17965995      -0.21273169       2.68809990       0.00000000       0.00000000       0.00000000       0.60986014       0.21845011      -0.92920338 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.76177308       1.13361340       3.53987608       0.00000000       0.00000000       0.00000000      -0.83449230       0.28026088      -0.54622663 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.27245132       2.67823159       2.33856667       0.00000000       0.00000000       0.00000000      -0.04795260       0.63018608      -0.10224302 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.44639853       3.87763003       3.79136161       0.00000000       0.00000000       0.00000000       0.20844590      -0.27651211       0.31561522 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.67848340       2.43463625       4.96726427       0.00000000       0.00000000       0.00000000       0.12537687       0.53569118       0.64420041 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.72032297       3.82978919       6.43650190       0.00000000       0.00000000       0.00000000      -0.78458420       0.10634170      -0.22566842 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.54602056       2.66332653       0.33666329       0.00000000       0.00000000       0.00000000      -0.46818150      -0.36156987      -0.89281026 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.90778930       3.91726454       1.53418327       0.00000000       0.00000000       0.00000000       0.93008124      -0.38041106      -0.27576795 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.25030240       2.33488142       2.43677566       0.00000000       0.00000000       0.00000000       0.30509518       0.30022447      -0.41428397 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.06247371       3.64545337       4.07024691       0.00000000       0.00000000       0.00000000       0.22689267      -0.56693106       0.49791892 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.75253246       5.32349424       2.73815053       0.00000000       0.00000000       0.00000000      -0.26215775       1.04471744       0.24924793 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.95926349       6.91418671       3.82223841       0.00000000       0.00000000       0.00000000      -0.93455555      -0.34378656       0.48482968 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.79555065       5.21642916       5.02646611       0.00000000       0.00000000       0.00000000      -0.07365891      -0.07332705       0.28789701 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.50489611       6.11918634       6.17020181       0.00000000       0.00000000       0.00000000       0.02635475       0.07570719       0.20855427 cartesian si_tiny/Si.upf eV/angstrom
+63
+Lattice="10.856179 -0.001145 -0.00299 -0.001146 10.849665 0.0015 -0.002991 0.001499 10.854704" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=444.73741274 Ecut=10.0 length_units=angstrom dft_energy=-7248.20437583 tol=1e-06 dataset=gap kpoints_mp_grid="4 4 4" config_type=vacancy structure_id=1880 energy_units=eV pbc="T T T"
+Si       6.77960919       9.55315589       9.60987085       0.00000000       0.00000000       0.00000000       0.50614593      -0.38496938      -0.16303507 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.24759552       1.23178164       1.32756308       0.00000000       0.00000000       0.00000000       0.10315316       0.36603324      -0.22426611 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.71718997       2.69221556       0.04242390       0.00000000       0.00000000       0.00000000      -0.16674334      -0.50630431      -0.11307308 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.07313800       4.00040831       1.43040668       0.00000000       0.00000000       0.00000000       0.34860025       0.56040197       0.24737508 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.70497198       0.03372075       2.77279913       0.00000000       0.00000000       0.00000000       0.00021730      -0.11872250       0.19843895 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.18592409       1.36532588       4.09043396       0.00000000       0.00000000       0.00000000      -0.43833153       0.10625682       0.64736713 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.10751310       2.75123056       2.79110566       0.00000000       0.00000000       0.00000000       0.32022748      -0.19435364      -0.20355139 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.50478987       4.12149781       4.15794069       0.00000000       0.00000000       0.00000000      -0.18725077      -0.18036278       0.20420153 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.05135010       0.15931003       5.57185717       0.00000000       0.00000000       0.00000000       0.20631250      -0.19088418      -0.40341704 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.45197049       1.40924967       6.90627335       0.00000000       0.00000000       0.00000000       0.23857701       0.19277102       0.39556082 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.83374983       2.74162446       5.55015089       0.00000000       0.00000000       0.00000000       0.12657304      -0.18515430      -0.59815782 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.17283933       4.08551193       6.92040667       0.00000000       0.00000000       0.00000000       0.20031339      -0.42614825       0.33013283 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.71211338      -0.04130921       8.32472856       0.00000000       0.00000000       0.00000000      -0.08027833      -0.07250036      -0.50421835 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.15144141       1.36523026       9.50089416       0.00000000       0.00000000       0.00000000      -0.57599898      -0.32570778       1.10858329 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.05869415       2.76455442       8.25800526       0.00000000       0.00000000       0.00000000       0.34006854      -0.44784678       0.30593375 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.45551480       4.14965247       9.54092476       0.00000000       0.00000000       0.00000000      -0.90174768      -0.55943016       0.88845269 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.06578164       5.48998977       0.08788229       0.00000000       0.00000000       0.00000000       0.20506302      -0.43307609       0.25751084 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.44746903       6.80782496       1.47449163       0.00000000       0.00000000       0.00000000      -0.49158314       0.03020005       0.51759001 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.61496038       8.24038553       0.11172297       0.00000000       0.00000000       0.00000000       0.48879700       0.22215265      -0.27791292 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.07757816       9.45324301       1.50789107       0.00000000       0.00000000       0.00000000       0.00934365       0.50061654      -0.50548574 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.88085736       5.49674415       2.83023249       0.00000000       0.00000000       0.00000000      -0.59228912      -0.51591234      -0.39690950 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.11593395       6.82452621       4.24556170       0.00000000       0.00000000       0.00000000       0.79830549       0.24001953       0.23896485 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.05018801       8.23553093       2.83332277       0.00000000       0.00000000       0.00000000       0.18279286      -0.24077057      -0.32365215 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.34671843       9.59172178       4.24863899       0.00000000       0.00000000       0.00000000       0.37234841      -0.02157239      -0.42099682 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.06088398       5.36982861       5.57674297       0.00000000       0.00000000       0.00000000       0.35192252       0.35829416      -0.11063258 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.45499708       6.77168557       6.90846827       0.00000000       0.00000000       0.00000000      -0.66050241       0.33461558       0.09819497 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.72497703       8.20702584       5.56125912       0.00000000       0.00000000       0.00000000      -0.30547403      -0.54821616      -0.44512777 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.11846424       9.43444927       6.86736509       0.00000000       0.00000000       0.00000000       0.37930851       1.07351520       0.39000484 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.77850598       5.42010242       8.25501815       0.00000000       0.00000000       0.00000000       0.80728019       0.74371884      -0.37319236 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.04458356       6.89661894       9.58940501       0.00000000       0.00000000       0.00000000       0.16125738      -0.50768184       0.43621704 cartesian si_tiny/Si.upf eV/angstrom
+Si      -0.00228603       8.20359645       8.26565575       0.00000000       0.00000000       0.00000000       0.37812526      -0.10365831      -0.01499336 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.15305953       9.68507139       9.75214818       0.00000000       0.00000000       0.00000000       0.03368514       0.04988838      -0.11195409 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.44692511       0.01340454       0.11084792       0.00000000       0.00000000       0.00000000      -0.62996429      -0.10539366       0.13884664 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.82703384       1.34176575       1.43098495       0.00000000       0.00000000       0.00000000       0.23642814       0.25233153       0.01608431 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.24924148       2.65918087       0.12037391       0.00000000       0.00000000       0.00000000       0.26510068       0.17831318      -0.16826982 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.58412083       4.07237175       1.45662179       0.00000000       0.00000000       0.00000000      -0.02232922       0.13103490      -0.13911219 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.24344762       0.06000955       2.75912017       0.00000000       0.00000000       0.00000000       0.43404970       0.03966242      -0.18726376 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.59239284       1.41705678       4.13044967       0.00000000       0.00000000       0.00000000       0.05875433      -0.06277090      -0.33039132 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.52957087       2.73770272       2.77895122       0.00000000       0.00000000       0.00000000      -0.38710183      -0.03204608      -0.19954450 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.78414520       4.09436298       4.18305529       0.00000000       0.00000000       0.00000000       0.73799603       0.20808516      -0.15588180 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.54664288       0.00719395       5.49738996       0.00000000       0.00000000       0.00000000      -0.36510918      -0.30297705      -0.00633094 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.95696851       1.32877465       6.84444825       0.00000000       0.00000000       0.00000000      -0.46582093       0.37666563      -0.18633053 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.22667848       2.71616123       5.43162673       0.00000000       0.00000000       0.00000000      -0.23508221       0.53292060       0.88626561 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.52402792       4.07057580       6.94837968       0.00000000       0.00000000       0.00000000      -0.36632002       0.06045479      -0.62953838 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.21842737       0.05950821       8.30299286       0.00000000       0.00000000       0.00000000       0.83203766      -0.24025304       0.45384477 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.78742154       1.28916681       9.74413758       0.00000000       0.00000000       0.00000000      -0.34748852      -0.25000224      -0.20630913 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.54959171       2.60640053       8.21967374       0.00000000       0.00000000       0.00000000       0.40325245       1.21197425      -0.41116429 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.86166407       4.05974541       9.61267099       0.00000000       0.00000000       0.00000000      -0.24443248       0.20971913      -0.15646382 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.43013078       5.47337465       0.14549563       0.00000000       0.00000000       0.00000000       0.17074545      -0.27392167      -0.52718331 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.91692318       6.72984938       1.49315343       0.00000000       0.00000000       0.00000000      -0.55873932       0.75316691       0.12038169 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.21451671       8.23712934       0.13485312       0.00000000       0.00000000       0.00000000      -0.40511619      -0.13463086      -0.03604664 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.64480000       9.62053486       1.36487905       0.00000000       0.00000000       0.00000000       0.36957582       0.03627594       0.16913692 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.28184690       5.42785925       2.86555466       0.00000000       0.00000000       0.00000000      -0.20664763      -0.02715984       0.18151119 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.63390791       6.81560904       4.22489310       0.00000000       0.00000000       0.00000000      -0.57484361       0.08013191       0.12452995 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.49473944       8.17806207       2.83922913       0.00000000       0.00000000       0.00000000       0.28871380      -0.78695108      -0.15032622 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.92236323       9.53932475       4.07679675       0.00000000       0.00000000       0.00000000      -0.43302585      -0.19042142       0.62107796 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.54598919       5.44010601       5.63028626       0.00000000       0.00000000       0.00000000      -0.57135242       0.36367995      -0.62951010 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.88527197       6.83856542       6.90855592       0.00000000       0.00000000       0.00000000       0.08549434       0.05496498      -0.12634559 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.19210746       8.22434917       5.54522140       0.00000000       0.00000000       0.00000000       0.70537970      -0.05096286      -0.29017441 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.60827206       9.64164075       6.86158335       0.00000000       0.00000000       0.00000000      -0.85280514      -0.81725798       0.54620898 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.22055310       5.52493452       8.26496387       0.00000000       0.00000000       0.00000000      -0.23286918      -0.89573628       0.29993961 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.51508358       6.83465469       9.66743311       0.00000000       0.00000000       0.00000000       0.29651524       0.41635920      -0.39012967 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.48725629       8.12122816       8.23125362       0.00000000       0.00000000       0.00000000      -0.14323071       0.44955723       0.29449651 cartesian si_tiny/Si.upf eV/angstrom
+63
+Lattice="10.893884 0.030295 -0.015578 0.03023 10.907747 0.012351 -0.015592 0.012365 10.911924" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=438.33769068 Ecut=10.0 length_units=angstrom dft_energy=-7247.33693162 tol=1e-06 dataset=gap kpoints_mp_grid="4 4 4" config_type=vacancy structure_id=1888 energy_units=eV pbc="T T T"
+Si       7.04682720       9.58365202       9.83133207       0.00000000       0.00000000       0.00000000      -0.91169982      -0.02974885       0.07730876 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.46328187       1.32528142       1.53386028       0.00000000       0.00000000       0.00000000       0.02138897       0.34565952      -0.14191627 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.00928905       2.66060296       0.25110244       0.00000000       0.00000000       0.00000000      -1.03710276      -0.14238191      -0.12560898 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.23445671       4.13407717       1.51521764       0.00000000       0.00000000       0.00000000       0.50033442       0.16895239       1.24363932 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.89776401       0.07686188       2.91969835       0.00000000       0.00000000       0.00000000       0.10849304      -0.55090024       0.26444211 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.38331015       1.35453234       4.33275440       0.00000000       0.00000000       0.00000000      -0.38032363      -0.08791501      -0.27293135 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.16228589       2.76485837       2.94919513       0.00000000       0.00000000       0.00000000       0.19185325      -0.35157685      -0.19719118 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.56965070       4.02455882       4.38599978       0.00000000       0.00000000       0.00000000       0.34776068       0.19132866      -0.30367959 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.19706050       0.01955710       5.77162640       0.00000000       0.00000000       0.00000000       0.63625078      -0.27994057       0.33041318 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.56406752       1.41346696       7.22233581       0.00000000       0.00000000       0.00000000      -0.14731558       0.09578030      -1.01171823 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.01736045       2.68319231       5.68895753       0.00000000       0.00000000       0.00000000      -0.73222022      -0.07663676       0.58206598 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.23219134       4.11895039       7.11486797       0.00000000       0.00000000       0.00000000       0.05419627       0.11285618      -0.13169900 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.86043250       0.01573313       8.54372382       0.00000000       0.00000000       0.00000000      -0.11364506      -0.33555501       0.07586151 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.30150291       1.31976166       9.83037205       0.00000000       0.00000000       0.00000000       0.51796608      -0.13721913       0.10759423 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.09943127       2.72504499       8.56054723       0.00000000       0.00000000       0.00000000       0.52084878      -0.25990177      -0.30739158 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.61663016       4.03496209       9.80341276       0.00000000       0.00000000       0.00000000      -0.70386113      -0.45323364       0.68729883 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.34079578       5.37556108       0.32589458       0.00000000       0.00000000       0.00000000      -0.00466915       0.62480538      -0.25028365 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.59843924       6.79699320       1.73925511       0.00000000       0.00000000       0.00000000      -0.33695665       0.33794749      -0.55560580 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.86453509       8.11557459       0.22329954       0.00000000       0.00000000       0.00000000      -0.33073185       0.28275227      -0.00253072 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.20247066       9.42150346       1.63013941       0.00000000       0.00000000       0.00000000       0.64652174       0.90607206      -0.06267201 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.92844520       5.46814911       3.07163962       0.00000000       0.00000000       0.00000000       0.71033104      -0.38865364      -0.00264640 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.45053066       6.84030131       4.34704265       0.00000000       0.00000000       0.00000000      -0.65967709      -0.13651807       0.29553796 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.15120348       8.30707327       2.86631479       0.00000000       0.00000000       0.00000000       0.66587164      -0.21160107       0.48648831 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.60824354       9.58357702       4.32070095       0.00000000       0.00000000       0.00000000      -0.24643160      -0.18197666       0.43902354 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.22157125       5.46023047       5.65724073       0.00000000       0.00000000       0.00000000       0.21483363       0.40681373       0.85748948 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.54377054       6.95174136       7.13072378       0.00000000       0.00000000       0.00000000      -0.44816747      -0.88298240      -0.89349181 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.97883116       8.15336205       5.75944488       0.00000000       0.00000000       0.00000000       0.28145514       0.78581404      -0.71803924 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.29626988       9.59688673       7.15520941       0.00000000       0.00000000       0.00000000       0.08448248      -0.62728981      -0.24829139 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.71747123       5.43857695       8.41141142       0.00000000       0.00000000       0.00000000       1.57175484       0.52576639      -0.01959102 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.22982325       6.85721052       9.70444936       0.00000000       0.00000000       0.00000000       0.24207448      -0.82307253       0.15992607 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.09358582       8.21279918       8.42751193       0.00000000       0.00000000       0.00000000       0.05889959       0.25110830       0.00762128 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.38361214       9.56498816       9.84674890       0.00000000       0.00000000       0.00000000       0.35294853       0.00122903       0.52854223 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.66001569      -0.00983812       0.37583383       0.00000000       0.00000000       0.00000000      -0.27143448      -0.51786238      -0.51383097 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.01480099       1.44655870       1.60445482       0.00000000       0.00000000       0.00000000       0.94935584      -0.23380364      -0.02711547 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.41764215       2.81754739       0.12451391       0.00000000       0.00000000       0.00000000       0.03539072      -1.05831252       0.93436383 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.71386094       4.19453015       1.55797746       0.00000000       0.00000000       0.00000000       0.45841422      -1.06302266      -0.20068310 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.50132620      -0.03082890       2.88679715       0.00000000       0.00000000       0.00000000      -0.30674060       0.57784043      -0.16185351 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.81242009       1.36430741       4.34425525       0.00000000       0.00000000       0.00000000      -0.38295133      -0.10918562      -0.56094234 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.63212684       2.75221288       2.93307052       0.00000000       0.00000000       0.00000000      -0.15033459       0.54203739       0.00046527 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.01598853       4.06794188       4.33749874       0.00000000       0.00000000       0.00000000      -0.41015806       0.66989263       0.36799383 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.67223021      -0.01232149       5.73989013       0.00000000       0.00000000       0.00000000       0.13399929      -0.20895326      -0.11786274 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.01513029       1.35031028       7.12933921       0.00000000       0.00000000       0.00000000       0.25568015       0.27537241      -0.64130538 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.37507194       2.66476397       5.63868007       0.00000000       0.00000000       0.00000000       0.00310500       0.26682984       0.72238979 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.74196515       4.10553225       7.03138073       0.00000000       0.00000000       0.00000000      -0.35126951      -0.20437950      -0.12240757 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.36788983       0.01237543       8.50743433       0.00000000       0.00000000       0.00000000       0.17445488       0.26551553       0.00717435 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.83511871       1.23047618       9.95304276       0.00000000       0.00000000       0.00000000      -0.08047576       0.19495382       0.13005284 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.62129817       2.70023652       8.41627232       0.00000000       0.00000000       0.00000000      -0.05845962       0.40536190       0.34941725 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.02238999       4.14295690       9.73456168       0.00000000       0.00000000       0.00000000      -1.18052290      -0.85800708       0.19287370 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.68190257       5.44722958       0.20084410       0.00000000       0.00000000       0.00000000      -0.12688004       0.82426324       0.11923391 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.17052613       6.83712301       1.59164298       0.00000000       0.00000000       0.00000000      -0.59685242      -0.48322496      -0.44263979 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.42375051       8.17216691       0.11930665       0.00000000       0.00000000       0.00000000       0.90058235       0.15139998       0.66042331 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.93420755       9.71053331       1.30149854       0.00000000       0.00000000       0.00000000      -0.39046479      -0.06146647      -0.16673417 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.43979827       5.42459878       2.96047607       0.00000000       0.00000000       0.00000000      -0.52658414       0.77367839       0.88841874 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.77261035       6.90241025       4.32217970       0.00000000       0.00000000       0.00000000       0.55487204      -0.89495553      -1.25128332 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.77342119       8.16014464       2.89060785       0.00000000       0.00000000       0.00000000      -0.65924707       0.15859682       0.29452173 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.05088818       9.52551448       4.29649983       0.00000000       0.00000000       0.00000000      -0.09188984       0.68123335      -0.39007208 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.66918405       5.54867542       5.88589645       0.00000000       0.00000000       0.00000000       0.81970510      -0.57505622      -0.68779961 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.21172096       6.90030773       7.15692574       0.00000000       0.00000000       0.00000000      -0.38631065      -0.55502756      -0.74315035 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.43621007       8.20155457       5.54892469       0.00000000       0.00000000       0.00000000      -0.63424848       0.24842595       1.63417089 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.62235474       9.58666745       7.05375529       0.00000000       0.00000000       0.00000000       0.59142000       0.10835632      -0.44217831 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.41501105       5.38725411       8.52018501       0.00000000       0.00000000       0.00000000       0.98424258       1.03276753      -1.12386284 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.84879629       6.77832638       9.80609147       0.00000000       0.00000000       0.00000000      -0.30469965      -0.36481892       0.22123676 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.74595143       8.15337139       8.43530788       0.00000000       0.00000000       0.00000000      -0.62712644       0.93175358       0.17304924 cartesian si_tiny/Si.upf eV/angstrom
+63
+Lattice="10.841885 -0.035038 -0.006065 -0.0353 10.854888 -0.023101 -0.006189 -0.022913 10.8271" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=408.25098148 Ecut=10.0 length_units=angstrom dft_energy=-7246.65559638 tol=1e-06 dataset=gap kpoints_mp_grid="4 4 4" config_type=vacancy structure_id=1896 energy_units=eV pbc="T T T"
+Si       6.91970215       9.42520697       9.91393623       0.00000000       0.00000000       0.00000000      -0.03276092      -0.31015838      -1.46374173 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.76174806       0.53250391       0.93160681       0.00000000       0.00000000       0.00000000       0.26346285       0.03987987       0.14146087 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.74534987       2.41333292       0.22632464       0.00000000       0.00000000       0.00000000       0.33931763      -0.67911498       0.26467879 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.15429287       3.83101265       1.51015706       0.00000000       0.00000000       0.00000000      -0.84179027       0.18932220       0.86500018 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.79264839       0.04251350       2.82712158       0.00000000       0.00000000       0.00000000      -0.25722184      -0.85154097       0.30935991 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.23986801       1.26436714       4.37862593       0.00000000       0.00000000       0.00000000      -1.08918933       0.34282954      -0.22805607 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.25700282       2.56187219       2.81850312       0.00000000       0.00000000       0.00000000       0.04836563      -0.19173079       0.17632498 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.45839239       3.98450385       4.37198188       0.00000000       0.00000000       0.00000000       0.51968115      -0.62459011      -0.89986954 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.17868799      -0.10881535       5.70114503       0.00000000       0.00000000       0.00000000       0.04650243       0.75902806      -0.28750107 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.56725229       1.24999848       6.99079858       0.00000000       0.00000000       0.00000000      -0.26264557       0.50907224       0.67964753 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.89412426       2.74844153       5.73820456       0.00000000       0.00000000       0.00000000       0.03115752      -0.91476865      -0.21947376 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.30107643       3.99308567       7.10726907       0.00000000       0.00000000       0.00000000      -0.47407429      -0.15844196       0.30427931 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.92639813      -0.10189711       8.35210354       0.00000000       0.00000000       0.00000000      -0.15955101      -0.18864221       0.27306831 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.31044268       1.16692884       9.69582671       0.00000000       0.00000000       0.00000000      -0.65749379       0.50520962       0.46816276 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.13687111       2.57669985       8.45963713       0.00000000       0.00000000       0.00000000       0.32842458      -0.00919095      -0.40552700 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.64107621       3.88439688       9.73255214       0.00000000       0.00000000       0.00000000      -0.94056600       0.79595330      -0.32195734 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.28402358       5.43043674       0.23157771       0.00000000       0.00000000       0.00000000      -0.20833428      -0.35717386      -0.44541654 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.39992513       6.75205508       1.73581877       0.00000000       0.00000000       0.00000000       0.56241288       0.22686037       0.50724894 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.75495180       8.14180810       0.38466517       0.00000000       0.00000000       0.00000000      -0.09268197      -0.74022773      -0.55881533 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.20025109       9.32642629       1.62313170       0.00000000       0.00000000       0.00000000       0.12693386       1.43458789       0.68497503 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.82863129       5.26910915       2.99153992       0.00000000       0.00000000       0.00000000       0.39928236       0.51281573      -0.22580968 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.19214493       6.69036825       4.42797603       0.00000000       0.00000000       0.00000000       0.22216422      -0.75419366      -0.90554119 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.00108385       8.10129581       3.16955513       0.00000000       0.00000000       0.00000000       0.18057570      -0.99178834      -0.61874374 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.46270245       9.43438787       4.29972885       0.00000000       0.00000000       0.00000000       1.16714444       0.22542117       0.20324209 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.20032624       5.40700865       5.66510979       0.00000000       0.00000000       0.00000000       0.11739165       0.29868026       1.03756882 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.61485987       6.76568477       7.11850802       0.00000000       0.00000000       0.00000000      -0.40027639       0.12392765       0.10673382 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.97459035       8.11749675       5.72096288       0.00000000       0.00000000       0.00000000      -1.34187417       0.06642527      -0.38847794 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.30250395       9.44893462       6.98036086       0.00000000       0.00000000       0.00000000       0.52506210       0.03994981       0.58163609 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.97079232       5.36011757       8.45160557       0.00000000       0.00000000       0.00000000      -0.23530630       0.08559934       0.01868249 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.19546215       6.74669722       9.88406906       0.00000000       0.00000000       0.00000000       0.20944833       0.31939888      -0.89554248 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.24376129       8.19191074       8.59023003       0.00000000       0.00000000       0.00000000       0.43531035      -0.14697923      -0.28099747 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.52937347       9.71138829      10.00489026       0.00000000       0.00000000       0.00000000      -0.05700088      -0.25056843      -0.49959045 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.57464223      -0.05094857       0.36055641       0.00000000       0.00000000       0.00000000      -0.00789830      -0.56603859       0.06461843 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.01299634       1.16904740       1.71106560       0.00000000       0.00000000       0.00000000      -0.51609476       1.11906532       0.04415017 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.32996494       2.66344337       0.39589465       0.00000000       0.00000000       0.00000000       0.57795369      -0.36012688       0.06627372 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.80567596       4.09833346       1.63153720       0.00000000       0.00000000       0.00000000      -0.76563518      -0.69229808       0.01861150 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.34506817      -0.13541082       3.07164606       0.00000000       0.00000000       0.00000000       0.11534833       0.67351972       0.67260964 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.72932905       1.38245947       4.34634673       0.00000000       0.00000000       0.00000000       0.09207668      -1.27113451      -0.51734317 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.46475826       2.57185911       2.95122815       0.00000000       0.00000000       0.00000000       1.18613842      -0.03836262      -0.23612713 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.87249354       4.01044758       4.19982881       0.00000000       0.00000000       0.00000000      -0.46256866      -1.34606777       1.39103155 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.70587235      -0.05318121       5.63696193       0.00000000       0.00000000       0.00000000      -0.81109331       0.39986337       1.00254611 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.99982517       1.31099886       7.03838192       0.00000000       0.00000000       0.00000000       0.79445313      -0.24061434       0.67198310 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.37785598       2.65426043       5.65242957       0.00000000       0.00000000       0.00000000      -1.36089887       0.64527684      -0.03905006 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.68871356       4.00001445       6.98456448       0.00000000       0.00000000       0.00000000       0.31883774      -0.15940509       1.05127180 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.41728060      -0.07256955       8.64832117       0.00000000       0.00000000       0.00000000       0.08493538      -0.25591422      -0.86385599 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.89630505       1.17899894      10.09745028       0.00000000       0.00000000       0.00000000      -0.47959390       0.71444569      -0.46445795 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.59676557       2.60135805       8.42991233       0.00000000       0.00000000       0.00000000       0.63862980       0.04860153      -0.22935039 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.00490492       3.91693979       9.76548859       0.00000000       0.00000000       0.00000000      -0.29152733       0.26846733       0.07906884 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.51203190       5.25557536       0.27852335       0.00000000       0.00000000       0.00000000       0.53091308       0.18354546      -0.57536273 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.88863600       6.65232686       1.54524696       0.00000000       0.00000000       0.00000000       0.80083489       0.28120878       1.00052269 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.35805087       8.25299077       0.43803242       0.00000000       0.00000000       0.00000000       0.25907446      -1.01361514      -0.31462401 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.82519618       9.60698804       1.75497919       0.00000000       0.00000000       0.00000000       0.26610515      -0.10716925      -0.46105630 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.27640959       5.26248278       3.01677093       0.00000000       0.00000000       0.00000000       0.22946488       1.06057641      -1.32570161 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.48841597       6.57284599       4.46599097       0.00000000       0.00000000       0.00000000       0.43950284       0.98659202      -0.50287673 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.53416241       7.99094269       2.97699947       0.00000000       0.00000000       0.00000000       0.49179009      -0.10893686       0.52454500 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.89033549       9.40559487       4.37681508       0.00000000       0.00000000       0.00000000       0.78573090      -1.16606898      -0.91321440 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.57854142       5.29072030       5.74883081       0.00000000       0.00000000       0.00000000       0.69913242       0.48954178      -0.85201501 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.04265208       6.57624505       7.05546621       0.00000000       0.00000000       0.00000000      -0.24061561       0.51226766      -0.06550829 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.32514398       8.10553589       5.76874808       0.00000000       0.00000000       0.00000000      -0.52894669      -0.35871115       0.13797363 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.77198541       9.36296299       7.09927262       0.00000000       0.00000000       0.00000000      -0.93271324       0.68917467       0.80987375 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.39210809       5.32706966       8.47164589       0.00000000       0.00000000       0.00000000       0.03542187      -0.15433928      -0.10516246 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.66495082       6.78137682       9.81802522       0.00000000       0.00000000       0.00000000      -0.09849309       0.04901510       0.36657068 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.66244875       7.99398307       8.28976348       0.00000000       0.00000000       0.00000000      -0.32214618       0.41179821       1.58704921 cartesian si_tiny/Si.upf eV/angstrom
+63
+Lattice="10.913837 -0.055205 -0.046054 -0.05555 10.883605 -0.057027 -0.046118 -0.056599 10.914192" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=431.2509145 Ecut=10.0 length_units=angstrom dft_energy=-7245.22207897 tol=1e-06 dataset=gap kpoints_mp_grid="4 4 4" config_type=vacancy structure_id=1904 energy_units=eV pbc="T T T"
+Si       7.16881475       9.37715529       9.91961390       0.00000000       0.00000000       0.00000000      -1.34153173       0.70231197       0.34180883 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.38172611       0.96583770       1.30798236       0.00000000       0.00000000       0.00000000      -0.41827856       0.59683951       0.39951351 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.94571913       2.63079635       0.28637078       0.00000000       0.00000000       0.00000000       0.33565081      -0.40606019       0.16810854 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.15224694       4.07940087       1.77862472       0.00000000       0.00000000       0.00000000       0.05097491       0.33951947       0.03012249 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.77234014      -0.01519702       3.11667549       0.00000000       0.00000000       0.00000000       0.26867846       0.46812442       0.21596066 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.34667411       1.31012333       4.46142343       0.00000000       0.00000000       0.00000000      -1.27255749       0.46675421       0.56275075 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.25288531       2.68817767       3.04192779       0.00000000       0.00000000       0.00000000      -0.33176398      -0.52158158      -0.71351328 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.53147664       4.05537438       4.46231728       0.00000000       0.00000000       0.00000000      -0.22067051      -0.06206088       0.74147245 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.11558553      -0.14749964       5.92133767       0.00000000       0.00000000       0.00000000       0.11317395       0.90192983       0.43350991 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.50645363       1.24728528       7.30330018       0.00000000       0.00000000       0.00000000       0.17590116       0.52964873      -0.14385819 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.84394887       2.72603236       5.93685829       0.00000000       0.00000000       0.00000000       0.25447621      -0.99809381      -0.87380588 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.26938066       4.13403016       7.09474274       0.00000000       0.00000000       0.00000000       0.64044989      -0.30979707       0.51718272 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.95911652      -0.09258509       8.62938792       0.00000000       0.00000000       0.00000000       0.59104955       0.91040608      -0.37512252 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.48054804       1.27285776       9.86543806       0.00000000       0.00000000       0.00000000      -0.93699151       0.98084377      -0.26711304 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.25236392       2.72219633       8.75462465       0.00000000       0.00000000       0.00000000       0.27460308      -0.21526954      -0.19575470 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.74203153       4.20309563       9.95299741       0.00000000       0.00000000       0.00000000      -1.26207251      -1.42373751       0.63023270 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.29135858       5.49672661       0.42763926       0.00000000       0.00000000       0.00000000      -0.30377050      -1.11937808      -0.10803667 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.42667970       6.91885369       1.75092154       0.00000000       0.00000000       0.00000000       1.35319663       0.63989858       0.32797486 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.90144123       8.27650505       0.28196695       0.00000000       0.00000000       0.00000000      -0.35566846      -0.23412959       0.34218728 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.17742823       9.64749373       1.73535058       0.00000000       0.00000000       0.00000000       0.00290606      -1.04250329       0.00290486 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.71417705       5.48347415       3.14404458       0.00000000       0.00000000       0.00000000       1.15742989       0.34627268      -0.47572512 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.16774712       6.76848707       4.57253791       0.00000000       0.00000000       0.00000000       0.81148041      -0.11598776      -1.87409906 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.20480783       8.30820636       3.19722256       0.00000000       0.00000000       0.00000000       0.32547877      -0.65850230       0.17629996 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.60941100       9.50405920       4.65589265       0.00000000       0.00000000       0.00000000       0.25658865      -0.27405789      -0.40762370 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.31949105       5.66199253       5.83689797       0.00000000       0.00000000       0.00000000      -0.01854280      -1.07656462       0.35243237 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.67128595       6.85535347       7.40345814       0.00000000       0.00000000       0.00000000       0.06956612       0.63209340      -1.54403739 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.13322062       8.18381465       5.98082197       0.00000000       0.00000000       0.00000000      -1.35722205       0.20951794       0.50013224 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.45436616       9.55150826       7.29980360       0.00000000       0.00000000       0.00000000      -0.59815523       0.11418686      -0.14682523 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.99283090       5.43418467       8.56947695       0.00000000       0.00000000       0.00000000       1.20616727       0.53717317       0.05164476 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.39676956       6.80647672       9.91524700       0.00000000       0.00000000       0.00000000      -0.76888433      -0.11303653       0.41068545 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.31960667       8.32384998       8.57047054       0.00000000       0.00000000       0.00000000       0.21248045      -0.57462957       1.39346642 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.41944400       9.83238057      10.01136049       0.00000000       0.00000000       0.00000000       0.28190213      -0.38780851       1.04617430 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.64242381      -0.07305554       0.38851475       0.00000000       0.00000000       0.00000000       1.77769956       0.33675430       0.21033930 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.05048815       1.40832432       1.82082830       0.00000000       0.00000000       0.00000000      -0.81832941      -0.48732082      -0.74010273 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.52671442       2.58636688       0.41642843       0.00000000       0.00000000       0.00000000      -0.98275416      -0.94618881      -1.29169356 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.69340069       3.99250001       1.61009425       0.00000000       0.00000000       0.00000000       2.06994324       0.72272876       1.03985067 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.29499707      -0.06551208       3.11932157       0.00000000       0.00000000       0.00000000       0.96192222       0.09919912       0.36462747 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.82974754       1.28421372       4.41172343       0.00000000       0.00000000       0.00000000      -0.89922718      -0.08600356       0.50949607 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.56661692       2.75676074       3.10398772       0.00000000       0.00000000       0.00000000       0.78504563      -0.18704904       0.28259546 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.10051822       3.88572073       4.59019241       0.00000000       0.00000000       0.00000000      -1.02817435       0.66319176      -1.40847718 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.73203903       0.07009570       5.97402684       0.00000000       0.00000000       0.00000000      -0.20107866       0.11233369      -0.42164960 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.06849268       1.42023732       7.32778503       0.00000000       0.00000000       0.00000000       0.19485162      -0.44637346       0.19732244 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.39833460       2.67479838       5.96797926       0.00000000       0.00000000       0.00000000       2.16268899      -0.35170740      -0.25963659 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.96204413       4.09053217       7.17941143       0.00000000       0.00000000       0.00000000      -0.96656521       0.08328682       0.30925265 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.45167726       0.01245703       8.70072278       0.00000000       0.00000000       0.00000000       0.65984256      -0.01126853       0.32403993 cartesian si_tiny/Si.upf eV/angstrom
+Si      10.08695315       1.07019917      10.23419351       0.00000000       0.00000000       0.00000000      -0.24184310       0.51051673      -0.31007745 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.76182465       2.87071404       8.55908101       0.00000000       0.00000000       0.00000000      -0.74964168      -0.30771203       0.19323186 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.20171912       4.07525200       9.95397234       0.00000000       0.00000000       0.00000000      -0.60617788       0.09182453       0.58093201 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.66102732       5.45775363       0.47675650       0.00000000       0.00000000       0.00000000       0.89944795      -0.12583453      -0.20962939 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.26961675       6.78534377       1.78063894       0.00000000       0.00000000       0.00000000      -1.90377474       0.01996271       0.58100077 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.54885604       8.15077896       0.36611448       0.00000000       0.00000000       0.00000000       0.85987969      -0.04114270       0.32472025 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.85722337       9.55811678       1.78584984       0.00000000       0.00000000       0.00000000      -0.90892298       0.99374784      -0.34765144 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.42860091       5.18103044       3.11247549       0.00000000       0.00000000       0.00000000       0.11065210       1.29940330       0.52241590 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.78272144       6.76099499       4.38722211       0.00000000       0.00000000       0.00000000      -0.84372376       0.07695644       0.33297272 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.52742291       8.25211870       3.12212618       0.00000000       0.00000000       0.00000000       0.40077529      -1.15338848      -0.28502488 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.86529291       9.53237144       4.52220364       0.00000000       0.00000000       0.00000000       0.93845699      -0.33370596       0.21855083 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.68417953       5.39323088       5.66601378       0.00000000       0.00000000       0.00000000       0.10169752       0.05090419       0.96750101 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.06113033       6.67252402       7.13909577       0.00000000       0.00000000       0.00000000      -0.49065979      -0.01443437       0.39656252 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.34119477       8.09890466       5.85742702       0.00000000       0.00000000       0.00000000       0.37372813       0.28971239      -0.67318319 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.70165388       9.39313900       7.37190701       0.00000000       0.00000000       0.00000000      -1.06135962       0.76340209      -1.77686442 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.51459555       5.47179638       8.59126520       0.00000000       0.00000000       0.00000000       0.80168098       0.00973989      -0.08217425 cartesian si_tiny/Si.upf eV/angstrom
+Si      10.03562486       6.86444633       9.98663394       0.00000000       0.00000000       0.00000000      -1.46850422      -0.17607913      -1.09130299 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.73117365       8.10457401       8.54392987       0.00000000       0.00000000       0.00000000       0.87635744      -0.29778872       0.02299414 cartesian si_tiny/Si.upf eV/angstrom
+63
+Lattice="10.878497 0.021228 -0.006742 0.020868 10.850945 0.022114 -0.006663 0.022751 10.90774" Properties=species:S:1:pos:R:3:velocities:R:3:dft_force:R:3:force_representation:S:1:pseudopotential:S:1:force_units:S:1 runtime_s=512.18468466 Ecut=10.0 length_units=angstrom dft_energy=-7244.31083143 tol=1e-06 dataset=gap kpoints_mp_grid="4 4 4" config_type=vacancy structure_id=1908 energy_units=eV pbc="T T T"
+Si       7.21849633       9.74074609      10.26154242       0.00000000       0.00000000       0.00000000      -0.11671704      -0.77225923       0.06157299 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.54929921       0.57003266       0.91284442       0.00000000       0.00000000       0.00000000       0.39269210      -0.67825350       0.20808064 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.82714206       2.62935499       0.62882710       0.00000000       0.00000000       0.00000000       0.58780780       0.08482104       0.94098855 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.36660765       4.11341600       1.98047975       0.00000000       0.00000000       0.00000000      -1.07998592      -1.09898763      -0.29973699 cartesian si_tiny/Si.upf eV/angstrom
+Si       2.83636536       0.25007543       3.02179603       0.00000000       0.00000000       0.00000000       0.33779853      -0.46233160       0.05187600 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.37428416       1.41993683       4.47264702       0.00000000       0.00000000       0.00000000      -0.61270065      -0.75996688       0.49117248 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.27528826       2.58007618       3.15962604       0.00000000       0.00000000       0.00000000      -0.01061206      -0.28464682      -0.50611120 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.57638401       3.99192076       4.44644480       0.00000000       0.00000000       0.00000000       1.06160033       0.94492409       0.80652456 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.46228755      -0.03021998       6.10289496       0.00000000       0.00000000       0.00000000       0.32247361      -0.30093037      -0.90095460 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.75717388       1.52887457       7.29856779       0.00000000       0.00000000       0.00000000       0.07573040      -1.00642783       1.15546467 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.08439783       2.77548076       5.87734120       0.00000000       0.00000000       0.00000000      -0.11837520       0.61479085      -0.07990511 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.42631355       4.08597575       7.35350347       0.00000000       0.00000000       0.00000000      -0.19829370       1.00664496      -0.41352183 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.13043258       0.20245244       8.93977692       0.00000000       0.00000000       0.00000000      -1.11186784      -1.08537729      -2.02370729 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.33690532       1.63949275      10.09677368       0.00000000       0.00000000       0.00000000       1.51813861       0.37621970       0.91617113 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.32485139       2.72376705       8.75638363       0.00000000       0.00000000       0.00000000       1.06985413       1.84125719      -0.42505787 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.77172554       4.20479934      10.23042850       0.00000000       0.00000000       0.00000000      -1.35861055      -0.31069097      -0.56820381 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.42747762       5.63096251       0.69542254       0.00000000       0.00000000       0.00000000       0.53132840      -0.94730965      -0.92786222 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.53520632       6.94598052       2.16107239       0.00000000       0.00000000       0.00000000       1.98626457      -0.01591530      -1.16294495 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.01936504       8.22511871       0.66113708       0.00000000       0.00000000       0.00000000       0.46129761      -0.57383957       0.62711047 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.47761099       9.69833302       1.85680559       0.00000000       0.00000000       0.00000000      -0.93798394      -0.08724642       0.62216400 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.04250991       5.53029660       3.23885189       0.00000000       0.00000000       0.00000000      -0.60255838      -0.56055426       0.71247481 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.45821665       6.73355686       4.65843306       0.00000000       0.00000000       0.00000000       0.50968547       1.00515656       0.42541090 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.29350560       8.22306756       3.47139953       0.00000000       0.00000000       0.00000000      -0.86299082       1.22379588       0.06478039 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.93556873       9.45367076       4.53821695       0.00000000       0.00000000       0.00000000      -0.62285392       1.10127143       1.10549049 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.33779534       5.49797458       5.99438098       0.00000000       0.00000000       0.00000000      -0.14645063      -1.07800994      -0.11289101 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.69216782       6.86259670       7.31996704       0.00000000       0.00000000       0.00000000       0.08285944      -0.26581501       1.42817623 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.16362535       8.15220539       6.12800690       0.00000000       0.00000000       0.00000000       0.24873360       0.00035961      -0.90560020 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.41826942       9.56587910       7.49244475       0.00000000       0.00000000       0.00000000       0.05320627       0.38868602       0.37403238 cartesian si_tiny/Si.upf eV/angstrom
+Si       3.10445551       5.47636613       8.83178465       0.00000000       0.00000000       0.00000000      -0.76919775      -0.40874342      -1.90830293 cartesian si_tiny/Si.upf eV/angstrom
+Si       4.31888697       6.72175799      10.20982265       0.00000000       0.00000000       0.00000000       1.27780768       1.53183627       0.66380262 cartesian si_tiny/Si.upf eV/angstrom
+Si       0.36735446       8.25166491       8.85899230       0.00000000       0.00000000       0.00000000       1.68099492       0.40404471       0.28206226 cartesian si_tiny/Si.upf eV/angstrom
+Si       1.79295034       9.77992005      10.41010048       0.00000000       0.00000000       0.00000000      -1.01642595       0.28210629      -0.98383943 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.76743125       0.30881309       0.64424014       0.00000000       0.00000000       0.00000000       0.70628617      -0.15612325      -1.05074864 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.32714249       1.58179459       1.90002926       0.00000000       0.00000000       0.00000000      -1.12519988      -0.62155006       0.61182529 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.57543921       2.97580482       0.62830423       0.00000000       0.00000000       0.00000000       1.32180461      -0.94554964      -0.25393229 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.97540331       4.27121540       1.91414761       0.00000000       0.00000000       0.00000000      -0.11530335      -0.73240914       0.48624910 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.65622102       0.18936420       3.23302184       0.00000000       0.00000000       0.00000000      -1.28503496      -1.41128611      -0.19785907 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.90450754       1.30530128       4.68143475       0.00000000       0.00000000       0.00000000       2.00189936      -0.23997048       0.00153341 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.74025514       2.72660641       3.22500554       0.00000000       0.00000000       0.00000000       0.72845896       0.63388113       0.02204424 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.12341141       4.04083128       4.58844054       0.00000000       0.00000000       0.00000000       0.94011341      -0.23755915       0.48573156 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.64715934       0.06130341       5.95536435       0.00000000       0.00000000       0.00000000       1.05251310      -0.43800375       0.15078245 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.15468769       1.35613468       7.33092066       0.00000000       0.00000000       0.00000000      -0.93382943      -0.64254959       1.27296657 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.50752163       2.44403077       5.94031048       0.00000000       0.00000000       0.00000000      -0.31726997       3.57191818       0.39245000 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.82292821       4.13480311       7.38321093       0.00000000       0.00000000       0.00000000      -0.32382891      -0.27173321      -0.22172502 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.66698093       0.17861991       8.89453126       0.00000000       0.00000000       0.00000000      -1.40044035      -0.56647149      -0.67733007 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.93940291       1.56593191      10.17236267       0.00000000       0.00000000       0.00000000      -0.13788212       0.13087840       1.26767502 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.80694320       2.84062353       8.67215842       0.00000000       0.00000000       0.00000000       1.10967225      -0.20511757       0.79852166 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.26232322       4.17174160      10.22723092       0.00000000       0.00000000       0.00000000      -1.71847206       1.02873199      -1.91159584 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.73969094       5.34808641       0.68799821       0.00000000       0.00000000       0.00000000       0.27278011       0.64926842      -1.41924909 cartesian si_tiny/Si.upf eV/angstrom
+Si       6.99774439       6.89144522       1.84958631       0.00000000       0.00000000       0.00000000       0.51533638       0.02523651       1.60912941 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.58086298       8.12764958       0.69525367       0.00000000       0.00000000       0.00000000      -0.26692044       1.19752823      -1.03129822 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.95909066       9.65814474       1.88740209       0.00000000       0.00000000       0.00000000       0.57621657      -0.00823145       0.56124688 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.51335387       5.47452693       3.23281704       0.00000000       0.00000000       0.00000000      -0.82762784       0.86271257       0.84420382 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.80278665       6.89961065       4.77544448       0.00000000       0.00000000       0.00000000      -0.33319663      -0.62734542      -0.57020700 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.73695270       8.39662336       3.34186170       0.00000000       0.00000000       0.00000000       0.78828084      -1.00635279       0.40920935 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.36284498       9.62318590       4.72338963       0.00000000       0.00000000       0.00000000      -1.32470770       0.22579635      -0.40863985 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.94639026       5.45799939       6.06014138       0.00000000       0.00000000       0.00000000      -0.70342474       0.14810096       0.05490452 cartesian si_tiny/Si.upf eV/angstrom
+Si       7.07118575       7.00896555       7.52362206       0.00000000       0.00000000       0.00000000       0.98942700      -1.21310073      -0.47009127 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.58552906       8.24755677       6.22030542       0.00000000       0.00000000       0.00000000      -0.50524135       0.36513124      -0.17129580 cartesian si_tiny/Si.upf eV/angstrom
+Si       9.94686149       9.60284224       7.57342092       0.00000000       0.00000000       0.00000000      -0.11321882       0.49224758      -0.68809026 cartesian si_tiny/Si.upf eV/angstrom
+Si       8.58859574       5.65990624       8.86247577       0.00000000       0.00000000       0.00000000      -0.57413375      -0.90078854      -0.69138285 cartesian si_tiny/Si.upf eV/angstrom
+Si      10.01308058       6.92228170      10.18532264       0.00000000       0.00000000       0.00000000      -0.93684366       0.11249444       0.27142192 cartesian si_tiny/Si.upf eV/angstrom
+Si       5.79718819       8.24604044       8.91894591       0.00000000       0.00000000       0.00000000      -0.69285241       0.67163275       0.80480759 cartesian si_tiny/Si.upf eV/angstrom

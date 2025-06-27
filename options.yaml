@@ -1,0 +1,76 @@
+
+model:
+  atomic_types: [14]
+  # SOAP hypers
+  soap:
+    cutoff:
+      radius: 5.0
+      smoothing: 
+        type: ShiftedCosine
+        width: 1.0
+    density:
+      type: Gaussian
+      center_atom_weight: 1.0
+      width: 0.3
+      scaling:
+        type: Willatt2018
+        rate: 1.0
+        scale: 2.0
+        exponent: 7.0
+    basis:
+      type: TensorProduct
+      max_angular: 6
+      radial:
+        type: Gto
+        max_radial: 7
+  
+  # GPR hypers
+  krr:
+    degree: 2
+    num_sparse_points: 1000  # null to use all training points 
+
+training:
+  use_gradients: true
+  alpha_energy:
+    value: 0.001
+    read_from: null #"/home/apaulish/Documents/code/joe_davide/ext_data/train_n574_e10_energy_errors.txt" #train_gap_ecut18_ext_errors.txt #
+  alpha_energy_grad:
+    value: 0.001
+    read_from: null #"/home/apaulish/Documents/code/joe_davide/ext_data/train_n574_e10_force_errors.txt" #alpha_energy_grad.txt
+  predict_std_energy: true
+  predict_std_energy_grad: false
+
+torch:
+  device: cpu
+  dtype: float64
+
+training_set:
+  systems:  "/home/apaulish/Documents/code/joe_davide/ext_data/train_n574_e26.xyz" #train_n574_e10.xyz"  #"train.xyz"  #"train_gap_ecut18_ext.xyz"  #"ref_train_si_tiny_dia25_ecut26.xyz"
+  targets:
+    energy:
+      key: "dft_energy" # name of the target value
+      unit: "eV" # unit of the target value
+    forces:
+      key: "dft_force"
+      unit: "eV/Ang" # unit of the target value
+
+test_set: 
+  systems:  "/home/apaulish/Documents/code/joe_davide/ext_data/test_n197_e26.xyz" # "test_no_overlap.xyz" test.xyz" 
+  targets:
+    energy:
+      key: "dft_energy" # name of the target value
+      unit: "eV" # unit of the target value
+    forces:
+      key: "dft_force"
+      unit: "eV/Ang" # unit of the target value
+
+validation_set: 
+  systems: "/home/apaulish/Documents/code/joe_davide/ext_data/test_n197_e26.xyz" # "test_no_overlap.xyz" #  #"test_gap_ecut26.xyz"
+  targets:
+    energy:
+      key: "dft_energy" # name of the target value
+      unit: "eV" # unit of the target value
+    forces:
+      key: "dft_force"
+      unit: "eV/Ang" # unit of the target value
+
